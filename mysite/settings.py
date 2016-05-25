@@ -108,7 +108,12 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
+MEDIA_ROOT = '/home/SmartFoods/mysite/media/'
 
+MEDIA_URL = '/media/'
+
+STATIC_ROOT = '/home/SmartFoods/mysite/blog/static/'
+STATIC_URL = '/static/'
 USE_I18N = True
 
 USE_L10N = True
