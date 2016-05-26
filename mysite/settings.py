@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
-MEDIA_ROOT = '/home/SmartFoods/mysite/media/'
+MEDIA_ROOT = '/home/djangogirls1/mysite/media/'
 
 MEDIA_URL = '/media/'
 

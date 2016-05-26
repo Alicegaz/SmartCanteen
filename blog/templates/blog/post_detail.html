@@ -9,12 +9,12 @@
     </head>
     <body>
     <div class="page-header">
+        <a href="{% url 'post_new' %}" class="top-menu"><span clas="glyphicon glyphicon-plus"></span></a>
         <h1><a href="/">Django Girls Blog</a></h1>
     </div>
     <div class="content container">
         <div class="row">
             <div class="col-md-8">
-{% block content %}
     <div class="post">
         {% if post.published_date %}
             <div class="date">
@@ -24,7 +24,6 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaks }}</p>
     </div>
-{% endblock %}
  </div>
         </div>
     </div>
