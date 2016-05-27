@@ -9,7 +9,7 @@
     </head>
     <body>
     <div class="page-header">
-        <a href="{% url 'post_new' %}" class="top-menu"><span clas="glyphicon glyphicon-plus"></span></a>
+        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
         <h1><a href="/">Django Girls Blog</a></h1>
     </div>
     <div class="content container">
@@ -23,6 +23,9 @@
         {% endif %}
         <h1>{{ post.title }}</h1>
         <p>{{ post.text|linebreaks }}</p>
+    <p>
+        <img src='{{ instance.image.url }}' class='img-resp' />
+    </p>
     </div>
  </div>
         </div>

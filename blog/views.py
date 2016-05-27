@@ -4,6 +4,10 @@ from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 from .forms import PostForm
 from django.shortcuts import redirect
+from django.contrib import messages
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def post_list(request):
@@ -16,9 +20,25 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
+def post_edit(request):
+    instance = get_object_or_404(Post, id=id)
+    form = PostForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+        return HttpResponseRedirect(instance.get_absolute_url())
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "form":form,
+    }
+    return render(request, "blog/post_edit.html", context)
+
+
 def post_new(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST or None)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user

@@ -23,12 +23,15 @@
                         <p>published: {{ post.published_date }}</p>
                     </div>
                     <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
-
-                    <p> <img src="{{ post.pic.url }}" height="200" width="250" float="left"/>
-                    {{ post.pic }}
-                        </div>
+                    {% if post.image %}
+                    <p> <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
+                    {{ post.image.url }}
+                {% endif %}
+                </div>
                         {{ post.text|linebreaks }}
                     </p>
+                <p>price: {{  post.price }}</p>
+                <p>kkal: {{ post.kkal }}</p>
                 </div>
             {% endfor %}
         </div>
