@@ -23,10 +23,10 @@
         {% endif %}
         <h1>{{ post.title }}</h1>
         {% if post.image %}
-                         <img src="{{ post.image.url }}" height="200" width="250" float="left" class="img-responsive"/>
+                         <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
                         <p>price: {{  post.price }}</p>
-                        <p>kkal: {{ post.kkal }}</p>
+                        <p>kkal: {{ post.calories }}</p>
      {{ post.text|linebreaks }}
     </div>
  </div>

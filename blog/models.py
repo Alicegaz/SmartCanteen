@@ -9,7 +9,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
-    kkal = models.BigIntegerField(null=True, blank=True)
+    calories = models.BigIntegerField(null=True, blank=True)
     price = models.BigIntegerField(null=True, error_messages={'required': 'Укажите цену'})
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes')
