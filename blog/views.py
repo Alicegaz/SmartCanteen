@@ -19,7 +19,7 @@ def post_detail(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
     context = {
         "title": instance.title,
-        "post": instance,
+        "instance": instance,
 
     }
     return render(request, 'blog/post_detail.html', context)

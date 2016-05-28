@@ -16,19 +16,19 @@
         <div class="row">
             <div class="col-md-8">
     <div class="post">
-        {% if post.published_date %}
+        {% if instance.published_date %}
             <div class="date">
-                {{ post.published_date }}
+                {{ instance.published_date }}
             </div>
         {% endif %}
-        <h1>{{ post.title }}</h1>
-        {% if post.image %}
-                         <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
+        <h1>{{ instance.title }}</h1>
+        {% if instance.image %}
+                         <img src="{{ instance.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
-                        <p>price: {{  post.price }}</p>
-                        <p>kkal: {{ post.calories }}</p>
-     {{ post.text|linebreaks }}
-    </div>
+                        <p>price: {{  instance.price }}</p>
+                        <p>калории: {{ instance.calories }}</p>
+                {{ instance.text|linebreaks }}
+                </div>
  </div>
         </div>
     </div>
