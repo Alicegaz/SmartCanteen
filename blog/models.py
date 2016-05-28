@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django import forms
-from PIL import Image
+# from PIL import Image
 from django.core.exceptions import ValidationError
 
 
