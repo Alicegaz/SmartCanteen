@@ -15,9 +15,14 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 
-def post_detail(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    return render(request, 'blog/post_detail.html', {'post': post})
+def post_detail(request, pk=None):
+    instance = get_object_or_404(Post, pk=pk)
+    context = {
+        "title": instance.title,
+        "post": instance,
+
+    }
+    return render(request, 'blog/post_detail.html', context)
 
 
 def post_edit(request):
@@ -31,14 +36,14 @@ def post_edit(request):
     context = {
         "title": instance.title,
         "instance": instance,
-        "form":form,
+        "form": form,
     }
     return render(request, "blog/post_edit.html", context)
 
 
 def post_new(request):
-    if request.method == "POST":
-        form = PostForm(request.POST or None)
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user

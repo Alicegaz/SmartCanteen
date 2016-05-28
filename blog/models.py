@@ -12,7 +12,7 @@ class Post(models.Model):
     kkal = models.BigIntegerField(null=True, blank=True)
     price = models.BigIntegerField(null=True, error_messages={'required': 'Укажите цену'})
     created_date = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(null=True, upload_to='images/dishes')
+    image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
    # pic = models.ImageField(blank=True, )
 

@@ -22,10 +22,12 @@
             </div>
         {% endif %}
         <h1>{{ post.title }}</h1>
-        <p>{{ post.text|linebreaks }}</p>
-    <p>
-        <img src='{{ instance.image.url }}' class='img-resp' />
-    </p>
+        {% if post.image %}
+                         <img src="{{ post.image.url }}" height="200" width="250" float="left" class="img-responsive"/>
+                       {% endif %}
+                        <p>price: {{  post.price }}</p>
+                        <p>kkal: {{ post.kkal }}</p>
+     {{ post.text|linebreaks }}
     </div>
  </div>
         </div>
