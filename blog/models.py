@@ -14,6 +14,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
+    # ingredients = models.ManyToManyField(Ingredient, related_name='posts')
    # pic = models.ImageField(blank=True, )
 
     def publish(self):
@@ -31,4 +32,22 @@ def clean_price(self):
     if self.clean_data.get('price') < 0:
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
 
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=300)
+    weight = models.IntegerField(null=False, default=0)
+    price = models.IntegerField(null=False, default=0)
+    included_to = models.ManyToManyField(Post, blank=True, related_name='ingredients')
+    # dish_post = models.ManyToManyField(Post)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
  #Create your models here.
+
+
+#class PostIngredient(models.Model):
+   # post = models.ForeighKey(Post)
+   # ingredient = models.ForeignKey(Ingredient)
