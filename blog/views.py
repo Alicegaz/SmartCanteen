@@ -29,6 +29,12 @@ def post_admin(request):
 
     return render(request, 'blog/post_admin.html')
 
+
+def post_ingredientslist(request):
+    ingredientss = Ingredient.objects.all().order_by('published_date')
+    return render(request, 'blog/post_ingredientlist', {'ingredientss': ingredientss})
+
+
 def post_edit(request):
     instance = get_object_or_404(Post, id=id)
     form = PostForm(request.POST or None, instance=instance)

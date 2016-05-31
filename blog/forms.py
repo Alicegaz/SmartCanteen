@@ -13,13 +13,13 @@ class PostForm(forms.ModelForm):
         required=False,
     )
 
-    # class Meta:
-    #   model = Post
-    #  fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients')
-    # widgets = {
-    #    'body': forms.Textarea(),
-    #   'ingredients': forms.CheckboxSelectMultiple()
-    # }
+    class Meta:
+        model = Post
+        fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients')
+        widgets = {
+            'body': forms.Textarea(),
+            'ingredients': forms.CheckboxSelectMultiple()
+        }
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -43,5 +43,5 @@ class PostForm(forms.ModelForm):
 
 class IngredientsForm(forms.ModelForms):
     class Meta:
-        model = Post
+        model = Ingredient
         fields = ('name', 'weight', 'prise')

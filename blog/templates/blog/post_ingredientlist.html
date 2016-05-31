@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="page-header">
-             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+             {% <a href="{% url 'post_ingredientnew' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a> %}
             <h1><a href="">Smart cashier</a></h1>
         </div>
 
@@ -19,17 +19,9 @@
         <div class="col-md-8">
             {% for post in posts %}
                 <div class="post">
-                    <div class="date">
-                        {% if post.published_date %}
-                            <p>published: {{ post.published_date }}</p>
-                        {% endif %}
-                    </div>
-                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
-                        {% if post.image %}
-                         <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
-                       {% endif %}
+                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.name }}</a> <a href="{% url '' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
                         <p>price: {{  post.price }}</p>
-                        <p>калории: {{ post.calories }}</p>
+                        <p>калории: {{ post.weight }}</p>
                 {{ post.text|linebreaks }}
                 </div>
 
