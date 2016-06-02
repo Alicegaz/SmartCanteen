@@ -30,6 +30,11 @@
                        {% endif %}
                         <p>price: {{  post.price }}</p>
                         <p>калории: {{ post.calories }}</p>
+
+                {% for post in posts %}
+                    <p> {%  for dishes in post.dishes.all %}{{ dishes }} </p>
+                        {%  endfor %}
+                {%  endfor %}
                 {{ post.text|linebreaks }}
                 </div>
 

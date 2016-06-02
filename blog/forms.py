@@ -9,7 +9,7 @@ from django.db import models
 
 class PostForm(forms.ModelForm):
     ingredients = forms.ModelMultipleChoiceField(
-        Ingredient.objects.all(),
+        Ingredient.objects.all(), widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
 
@@ -21,13 +21,9 @@ class PostForm(forms.ModelForm):
             'ingredients': forms.CheckboxSelectMultiple()
         }
 
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        if self.instance.pk:
-            self.initial['ingredients'] = self.instance.ingredients.values_list('pk', flat=True)
-            rel = ManyToManyRel(Ingredient)
-            self.fields['ingredients'].widget = RelatedFieldWidgetWrapper(self.fields['ingredients'].widget, rel,
-                                                                          admin.site)
+
+    def selected_ingredients_labels(self):
+        return [label for value, label in self.fields['ingredients'].choices if value in self['ingredients'].vallue()]
 
     def save(self, *args, **kwargs):
         instance = super(PostForm, self).save(*args, **kwargs)

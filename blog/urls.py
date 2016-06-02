@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/$', views.post_detail, name='post_detail'),
     url(r'^post/new/$', views.post_new, name='post_new'),
     url(r'^post/admin/$', views.post_admin, name='post_admin'),
-    url(r'^post/ingredientslist/$', views.post_ingredientslist, name='post_ingredientslist')
+    url(r'^post/ingredientslist/$', views.post_ingredientslist, name='post_ingredientslist'),
+    url(r'^post/ingredientnew/$', views.post_ingredientnew, name='post_ingredientnew'),
+    url(r'^post/(?P<pk>\d+)/edit/$', views.post_edit, name='post_edit')
     # url(r'^post/(?P<pk>\d+)/images/$', view.post)
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

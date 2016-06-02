@@ -5,6 +5,24 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 
+class Ingredient(models.Model):
+    name = models.CharField(max_length=300)
+    weight = models.IntegerField(null=False, default=0)
+    price = models.IntegerField(null=False, default=0)
+    # mc = models.ManyToManyField(MC, verbose_name="Meny Category")
+    # included_to = models.ManyToManyField(Post, blank=True, related_name='ingredients')
+    # dish_post = models.ManyToManyField(Post)
+
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+
+
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
@@ -14,7 +32,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
-    # ingredients = models.ManyToManyField(Ingredient, related_name='posts')
+    ingredients = models.ManyToManyField(Ingredient)
    # pic = models.ImageField(blank=True, )
 
     def publish(self):
@@ -33,18 +51,7 @@ def clean_price(self):
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
 
 
-class Ingredient(models.Model):
-    name = models.CharField(max_length=300)
-    weight = models.IntegerField(null=False, default=0)
-    price = models.IntegerField(null=False, default=0)
-    included_to = models.ManyToManyField(Post, blank=True, related_name='ingredients')
-    # dish_post = models.ManyToManyField(Post)
 
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        ordering = ('name',)
  #Create your models here.
 
 

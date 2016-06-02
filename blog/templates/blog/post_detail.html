@@ -21,12 +21,23 @@
                 {{ instance.published_date }}
             </div>
         {% endif %}
-        <h1>{{ instance.title }}</h1>
+    {# <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon-pencil"></span></a> #}
+    {# <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> #}
+        <h1>{{ instance.title }} <a href="{% url 'post_edit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+          </h1>
         {% if instance.image %}
                          <img src="{{ instance.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
+
                         <p>price: {{  instance.price }}</p>
                         <p>калории: {{ instance.calories }}</p>
+                   {%  if ingredientss %}
+    <ul>
+        {%  for ingredients in ingredientss %}
+        <li>{{ ingredients.name }}</li>
+        {%  endfor %}
+    </ul>
+    {%  endif %}
                 {{ instance.text|linebreaks }}
                 </div>
  </div>
