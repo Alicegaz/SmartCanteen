@@ -9,9 +9,7 @@ class Ingredient(models.Model):
     name = models.CharField(max_length=300)
     weight = models.IntegerField(null=False, default=0)
     price = models.IntegerField(null=False, default=0)
-    # mc = models.ManyToManyField(MC, verbose_name="Meny Category")
-    # included_to = models.ManyToManyField(Post, blank=True, related_name='ingredients')
-    # dish_post = models.ManyToManyField(Post)
+
 
     def __unicode__(self):
         return self.name
