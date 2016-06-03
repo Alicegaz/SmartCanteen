@@ -30,9 +30,13 @@ def post_admin(request):
     return render(request, 'blog/post_admin.html')
 
 
+#def post_ingredientlist(request):
+#    ingredientss = Ingredient.objects.all()
+ #   return render(request, 'blog/post_ingredientlist', {'ingredientss': ingredientss})
+
 def post_ingredientlist(request):
-    ingredientss = Ingredient.objects.all()
-    return render(request, 'blog/post_ingredientlist', {'ingredientss': ingredientss})
+    posts = Ingredient.objects.all()
+    return render(request, 'blog/post_ingredientlist.html', {'posts': posts})
 
 
 def post_edit(request, pk):

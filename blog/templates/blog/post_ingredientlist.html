@@ -1,4 +1,3 @@
-
 {% load staticfiles %}
 <html>
     <head>
@@ -11,18 +10,18 @@
     </head>
     <body>
         <div class="page-header">
-            <a href="{% url 'post_ingredientnew' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a> %}
+            <a href="{% url 'post_ingredientnew' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
             <h1><a href="">Smart cashier</a></h1>
         </div>
 
        <div class="content container">
     <div class="row">
         <div class="col-md-8">
-            {% for ingredients in ingredientss %}
+            {% for post in posts %}
                 <div class="post">
-                    <h1><a href="{% url 'post_ingredientdetail' pk=ingredients.pk %}">{{ ingredients.name }}</a> <a href="{% url '' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+                    <h1><a href="{% url 'post_ingredientdetail' pk=post.pk %}">{{ post.name }}</a> <a href="{% url 'post_ingredientedit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
                         {# <p>price: {{  ingredients.price }}</p> #}
-                        <p>вес: {{ ingredients.weight }}</p>
+                        <p>вес: {{ post.weight }}</p>
                 </div>
             {% endfor %}
         </div>

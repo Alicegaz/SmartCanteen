@@ -10,7 +10,6 @@ class Ingredient(models.Model):
     weight = models.IntegerField(null=False, default=0)
     price = models.IntegerField(null=False, default=0)
 
-
     def __unicode__(self):
         return self.name
 
@@ -26,7 +25,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     calories = models.BigIntegerField(null=True, blank=True)
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'})
+    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the priceyi'})
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
@@ -47,8 +46,6 @@ class Post(models.Model):
 def clean_price(self):
     if self.clean_data.get('price') < 0:
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
-
-
 
  #Create your models here.
 
