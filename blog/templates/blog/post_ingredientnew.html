@@ -15,8 +15,10 @@
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
-                    {% block content %}
-                    {% endblock %}
+                     <form method="post" action="" enctype="multipart/form-data" class="post-form">{%  csrf_token %}
+                        {{ form.as_p }}
+                   <button type="submit" class="save btn btn-default">Save</button>
+                       </form>
                 </div>
             </div>
         </div>

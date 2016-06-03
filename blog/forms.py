@@ -37,7 +37,7 @@ class PostForm(forms.ModelForm):
         return instance
 
 
-class IngredientsForm(forms.ModelForms):
+class IngredientsForm(forms.ModelForm):
     class Meta:
         model = Ingredient
-        fields = ('name', 'weight', 'prise')
+        fields = ('name', 'weight')

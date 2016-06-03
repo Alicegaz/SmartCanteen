@@ -1,3 +1,4 @@
+
 {% load staticfiles %}
 <html>
     <head>
@@ -17,17 +18,14 @@
        <div class="content container">
     <div class="row">
         <div class="col-md-8">
-            {% for post in posts %}
+            {% for ingredients in ingredientss %}
                 <div class="post">
-                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.name }}</a> <a href="{% url '' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
-                        <p>price: {{  post.price }}</p>
-                        <p>калории: {{ post.weight }}</p>
-                {{ post.text|linebreaks }}
-                </div>
-
-
+                    <h1><a href="{% url 'post_ingredientdetail' pk=ingredients.pk %}">{{ ingredients.name }}</a> <a href="{% url '' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+                        {# <p>price: {{  ingredients.price }}</p> #}
+                        <p>вес: {{ ingredients.weight }}</p>
                 </div>
             {% endfor %}
+        </div>
         </div>
     </div>
 

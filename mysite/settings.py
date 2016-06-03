@@ -55,7 +55,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
+
 MEDIA_ROOT = '/home/SmartFoods/mysite/blog/images/dishes'
 
 MEDIA_URL = 'images/dishes/'
@@ -117,8 +118,6 @@ MEDIA_URL = 'images/dishes/'
 STATIC_ROOT = '/home/SmartFoods/mysite/blog/static/'
 STATIC_URL = '/static/'
 ADMIN_MEDIA_PREFIX = '/static/admin/'
-
-LANGUAGE_CODE = 'en-us'
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 TIME_ZONE = 'Europe/Moscow'

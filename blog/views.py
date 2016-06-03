@@ -30,8 +30,8 @@ def post_admin(request):
     return render(request, 'blog/post_admin.html')
 
 
-def post_ingredientslist(request):
-    ingredientss = Ingredient.objects.all().order_by('published_date')
+def post_ingredientlist(request):
+    ingredientss = Ingredient.objects.all()
     return render(request, 'blog/post_ingredientlist', {'ingredientss': ingredientss})
 
 
@@ -79,41 +79,49 @@ def post_new(request):
     return render(request, 'blog/post_edit.html', {'form': form})
 
 
-def post_ingredientdetail(request, pk1=None):
-    instance1 = get_object_or_404(Ingredient, pk1=pk1)
+def post_ingredientdetail(request, pk=None):
+    instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {
         "title": instance1.name,
         "instance": instance1,
 
     }
-    return render(request, 'blog/post_detail.html', context)
+    return render(request, 'blog/post_ingredientdetail.html', context)
 
 
-def post_ingredientedit(request):
-    instance = get_object_or_404(Ingredient, id=id)
-    form = IngredientsForm(request.POST or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-        return HttpResponseRedirect(instance.get_absolute_url())
-    context = {
-        "title": instance.name,
-        "instance": instance,
-        "form": form,
-    }
-    return render(request, "blog/post_ingredientedit.html", context)
+def post_ingredientedit(request, pk):
+    post = get_object_or_404(Ingredient, pk=pk)
+    if request.method == "POST":
+        form = IngredientsForm(request.POST or None, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            form.save_m2m()
+            # post_numder = post.pk
+            messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+            # return HttpResponseRedirect(instance.get_absolute_url())
+            context = {
+                "title": post.name,
+                "instance": post,
+                "form": form,
+            }
+            return render(request, 'blog/post_ingredientedit.html', context)
+    else:
+        form = IngredientsForm(instance=post)
+    return render(request, "blog/post_ingredientedit.html", {'form': form})
 
 
 def post_ingredientnew(request):
     if request.method == 'POST':
-        form1 = IngredientsForm(request.POST, request.FILES)
-        if form1.is_valid():
-            post = form1.save(commit=False)
+        form = IngredientsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
             post.author = request.user
             # post.published_date = timezone.now()
             post.save()
             return redirect('post_ingredientdetail', pk=post.pk)
     else:
-        form = PostForm()
+        form = IngredientsForm()
     return render(request, 'blog/post_ingredientedit.html', {'form': form})

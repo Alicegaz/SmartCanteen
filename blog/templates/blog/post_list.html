@@ -24,7 +24,7 @@
                             <p>published: {{ post.published_date }}</p>
                         {% endif %}
                     </div>
-                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_new' %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
                         {% if post.image %}
                          <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
