@@ -26,7 +26,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     text = models.TextField()
     calories = models.BigIntegerField(null=True, blank=True)
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Укажите цену'})
+    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'})
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
