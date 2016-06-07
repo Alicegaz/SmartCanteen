@@ -8,6 +8,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -19,6 +20,8 @@ SECRET_KEY = '8z(yk84j0#4r2f^ip)5r47kan-0!-m_%wqvk87i(xwffs08cxc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -37,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'sortedm2m',
+    'authentication',
+    'rest_framework',
+    'compressor',
+    'djangobower',
+    'bootstrap',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -76,9 +84,17 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
+
+#STATICFILE_DIRS = (
+ #   os.path.join(BASE_DIR, 'static'),
+#)
+
 STATICFILES_FINDERS = (
-    # 'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',)
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+    'djangobower.finders.BowerFinder',
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
@@ -89,6 +105,10 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+BOWER_COMPONENTS_ROOT = '/PROJECT_ROOT/components/'
+
+BOWER_PATH = '/usr/bin/bower'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -115,12 +135,26 @@ MEDIA_ROOT = '/home/SmartFoods/mysite/blog/images/dishes'
 
 MEDIA_URL = 'images/dishes/'
 
-STATIC_ROOT = '/home/SmartFoods/mysite/blog/static/'
+#STATIC_ROOT = '/home/SmartFoods/mysite/blog/static/'
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 TIME_ZONE = 'Europe/Moscow'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO", 'https')
+
+
 
 USE_I18N = True
 
@@ -128,7 +162,9 @@ USE_L10N = True
 
 USE_TZ = True
 
+COMPRESS_ENABLED = True
+COMPRESS_ROOT = 'staticfiles'
+AUTH_USER_MODEL = 'authentication.Account'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-
