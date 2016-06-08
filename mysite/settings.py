@@ -146,11 +146,11 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
 TIME_ZONE = 'Europe/Moscow'
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework.authentication.SessionAuthentication',
+#     )
+# }
 
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO", 'https')
 
