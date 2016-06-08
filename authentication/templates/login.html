@@ -1,0 +1,52 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <style>
+            .alert-danger {
+                background: #ffb3b3;
+    }
+        </style>
+        <title>Django Girls blog</title>
+
+          {% include 'stylesheets.html' %}
+
+            </head>
+    <body>
+       {%  include 'navbar.html' %}
+
+       <div class="content container">
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <h1>Login</h1>
+
+    <div class="well">
+      <form action="/auth/login/" method="post">
+          {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Имя пользователя</label>
+          <input type="text" class="form-control" id="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Пароль</label>
+          <input type="password" class="form-control" id="password" />
+            {% if login_error %}
+                <div class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Error!</strong> Wrong combination and login password </div>
+
+                {# <label class="control-label" for="inputError">{{ login_error }}</label> #}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+    </div>
+     {%  include 'javascripts.html' %}
+    </body>
+</html>

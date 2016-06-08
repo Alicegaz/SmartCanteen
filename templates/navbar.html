@@ -7,18 +7,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">SmartFoods</a>
+      <a class="navbar-brand" href="/">Smart Foods</a>
     </div> <!-- ./navbar-header -->
 
     <div class="collapse navbar-collapse" id="not-google-plus-nav">
       <ul class="nav navbar-nav pull-right">
         {% if user.is_authenticated %}
-          <li><a href="/+{{ user.username }}">+{{ user.username }}</a></li>
-          <li><a href="/+{{ user.username }}/settings">Settings</a></li>
-          <li><a href="javascript:void(0)">Logout</a></li>
+          <li class="navbar-text">Welcome, {{ user.username }}</li>
+          {# <li><a href="/+{{ user.username }}/settings">Settings</a></li>#}
+          <li><a href="/auth/logout/">Logout</a></li>
         {% else %}
-          <li><a href="/login">Login</a></li>
-          <li><a href="/register">Register</a></li>
+          <li><a href="/auth/login">Login</a></li>
+          <li><a href="/auth/register">Register</a></li>
         {% endif %}
       </ul>
     </div> <!-- /.collapse.navbar-collapse -->

@@ -2,22 +2,16 @@
 <html>
     <head>
         <title>Django Girls blog</title>
-
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
-        <link href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-    </head>
+          {% include 'stylesheets.html' %}
+            </head>
     <body>
-        <div class="page-header">
-             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-            <h1><a href="">Smart cashier</a></h1>
-        </div>
+       {%  include 'navbar.html' %}
 
        <div class="content container">
     <div class="row">
-        <div class="col-md-8">
+       {#  <div class="col-md-8"> #}
             {% for post in posts %}
+                <div class="col-md-8">
                 <div class="post">
                     <div class="date">
                         {% if post.published_date %}
@@ -37,12 +31,12 @@
                 {%  endfor %}
                 {{ post.text|linebreaks }}
                 </div>
+               </div>
+             {% endfor %}
+              {#  </div>  #}
 
-
-                </div>
-            {% endfor %}
         </div>
     </div>
-
+     {%  include 'javascripts.html' %}
     </body>
 </html>

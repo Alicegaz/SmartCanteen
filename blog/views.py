@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib import auth
+from django.core.context_processors import csrf
 
 def post_list(request):
     posts = Post.objects.all().order_by('published_date')
@@ -27,7 +28,10 @@ def post_detail(request, pk=None):
 
 
 def post_admin(request):
-    return render(request, 'blog/post_admin.html')
+    args = {}
+    args.update(csrf(request))
+    args['username'] = auth.get_user(request).is_superuser
+    return render(request, 'blog/post_admin.html', args)
 
 
 #def post_ingredientlist(request):
@@ -64,7 +68,7 @@ def post_edit(request, pk):
             return render(request, 'blog/post_edit.html', context)
     else:
         form = PostForm(instance=post)
-    return render(request, "blog/post_edit.html", {'form': form})
+    return render(request, "blog/post_edit.html", {'form': form, 'username': auth.get_user(request).is_superuser})
 
 
 def post_new(request):
@@ -80,7 +84,7 @@ def post_new(request):
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm()
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'username': auth.get_user(request).is_superuser})
 
 
 def post_ingredientdetail(request, pk=None):
@@ -88,10 +92,9 @@ def post_ingredientdetail(request, pk=None):
     context = {
         "title": instance1.name,
         "instance": instance1,
-
+        "username": auth.get_user(request).is_superuser
     }
     return render(request, 'blog/post_ingredientdetail.html', context)
-
 
 def post_ingredientedit(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
@@ -114,7 +117,7 @@ def post_ingredientedit(request, pk):
             return render(request, 'blog/post_ingredientedit.html', context)
     else:
         form = IngredientsForm(instance=post)
-    return render(request, "blog/post_ingredientedit.html", {'form': form})
+    return render(request, "blog/post_ingredientedit.html", {'form': form, 'username': auth.get_user(request).is_superuser})
 
 
 def post_ingredientnew(request):
@@ -128,4 +131,5 @@ def post_ingredientnew(request):
             return redirect('post_ingredientdetail', pk=post.pk)
     else:
         form = IngredientsForm()
-    return render(request, 'blog/post_ingredientedit.html', {'form': form})
+    return render(request, 'blog/post_ingredientedit.html',
+                  {'form': form, 'username': auth.get_user(request).is_superuser})

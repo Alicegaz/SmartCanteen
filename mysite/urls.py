@@ -13,19 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from authentication.views import AccountViewSet
-from authentication.views import LoginView
-from authentication.views import LogoutView
+#from authentication.views import AccountViewSet
+#from authentication.views import LoginView
+#from authentication.views import LogoutView
 from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
-from mysite.views import IndexView
-from rest_framework_nested import routers
+#from mysite.views import IndexView
+#from rest_framework_nested import routers
 from . import views
 
 
-router = routers.SimpleRouter()
-router.register(r'accounts', AccountViewSet)
+#router = routers.SimpleRouter()
+#router.register(r'accounts', AccountViewSet)
 
 admin.autodiscover()
 
@@ -34,11 +34,12 @@ urlpatterns = [
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('blog.urls')),
-    url(r'^api/v1/', include(router.urls)),
-    url('^.*$', IndexView.as_view(), name='index'),
+    #url(r'^api/v1/', include(router.urls)),
+    #url('^.*$', IndexView.as_view(), name='index'),
     #url(r'^index/$', IndexView.as_view(), name='index'),
-    url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),
-    url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
+    #url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),
+    #url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
+    url(r'^auth/', include('authentication.urls')),
 ]
 
 

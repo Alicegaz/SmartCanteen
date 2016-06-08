@@ -15,6 +15,7 @@ class AccountManager(BaseUserManager):
         )
 
         account.set_password(password)
+        account.is_stuff = True
         account.save()
 
         return account
@@ -23,6 +24,7 @@ class AccountManager(BaseUserManager):
         account = self.create_user(email, password, **kwargs)
 
         account.is_admin = True
+        account.is_stuff = True
         account.save()
 
         return account
@@ -37,6 +39,7 @@ class Account(AbstractBaseUser):
     tagline = models.CharField(max_length=40, blank=True)
 
     is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
