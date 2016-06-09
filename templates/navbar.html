@@ -16,9 +16,10 @@
           <li class="navbar-text">Welcome, {{ user.username }}</li>
           {# <li><a href="/+{{ user.username }}/settings">Settings</a></li>#}
           <li><a href="/auth/logout/">Logout</a></li>
+          <li><a href="/auth/register">Register</a></li>
         {% else %}
           <li><a href="/auth/login">Login</a></li>
-          <li><a href="/auth/register">Register</a></li>
+
         {% endif %}
       </ul>
     </div> <!-- /.collapse.navbar-collapse -->

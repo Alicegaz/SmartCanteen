@@ -53,3 +53,21 @@ class UserCreationForm(forms.ModelForm):
         username = forms.CharField()
         password = forms.CharField()
         """
+from django import forms
+from django.contrib.auth.models import User
+
+
+class NewUserForm(forms.Form):
+    username = forms.CharField(required=True, min_length=5, max_length=20, strip=True)
+    password = forms.CharField(required=True, min_length=1, max_length=20, widget=forms.PasswordInput)
+    is_stuff = forms.BooleanField(required=True)
+
+    def is_valid(self):
+        result = forms.Form.is_valid(self)
+        username = self.cleaned_data.get('username')
+        user = User.objects.get(username=username)
+        print(self)
+        if user is not None and user.is_active():
+            result = False
+            self.add_error('username', 'Такой пользователь уже существует')
+        return result

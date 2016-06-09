@@ -9,6 +9,7 @@ urlpatterns = [
 
     url(r'^login/$', views.login, name='login.html'),
     url(r'^logout/$', views.logout, name='logout.html'),
+    url(r'^register', views.register)
 ]
 
 if settings.DEBUG:
