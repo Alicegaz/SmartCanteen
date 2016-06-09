@@ -138,7 +138,10 @@ def logout(request):
 
 
 def user_is_stuff(user):
-    return user.is_authenticated() and user.is_stuff
+    print(user.is_authenticated())
+    print(user.is_staff)
+    print(user)
+    return user.is_authenticated() and user.is_staff
 
 
 @user_passes_test(user_is_stuff, '/have_no_permision')
@@ -149,7 +152,8 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = User.objects.create_user(username=username, password=password)
+            is_staff = form.cleaned_data.get('is_staff')
+            user = User.objects.create_user(username=username, password=password,is_staff=is_staff)
             user.save()
             return redirect('/')
     return render(request, 'register.html', {'form': form})
