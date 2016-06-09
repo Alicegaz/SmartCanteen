@@ -1,8 +1,9 @@
-import status as status
+"""import status as status
 from django.http import response
 from requests import Response
+from rest_framework import authentication
 
-"""from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets
 
 from authentication.models import Account
 from authentication.permissions import IsAccountOwner
@@ -13,7 +14,7 @@ from rest_framework import status, views
 # import codecs
 from rest_framework.response import Response
 from django.contrib.auth import logout
-from rest_framework import permissions"""
+from rest_framework import permissions
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
 from django.core.context_processors import csrf
@@ -25,9 +26,9 @@ def login(request):
     if request.POST:
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
+        account = authentication.authenticate(username=username, password=password)
+        if account is not None:
+            authentication.login(request, account)
             return redirect('/')
         else:
             args['login_error'] = "Пользователь не найден"
@@ -37,10 +38,10 @@ def login(request):
 
 
 def logout(request):
-    auth.logout(request)
+    authentication.logout(request)
     return redirect("/post_list.html")
 #class AccountViewSet(viewsets.ModelViewSet):
-"""   lookup_field = 'username'
+    lookup_field = 'username'
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
@@ -99,4 +100,32 @@ class LogoutView(views.APIView):
     def post(self, request, format=None):
         logout(request)
 
-        return Response({}, status.HTTP_204_NO_CONTENT)"""
+        return Response({}, status.HTTP_204_NO_CONTENT)
+        """
+
+from django.shortcuts import render_to_response, redirect
+from django.contrib import auth
+from django.core.context_processors import csrf
+from django.db import models
+
+
+def login(request):
+    args = {}
+    args.update(csrf(request))
+    if request.POST:
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else:
+            args['login_error'] = "Пользователь не найден"
+            return render_to_response('login.html', args)
+    else:
+        return render_to_response('login.html', args)
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect("/")

@@ -7,8 +7,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
 
-    url(r'^login/$', 'authentication.views.login'),
-    url(r'^logout/$', 'authentication.views.logout'),
+    url(r'^login/$', views.login, name='login.html'),
+    url(r'^logout/$', views.logout, name='logout.html'),
 ]
 
 if settings.DEBUG:

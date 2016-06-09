@@ -1,4 +1,4 @@
-from django.contrib.auth import update_session_auth_hash
+"""from django.contrib.auth import update_session_auth_hash
 
 from rest_framework import serializers
 
@@ -34,4 +34,5 @@ class AccountSerializer(serializers.ModelSerializer):
 
             update_session_auth_hash(self.context.get('request'), instance)
 
-            return instance
+        """
+#return instance

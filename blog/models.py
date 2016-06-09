@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
-from authentication.models import Account
+#from authentication.models import Account
 from django import forms
 # from PIL import Image
 from django.core.exceptions import ValidationError
+from requests import auth
 
 
 class Ingredient(models.Model):
@@ -22,7 +23,7 @@ class Ingredient(models.Model):
 
 
 class Post(models.Model):
-    author = models.ForeignKey(Account)
+    author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200)
     text = models.TextField()
     calories = models.BigIntegerField(null=True, blank=True)

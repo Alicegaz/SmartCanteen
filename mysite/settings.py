@@ -21,8 +21,6 @@ SECRET_KEY = '8z(yk84j0#4r2f^ip)5r47kan-0!-m_%wqvk87i(xwffs08cxc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-TEMPLATE_DEBUG = True
-
 ALLOWED_HOSTS = []
 
 # Application definition
@@ -78,7 +76,8 @@ TEMPLATES = [
                 'django.template.loaders.app_directories.Loader',
 
                 'django.template.loaders.filesystem.Loader',
-            ]
+            ],
+            'debug': DEBUG,
         },
     },
 ]
@@ -154,7 +153,7 @@ REST_FRAMEWORK = {
 
 #SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO", 'https')
 
-
+#LOGIN_URL = r"/auth/login/"
 
 USE_I18N = True
 
@@ -164,7 +163,10 @@ USE_TZ = True
 
 COMPRESS_ENABLED = True
 COMPRESS_ROOT = 'staticfiles'
-AUTH_USER_MODEL = 'authentication.Account'
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+)
+#AUTH_USER_MODEL = 'authentication.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
