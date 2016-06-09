@@ -106,6 +106,7 @@ class LogoutView(views.APIView):
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
 from django.core.context_processors import csrf
+from django.contrib.auth import authenticate, login
 from django.db import models
 
 
@@ -115,9 +116,9 @@ def login(request):
     if request.POST:
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        user = auth.authenticate(username=username, password=password)
+        user = authenticate(username=username, password=password)
         if user is not None:
-            auth.login(request, user)
+            login(request, user)
             return redirect('/')
         else:
             args['login_error'] = "Пользователь не найден"
