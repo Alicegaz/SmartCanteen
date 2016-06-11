@@ -23,8 +23,15 @@
     <div class="well">
         <form action="/auth/register/" method="post">
             {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Submit" />
+            <label for="username">Имя пользователя</label>
+            {{ form.username }}
+            <label for="username">Пароль</label>
+            {{ form.password }}
+            <label for="username">Кассир</label>
+            {{  form.is_staff }}
+            <div class="form-group">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
         </form>
     </div>
   </div>

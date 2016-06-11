@@ -18,6 +18,12 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+    def __init__(self, *args, **kwargs):
+        super(forms.Model, self).__init__(*args, **kwargs)
+        # adding css classes to widgets without define the fields:
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+
     class Meta:
         ordering = ('name',)
 
@@ -44,14 +50,17 @@ class Post(models.Model):
     def __unicode__(self):
         return self.choice_text
 
+    def __init__(self, *args, **kwargs):
+        super(forms.Model, self).__init__(*args, **kwargs)
+        # adding css classes to widgets without define the fields:
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
+            # class PostIngredient(models.Model):
+            # post = models.ForeighKey(Post)
+            # ingredient = models.ForeignKey(Ingredient)
+
 
 def clean_price(self):
     if self.clean_data.get('price') < 0:
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
 
- #Create your models here.
-
-
-#class PostIngredient(models.Model):
-   # post = models.ForeighKey(Post)
-   # ingredient = models.ForeignKey(Ingredient)

@@ -105,7 +105,7 @@ class LogoutView(views.APIView):
 
 from django.shortcuts import render_to_response, redirect, render
 from django.contrib.auth.models import User
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from authentication import forms
 from django.contrib.auth.decorators import user_passes_test

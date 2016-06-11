@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
-from django.core.context_processors import csrf
+from django.template.context_processors import csrf
 
 def post_list(request):
     posts = Post.objects.all().order_by('published_date')
@@ -28,10 +28,14 @@ def post_detail(request, pk=None):
 
 
 def post_admin(request):
-    args = {}
-    args.update(csrf(request))
-    args['username'] = auth.get_user(request).is_superuser
-    return render(request, 'blog/post_admin.html', args)
+    if request.user.is_superuser:
+
+        args = {}
+        args.update(csrf(request))
+        args['username'] = auth.get_user(request).is_superuser
+        return render(request, 'blog/post_admin.html', args)
+    else:
+        return HttpResponse("У вас нет прав администратора")
 
 
 #def post_ingredientlist(request):
