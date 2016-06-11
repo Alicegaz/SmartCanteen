@@ -69,7 +69,7 @@ class NewUserForm(forms.Form):
             user = User.objects.get(username=username)
         except BaseException:
             user = None
-        if user is not None and user.length == 1 and user[0].is_active:
+        if user is not None:
             result = False
             self.add_error('username', 'Такой пользователь уже существует')
         return result

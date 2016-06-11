@@ -138,9 +138,6 @@ def logout(request):
 
 
 def user_is_stuff(user):
-    print(user.is_authenticated())
-    print(user.is_staff)
-    print(user)
     return user.is_authenticated() and user.is_staff
 
 
