@@ -13,6 +13,14 @@ from django.core.context_processors import csrf
 def post_list(request):
     posts = Post.objects.all().order_by('published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
+    # json = request.GET.get('json')
+    # posts = Post.objects.all().order_by('published_date')
+    # print(posts.__class__)
+    # if not json:
+    #     return render(request, 'blog/post_list.html', {'posts': posts})
+    # else:
+    #     data = {'posts': serializers.serialize('json', posts)}
+    #     return JsonResponse(data, safe=False)
 
 
 def post_detail(request, pk=None):
