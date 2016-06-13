@@ -1,7 +1,9 @@
+from django.contrib.auth.decorators import user_passes_test
+
 from .models import Post, Ingredient
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
-from .forms import PostForm, IngredientsForm
+from .forms import PostForm, IngredientsForm, MenuForm
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -34,7 +36,18 @@ def post_detail(request, pk=None):
     }
     return render(request, 'blog/post_detail.html', context)
 
+def mymodal(request, pk=None):
+    instance = get_object_or_404(Post, pk=pk)
+    ingredientss = instance.ingredients.all()
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "ingredientss": ingredientss,
 
+    }
+    return render(request, 'blog/mymodal.html', context)
+
+#@user_passes_test(user.is_stuff, '/have_no_permission')
 def post_admin(request):
     if request.user.is_superuser:
 
@@ -97,6 +110,24 @@ def post_new(request):
     else:
         form = PostForm()
     return render(request, 'blog/post_edit.html', {'form': form, 'username': auth.get_user(request).is_superuser})
+
+
+
+def new_menu(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.published_date = timezone.now()
+            post.save()
+            form.save_m2m()
+            # post.ingredients()
+            return redirect('post_list')
+    else:
+        form = MenuForm()
+    return render(request, 'blog/new_menu.html', {'form': form, 'username': auth.get_user(request).is_superuser})
+
 
 
 def post_ingredientdetail(request, pk=None):

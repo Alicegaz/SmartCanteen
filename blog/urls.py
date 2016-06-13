@@ -14,6 +14,8 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/ingredientedit/$', views.post_ingredientedit, name='post_ingredientedit'),
     url(r'^post/(?P<pk>\d+)/ingredientdetail/$', views.post_ingredientdetail, name='post_ingredientdetail'),
     url(r'^post/ingredientlist/$', views.post_ingredientlist, name='post_ingredientlist'),
+    url(r'^mymodal/(?P<pk>\d+)/$', views.mymodal, name='mymodal'),
+    url(r'^new/menu/$', views.new_menu, name='new_menu'),
     # url(r'^post/(?P<pk>\d+)/images/$', view.post)
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
