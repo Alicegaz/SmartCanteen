@@ -60,11 +60,13 @@ from django.contrib.auth.models import User
 class NewUserForm(forms.Form):
     username = forms.CharField(required=True, min_length=5, max_length=20, strip=True)
     password = forms.CharField(required=True, min_length=1, max_length=20, widget=forms.PasswordInput)
-    is_staff = forms.BooleanField(required=False)
 
     def is_valid(self):
         result = forms.Form.is_valid(self)
         username = self.cleaned_data.get('username')
+        print(username)
+        print(1)
+        print(forms.Form.is_valid(self))
         try:
             user = User.objects.get(username=username)
         except BaseException:

@@ -25,10 +25,10 @@
             {% csrf_token %}
             <label for="username">Имя пользователя</label>
             {{ form.username }}
-            <label for="username">Пароль</label>
+            <label for="password">Пароль</label>
             {{ form.password }}
-<input type="radio" name="language" value="is_admin" /> Администратор
-<input type="radio" name="language" value="is_cashier" /> Кассир
+            <input type="radio" name="role" value="is_admin" /> Администратор
+            <input type="radio" name="role" value="is_cashier" /> Кассир
 
             <div class="form-group">
 

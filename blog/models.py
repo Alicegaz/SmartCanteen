@@ -29,11 +29,11 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
-    def __init__(self, *args, **kwargs):
-        super(forms.Model, self).__init__(*args, **kwargs)
+    #def __init__(self, *args, **kwargs):
+       # super(models.Model, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+       # for field in self.fields:
+        #    self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
         ordering = ('name',)

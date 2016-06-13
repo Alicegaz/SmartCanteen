@@ -4,6 +4,9 @@ from django.template.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from authentication import forms
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+
 
 
 def login(request):
@@ -35,6 +38,10 @@ def logout(request):
 def user_is_stuff(user):
     return user.is_authenticated() and user.is_staff
 
+def create_permission(codename, name):
+    content_type = ContentType.objects.get_for_model(User)
+    permission = Permission.objects.create(codename=codename, name=name, content_type=content_type)
+    return permission
 
 @user_passes_test(user_is_stuff, '/have_no_permision')
 def register(request):
@@ -44,10 +51,15 @@ def register(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            is_admin = None
-            is_cashier = None
+            role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
-            user.user_permissions.add()
+            if role == 'is_admin':
+                permission = create_permission('is_admin', 'is user admin')
+            elif role == 'is_cashier':
+                permission = create_permission('is_cashier', 'is user cashier')
+            else:
+                return redirect('/have_no_permision')
+            user.user_permissions.add(permission)
             user.save()
             return redirect('/')
     return render(request, 'register.html', {'form': form})
