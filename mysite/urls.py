@@ -34,11 +34,6 @@ urlpatterns = [
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('blog.urls')),
-    #url(r'^api/v1/', include(router.urls)),
-    #url('^.*$', IndexView.as_view(), name='index'),
-    #url(r'^index/$', IndexView.as_view(), name='index'),
-    #url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),
-    #url(r'^api/v1/auth/logout/$', LogoutView.as_view(), name='logout'),
     url(r'^auth/', include('authentication.urls')),
 ]
 
