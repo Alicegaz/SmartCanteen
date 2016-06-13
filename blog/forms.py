@@ -1,6 +1,8 @@
+
 from django import forms
 from django.contrib import admin
 from .models import Post, Ingredient
+from .models import Menu
 from django.db.models.fields.related import ManyToManyRel
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from datetime import date
@@ -41,3 +43,33 @@ class IngredientsForm(forms.ModelForm):
     class Meta:
         model = Ingredient
         fields = ('name', 'weight')
+
+
+
+class MenuForm(forms.ModelForm):
+    items = forms.ModelMultipleChoiceField(
+        Post.objects.all(), widget=forms.CheckboxSelectMultiple(),
+        required=False,
+    )
+
+    class Meta:
+        model = Menu
+        fields = ('items',)
+        widgets = {
+            'items': forms.CheckboxSelectMultiple()
+        }
+
+
+    def selected_ingredients_labels(self):
+        return [label for value, label in self.fields['items'].choices if value in self['items'].vallue()]
+
+    def save(self, *args, **kwargs):
+        instance = super(MenuForm, self).save(*args, **kwargs)
+        if instance.pk:
+            for item in instance.items.all():
+                if item not in self.cleaned_data['items']:
+                    instance.ingredients.remove(item)
+            for item in self.cleaned_data['items']:
+                if item not in instance.items.all():
+                    instance.items.add(item)
+        return instance
