@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib import admin
 from .models import Post, Ingredient
-from .models import Menu
+# from .models import Menu
 from django.db.models.fields.related import ManyToManyRel
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from datetime import date
