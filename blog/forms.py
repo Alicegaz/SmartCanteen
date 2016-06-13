@@ -17,10 +17,11 @@ class PostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients')
+        fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients', 'type')
         widgets = {
             'body': forms.Textarea(),
-            'ingredients': forms.CheckboxSelectMultiple()
+            'ingredients': forms.CheckboxSelectMultiple(),
+            'type': forms.RadioSelect(),
         }
 
 
@@ -54,9 +55,10 @@ class MenuForm(forms.ModelForm):
 
     class Meta:
         model = Menu
-        fields = ('items',)
+        fields = ('items', 'title')
         widgets = {
-            'items': forms.CheckboxSelectMultiple()
+            'items': forms.CheckboxSelectMultiple(),
+            'title': forms.RadioSelect(),
         }
 
 

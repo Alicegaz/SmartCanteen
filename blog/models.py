@@ -1,8 +1,23 @@
 from django.db import models
+from django.forms import RadioSelect
 from django.utils import timezone
 from django import forms
 from django.core.exceptions import ValidationError
+from requests import auth
 
+TYPE_CHOICES = (
+    ('First', 'Первое'),
+    ('Second', 'Гарнир'),
+    ('Third', 'Второе'),
+    ('Self', 'Самостоятельное'),
+    ('Salad', 'Салат'),
+    ('Baverage', 'Напиток'),
+)
+TYPE_MENU_CHOICES = (
+    ('dinner', 'обед'),
+    ('breakfast', 'завтрак'),
+    ('supper', 'ужин'),
+)
 class Ingredient(models.Model):
     name = models.CharField(max_length=300)
     weight = models.IntegerField(null=False, default=0)
@@ -14,11 +29,11 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
-    #def __init__(self, *args, **kwargs):
-       # super(models.Model, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        super(forms.Model, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
-       # for field in self.fields:
-        #    self.fields[field].widget.attrs['class'] = 'form-control'
+        for field in self.fields:
+            self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
         ordering = ('name',)
@@ -34,6 +49,7 @@ class Post(models.Model):
     image = models.FileField(null=True, upload_to='images/dishes')
     published_date = models.DateTimeField(blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient)
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
    # pic = models.ImageField(blank=True, )
 
     def publish(self):
@@ -46,14 +62,24 @@ class Post(models.Model):
     def __unicode__(self):
         return self.choice_text
 
-    def __init__(self, *args, **kwargs):
-        super(forms.Model, self).__init__(*args, **kwargs)
-        # adding css classes to widgets without define the fields:
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
-            # class PostIngredient(models.Model):
-            # post = models.ForeighKey(Post)
-            # ingredient = models.ForeignKey(Ingredient)
+
+class Menu(models.Model):
+    author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=1, choices=TYPE_MENU_CHOICES)
+    date = models.DateTimeField(blank=True, null=True)
+    items = models.ManyToManyField(Post)
+   # pic = models.ImageField(blank=True, )
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
+
+    def __unicode__(self):
+        return self.choice_text
+
 
 
 def clean_price(self):
