@@ -46,8 +46,6 @@ class Post(models.Model):
     def __unicode__(self):
         return self.choice_text
 
-
-
 def clean_price(self):
     if self.clean_data.get('price') < 0:
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
