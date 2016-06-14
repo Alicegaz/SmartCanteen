@@ -1,7 +1,9 @@
 
 from django import forms
 from django.contrib import admin
-from .models import Post, Ingredient
+from django.forms import RadioSelect, ChoiceField
+
+from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES
 from .models import Menu
 from django.db.models.fields.related import ManyToManyRel
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
@@ -11,17 +13,20 @@ from django.db import models
 
 class PostForm(forms.ModelForm):
     ingredients = forms.ModelMultipleChoiceField(
-        Ingredient.objects.all(), widget=forms.CheckboxSelectMultiple(),
+        Ingredient.objects.all(), widget=forms.SelectMultiple(),
         required=False,
     )
+    type = forms.ChoiceField(widget=forms.Select(), choices=TYPE_CHOICES)
+    #type = forms.ChiceField(widget=forms.RadioSelect, choices = TYPE_CHOICES)
+
 
     class Meta:
         model = Post
         fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients', 'type')
         widgets = {
             'body': forms.Textarea(),
-            'ingredients': forms.CheckboxSelectMultiple(),
-            'type': forms.RadioSelect(),
+            'ingredients': forms.SelectMultiple(),
+             'type' : ChoiceField(choices=TYPE_CHOICES, widget=forms.Select()),
         }
 
 
@@ -51,14 +56,15 @@ class MenuForm(forms.ModelForm):
     items = forms.ModelMultipleChoiceField(
         Post.objects.all(), widget=forms.CheckboxSelectMultiple(),
         required=False,
-    )
+        )
+    title = forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES)
 
     class Meta:
         model = Menu
         fields = ('items', 'title')
         widgets = {
-            'items': forms.CheckboxSelectMultiple(),
-            'title': forms.RadioSelect(),
+                'items': forms.SelectMultiple(),
+                'title': forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES),
         }
 
 

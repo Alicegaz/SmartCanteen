@@ -41,15 +41,15 @@ class Ingredient(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200)
-    text = models.TextField()
-    calories = models.BigIntegerField(null=True, blank=True)
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the priceyi'})
+    title = models.CharField(max_length=200, verbose_name='Название блюда')
+    text = models.TextField(verbose_name='Описание')
+    calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
+    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the priceyi'}, verbose_name='цена')
     created_date = models.DateTimeField(default=timezone.now)
-    image = models.FileField(null=True, upload_to='images/dishes')
+    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
     published_date = models.DateTimeField(blank=True, null=True)
-    ingredients = models.ManyToManyField(Ingredient)
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES)
+    ingredients = models.ManyToManyField(Ingredient, verbose_name='список продуктов')
+    type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
    # pic = models.ImageField(blank=True, )
 
     def publish(self):

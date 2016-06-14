@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import user_passes_test
 
+from blog.forms import PostForm, IngredientsForm, MenuForm
 from .models import Post, Ingredient
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404

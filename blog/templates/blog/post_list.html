@@ -1,11 +1,24 @@
 {% load staticfiles %}
 <html>
     <head>
-        <style>
+           <style>
             .navbar, .navbar-default {
                 background-color: orange !important;
             }
-        </style>
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
+               h2{
+                   color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif !important;
+               }
+                                        </style>
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
             </head>
@@ -18,23 +31,23 @@
             {% for post in posts %}
                 <div class="col-md-8">
                 <div class="post">
-                    <div class="date">
-                        {% if post.published_date %}
-                            <p>published: {{ post.published_date }}</p>
-                        {% endif %}
-                    </div>
-                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+                   {# <div class="date"> #}
+                         {#{% if post.published_date %} #}
+                            {#  <p>published: {{ post.published_date }}</p> #}
+                       {# {% endif %} #}
+                    {# </div>#}
+                    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>
                         {% if post.image %}
                          <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
                         <p>price: {{  post.price }}</p>
                         <p>калории: {{ post.calories }}</p>
 
-                {% for post in posts %}
-                    <p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p>
-                        {%  endfor %}
-                {%  endfor %}
-                {{ post.text|linebreaks }}
+               {#{% for post in posts %} #}
+                   {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
+                       {#{%  endfor %} #}
+                {# {%  endfor %} #}
+                {# {{ post.text|linebreaks }} #}
                 </div>
                </div>
              {% endfor %}

@@ -65,7 +65,6 @@ class NewUserForm(forms.Form):
         result = forms.Form.is_valid(self)
         username = self.cleaned_data.get('username')
         print(username)
-        print(1)
         print(forms.Form.is_valid(self))
         try:
             user = User.objects.get(username=username)
