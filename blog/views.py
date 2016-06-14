@@ -19,7 +19,6 @@ def post_list(request):
     posts = Post.objects.all().order_by('published_date')
     if not json:
         posts = Post.objects.all().order_by('published_date')
-        print(posts)
         return render(request, 'blog/post_list.html', {'posts': posts})
     else:
         data = {'posts': serializers.serialize('json', posts)}
