@@ -6,6 +6,7 @@ from authentication import forms
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import permission_required
 
 
 
@@ -35,15 +36,13 @@ def logout(request):
     return redirect("/")
 
 
-def user_is_stuff(user):
-    return user.is_authenticated() and user.is_staff
-
 def create_permission(codename, name):
     content_type = ContentType.objects.get_for_model(User)
     permission = Permission.objects.create(codename=codename, name=name, content_type=content_type)
     return permission
 
-@user_passes_test(user_is_stuff, '/have_no_permision')
+
+@permission_required('is_admin', login_url='/have_no_permission')
 def register(request):
     form = forms.NewUserForm()
     if request.POST:
@@ -53,10 +52,8 @@ def register(request):
             password = form.cleaned_data.get('password')
             role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
-            if role == 'is_admin':
-                permission = create_permission('is_admin', 'is user admin')
-            elif role == 'is_cashier':
-                permission = create_permission('is_cashier', 'is user cashier')
+            if role == 'is_admin' or role == 'is_cashier':
+                permission = create_permission(role, 'user''role')
             else:
                 return redirect('/have_no_permision')
             user.user_permissions.add(permission)
