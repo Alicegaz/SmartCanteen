@@ -21,6 +21,15 @@
     <body>
     {%  include 'navbar.html' %}
     <div class="content container">
+        <div class="row">
+               <div class="col-md-4">
+            <ul class="nav nav-pills nav-stacked">
+  <li class="active"><a href="#">Home</a></li>
+  <li><a href="#">Menu 1</a></li>
+  <li><a href="#">Menu 2</a></li>
+  <li><a href="#">Menu 3</a></li>
+</ul>
+        </div>
          <div class="col-md-8">
              <div class="row">
            <p><a href="{% url 'post_list' %}" >Блюда</a> <a href ="{% url 'post_new' %}"><span class="glyphicon glyphicon-plus"></span></a></p>
@@ -31,6 +40,8 @@
             <div class="row">
            <p><a href="/auth/register" >Создать нового пользователя</a> <a href ="/auth/register"><span class="glyphicon glyphicon-plus"></span></a></p>
                 </div>
+            </div>
+
             </div>
     </div>
      {%  include 'javascripts.html' %}
