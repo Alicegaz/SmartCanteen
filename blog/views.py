@@ -1,28 +1,32 @@
 from django.contrib.auth.decorators import user_passes_test
-
 from .models import Post, Ingredient
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
-#from .forms import PostForm, IngredientsForm, MenuForm
+from .forms import PostForm, IngredientsForm, MenuForm
 from django.shortcuts import redirect
+from django.http import HttpResponse
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
 from django.template.context_processors import csrf
-from django.core import serializers
+from common.views import json, json_response
+
 
 def post_list(request):
-    json = request.GET.get('json')
+    # json = request.GET.get('json')
+    # posts = Post.objects.all().order_by('published_date')
+    # if not json:
+    #     posts = Post.objects.all().order_by('published_date')
+    #     return render(request, 'blog/post_list.html', {'posts': posts})
+    # else:
+    #     data = {'posts': serializers.serialize('json', posts)}
+    #     return JsonResponse(data)
+    ##
     posts = Post.objects.all().order_by('published_date')
-    if not json:
-        posts = Post.objects.all().order_by('published_date')
-        return render(request, 'blog/post_list.html', {'posts': posts})
+    if json(request):
+        return json_response(request, posts)
     else:
-        data = {'posts': serializers.serialize('json', posts)}
-        return JsonResponse(data)
-
+        data = {'posts': posts}
+        return render(request, 'blog/post_list.html', data)
 
 
 def post_detail(request, pk=None):
