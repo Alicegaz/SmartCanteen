@@ -1,47 +1,157 @@
 {% load staticfiles %}
 <html>
     <head>
-        <style>
+           <style>
             .navbar, .navbar-default {
                 background-color: orange !important;
+                height:60px;
             }
-        </style>
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
+               h2{
+                   color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif !important;
+               }
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d {
+    margin: 0;
+		padding: 0;
+		background: white;
+		/* color: #5f6f81; */
+		/* list-style: none; */
+		/* text-transform: none; */
+		/* font-weight: 300; */
+		/* font-family: 'Lato', Arial, sans-serif; */
+		line-height: 60px;
+}
+
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d li:hover {
+   background-color: lightsteelblue;
+}
+               .glyphicon.glyphicon-cog{
+    color:  #fff;
+                   left:13px;
+                   top:-2px;
+                   font-size:24px;
+}
+               .glyphicon.glyphicon-cog:hover{
+                   color: steelblue;
+
+               }
+               .glyphicon.glyphicon-plus-sign {
+                  color:red;
+               }
+               .glyphicon.glyphicon-plus-sign:hover {
+              -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(0, 0, 0, 0.1);
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+               }
+               .navbar .navbar-nav > li:hover {
+              color: steelblue;
+               }
+               .gn-menu .gn-submenu{
+                display:none !important;
+                   color:white !important;
+            }
+               .gn-menu > li:hover .gn-submenu {
+                   display:block !important;
+               }
+               a:hover{
+                   color: steelblue !important;
+               }
+               .settings {
+            {#  padding:22px; #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+               .settings:hover{
+            {#   padding:22px; #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+               .row-fluid{
+            {#  margin-left:60px !important; #}
+                   margin-right:100px;
+                   lef:0;
+                   margin-top:76px !important;
+
+               }
+                #1{
+                   width: 400px !important;
+                   left: 300px !important;
+               }
+             .menu {
+                position: fixed; /* Фиксированное положение */
+                right: 350px; /* Расстояние от правого края окна браузера */
+                bottom: 10%; /* Расстояние сверху */
+                padding: 10px; /* Поля вокруг текста */ /* Цвет фона */
+                color:red !important;
+                font-size:50px;
+               }
+               .text {
+                height: 1000px;
+               }
+               .col-xs-12 .col-sm-6 .col-md-4 .col-lg-4
+               {
+                   position:fixed;
+               }
+
+
+                                        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
-            </head>
+            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+        		            </head>
     <body>
        {%  include 'navbar.html' %}
 
        <div class="content container">
-    <div class="row">
+    <div class="row-fluid">
+
        {#  <div class="col-md-8"> #}
             {% for post in posts %}
-                <div class="col-md-8">
-                <div class="post">
-                    <div class="date">
-                        {% if post.published_date %}
-                            <p>published: {{ post.published_date }}</p>
-                        {% endif %}
-                    </div>
-                    <h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
+                {# <div class="col-md-8">  #}
+                <div id="image-{{post.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                   {# <div class="date"> #}
+                         {#{% if post.published_date %} #}
+                            {#  <p>published: {{ post.published_date }}</p> #}
+                       {# {% endif %} #}
+                    {# </div>#}
+
+                    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>
                         {% if post.image %}
-                         <img src="{{ post.image.url }}" height="200" width="250" float="left"/>
+                         <img src="/{{post.image.url}}" height="200" width="250" float="left"/>
                        {% endif %}
                         <p>price: {{  post.price }}</p>
                         <p>калории: {{ post.calories }}</p>
 
-                {% for post in posts %}
-                    <p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p>
-                        {%  endfor %}
-                {%  endfor %}
-                {{ post.text|linebreaks }}
+               {#{% for post in posts %} #}
+                   {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
+                       {#{%  endfor %} #}
+                {# {%  endfor %} #}
+                {# {{ post.text|linebreaks }} #}
                 </div>
+                 {% endfor %}
                </div>
-             {% endfor %}
+
               {#  </div>  #}
 
         </div>
-    </div>
-     {%  include 'javascripts.html' %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+    <script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
     </body>
 </html>

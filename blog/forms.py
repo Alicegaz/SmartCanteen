@@ -1,12 +1,12 @@
+from itertools import chain
 
 from django import forms
-from django.contrib import admin
-from .models import Post, Ingredient
+from django.forms import ChoiceField, CheckboxSelectMultiple, CheckboxInput
+from django.utils.html import conditional_escape
+from django.utils.safestring import mark_safe
+
 from .models import Menu
-from django.db.models.fields.related import ManyToManyRel
-from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
-from datetime import date
-from django.db import models
+from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES
 
 
 class PostForm(forms.ModelForm):
@@ -14,6 +14,10 @@ class PostForm(forms.ModelForm):
         Ingredient.objects.all(), widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
+    type = forms.ChoiceField(widget=forms.Select(), choices=TYPE_CHOICES)
+
+    # type = forms.ChiceField(widget=forms.RadioSelect, choices = TYPE_CHOICES)
+
 
     class Meta:
         model = Post
@@ -21,9 +25,8 @@ class PostForm(forms.ModelForm):
         widgets = {
             'body': forms.Textarea(),
             'ingredients': forms.CheckboxSelectMultiple(),
-            'type': forms.RadioSelect(),
+            'type': ChoiceField(choices=TYPE_CHOICES, widget=forms.Select()),
         }
-
 
     def selected_ingredients_labels(self):
         return [label for value, label in self.fields['ingredients'].choices if value in self['ingredients'].vallue()]
@@ -46,21 +49,20 @@ class IngredientsForm(forms.ModelForm):
         fields = ('name', 'weight')
 
 
-
 class MenuForm(forms.ModelForm):
     items = forms.ModelMultipleChoiceField(
-        Post.objects.all(), widget=forms.CheckboxSelectMultiple(),
+        Post.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class':'chosen'}),
         required=False,
     )
+    title = forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES)
 
     class Meta:
         model = Menu
         fields = ('items', 'title')
         widgets = {
-            'items': forms.CheckboxSelectMultiple(),
-            'title': forms.RadioSelect(),
+            'items': forms.CheckboxSelectMultiple(attrs={'class':'chosen'}),
+            'title': forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES),
         }
-
 
     def selected_ingredients_labels(self):
         return [label for value, label in self.fields['items'].choices if value in self['items'].vallue()]
@@ -75,3 +77,13 @@ class MenuForm(forms.ModelForm):
                 if item not in instance.items.all():
                     instance.items.add(item)
         return instance
+
+    def __init__(self, *args, **kwargs):
+        super(MenuForm, self).__init__(*args, **kwargs)
+        # adding css classes to widgets without define the fields:
+        for field in self.fields:
+            self.fields['items'].widget.attrs['class'] = 'chosen'
+            # class PostIngredient(models.Model):
+            # post = models.ForeighKey(Post)
+            # ingredient = models.ForeignKey(Ingredient)
+

@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'compressor',
     'djangobower',
-    'bootstrap',
+    'crispy_forms',
+    #'django.contrib.sites',
+
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -11,17 +11,52 @@
     </div> <!-- ./navbar-header -->
 
     <div class="collapse navbar-collapse" id="not-google-plus-nav">
-      <ul class="nav navbar-nav pull-right">
+      <ul id="gn-menu" class="nav navbar-nav pull-right">
         {% if user.is_authenticated %}
           <li class="navbar-text">Welcome, {{ user.username }}</li>
           {# <li><a href="/+{{ user.username }}/settings">Settings</a></li>#}
           <li><a href="/auth/logout/">Logout</a></li>
-          <li><a href="/post/admin"><span class="glyphicon glyphicon-cog"></span></a></li>
+          {# <li><a href="/post/admin"><span class="glyphicon glyphicon-cog"></span></a></li> #}
+            <li class="gn-trigger" id="k">
+					<a class="gn-icon-menu"><span class="glyphicon glyphicon-cog"></span></a>
+
+					<nav class="gn-menu-wrapper" id="m">
+						<div class="gn-scroller" id="n">
+							<ul class="gn-menu" id="d">
+                                <li class="settings">
+                                   <a class="gn-icon gn-icon-photoshop"> Настройки администратора</a>
+								<li>
+                                    <a class="gn-icon gn-icon-earth">Персонал</a>
+                                <ul class="gn-submenu">
+                                    <li><a class="gn-icon gn-icon-help">Управление</a></li>
+                                    <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
+                                </ul>
+                                </li>
+								<li>
+                                    <a class="gn-icon gn-icon-help">Информация</a>
+                                    <ul class="gn-submenu">
+                                   <li><a class="gn-icon gn-icon-article">Акции</a></li>
+										<li><a class="gn-icon gn-icon-earth">Контакты</a></li>
+                                </ul>
+                                </li>
+								<li>
+									<a class="gn-icon gn-icon-article">Склад</a>
+                                    <ul class="gn-submenu">
+                                    <li><a href="{% url 'dishes_list' %}" class="gn-icon gn-icon-search">Блюда</a></li>
+                                    <li><a href="{% url 'post_ingredientlist' %}" class="gn-icon gn-icon-pictures">Продукты</a></li>
+
+                                </ul>
+								</li>
+							</ul>
+						</div><!-- /gn-scroller -->
+					</nav>
+				</li>
         {% else %}
           <li><a href="/auth/login">Login</a></li>
 
         {% endif %}
       </ul>
+    </ul>
     </div> <!-- /.collapse.navbar-collapse -->
   </div> <!-- /.container-fluid -->
 </nav>
