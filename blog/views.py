@@ -13,10 +13,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
 from django.template.context_processors import csrf
 from common.views import json, json_response
+from django.core import serializers
 
 
 def post_list(request):
-    json = request.GET.get('json')
     posts = Post.objects.all().order_by('published_date')
     if json(request):
         return json_response(request, posts)
@@ -35,6 +35,7 @@ def dishes_list(request):
         data = {'posts': serializers.serialize('json', posts)}
         return JsonResponse(data)
 
+
 def post_detail(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
     ingredientss = instance.ingredients.all()
@@ -45,6 +46,7 @@ def post_detail(request, pk=None):
 
     }
     return render(request, 'blog/post_detail.html', context)
+
 
 def mymodal(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)

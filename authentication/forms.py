@@ -64,8 +64,6 @@ class NewUserForm(forms.Form):
     def is_valid(self):
         result = forms.Form.is_valid(self)
         username = self.cleaned_data.get('username')
-        print(username)
-        print(forms.Form.is_valid(self))
         try:
             user = User.objects.get(username=username)
         except BaseException:

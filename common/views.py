@@ -1,10 +1,12 @@
 from django.core import serializers
 from django.http import JsonResponse,HttpResponse
+import json as json_module
+
 
 def json(request):
     try:
-        get = request.GET
-        json = get.get('json')
+        get_dict = request.GET
+        json = get_dict.get('json')
         if json:
             return True
         else:
@@ -14,7 +16,18 @@ def json(request):
 
 
 def json_response(request, data):
-    json_data = serializers.serialize('json', data)
-    return JsonResponse(json_data, safe=False)
+    json_data = []
+    try:
+        for instance in data:
+            try:
+
+                json_data.append(instance.get_json_object())
+            except AttributeError:
+                json_data.append(instance.__dict__)
+    except TypeError:
+        json_data = {'data': serializers.serialize('json', data)}
+        return JsonResponse(json_data)
+    print(json_module.dumps(json_data))
+    return HttpResponse(json_module.dumps(json_data).__str__())
 
 
