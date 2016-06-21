@@ -11,7 +11,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+print(  )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -132,9 +132,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-MEDIA_ROOT = '/home/SmartFoods/mysite/blog/images/dishes'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-MEDIA_URL = 'images/dishes/'
+MEDIA_URL = 'media/'
 
 #STATIC_ROOT = '/home/SmartFoods/mysite/blog/static/'
 STATIC_URL = '/static/'

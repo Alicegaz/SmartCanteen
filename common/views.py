@@ -19,11 +19,7 @@ def json_response(request, data):
     json_data = []
     try:
         for instance in data:
-            try:
-
-                json_data.append(instance.get_json_object())
-            except AttributeError:
-                json_data.append(instance.__dict__)
+            json_data.append(instance.get_json_object())
     except TypeError:
         json_data = {'data': serializers.serialize('json', data)}
         return JsonResponse(json_data)
