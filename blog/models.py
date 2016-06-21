@@ -71,6 +71,7 @@ class Post(models.Model):
     def get_json_object(self):
         dic = self.__dict__
         dic['created_date'] = self.created_date.isocalendar()
+        dic['published_date']=self.created_date.isocalendar()
         dic.pop('_state')
         return dic
 

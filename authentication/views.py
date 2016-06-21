@@ -9,7 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 
 
-
 def login(request):
     args = {}
     args.update(csrf(request))

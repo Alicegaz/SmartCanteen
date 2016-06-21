@@ -27,7 +27,6 @@ def json_response(request, data):
     except TypeError:
         json_data = {'data': serializers.serialize('json', data)}
         return JsonResponse(json_data)
-    print(json_module.dumps(json_data))
     return HttpResponse(json_module.dumps(json_data).__str__())
 
 
