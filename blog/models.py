@@ -74,7 +74,6 @@ class Post(models.Model):
         dic['published_date'] = self.published_date.isocalendar()
         dic['image'] = self.image.url
         dic.pop('_state')
-        print(dic)
         return dic
 
 class Menu(models.Model):
