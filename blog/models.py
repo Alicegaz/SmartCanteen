@@ -71,6 +71,13 @@ class Post(models.Model):
     def __unicode__(self):
         return self.choice_text
 
+    def get_json_object(self):
+        dic = self.__dict__
+        dic['created_date'] = self.created_date.isocalendar()
+        dic['published_date'] = self.published_date.isocalendar()
+        dic['image'] = self.image.url
+        dic.pop('_state')
+        return dic
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')

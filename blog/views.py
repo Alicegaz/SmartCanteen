@@ -11,8 +11,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
+from common.views import json, json_response
 from django.core import serializers
-
 
 def post_list(request):
     json = request.GET.get('json')
@@ -36,35 +36,36 @@ def post_list(request):
     #end3 = DateTime.Parse("2016-03-27T20:00:15+03").ToUniversalTime().time;
     if 7 <= timezone.now().hour <= 11:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
+        if json(request):
+            return json_response(request, posts)
         else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
+            data = {'posts': posts}
+            return render(request, 'blog/post_list.html', data)
+
     elif 11 <= timezone.now().hour <= 16:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='обед')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
+        if json(request):
+            return json_response(request, posts)
         else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
+            data = {'posts': posts}
+            return render(request, 'blog/post_list.html', data)
+
     elif 16 <= timezone.now().hour <= 20:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='ужин')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
+        if json(request):
+            return json_response(request, posts)
         else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
+            data = {'posts': posts}
+            return render(request, 'blog/post_list.html', data)
+
     else:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
+        if json(request):
+            return json_response(request, posts)
         else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return  JsonResponse(data)
+            data = {'posts': posts}
+            return render(request, 'blog/post_list.html', data)
+
 
 def no_permission(request):
     return render(request, 'blog/no_permission.html')
@@ -90,6 +91,7 @@ def post_detail(request, pk=None):
 
     }
     return render(request, 'blog/post_detail.html', context)
+
 
 def mymodal(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
@@ -140,7 +142,6 @@ def post_edit(request, pk):
             form.save_m2m()
             #messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
             # return HttpResponseRedirect(instance.get_absolute_url())
-
             context = {
                 "title": post.title,
                 "instance": post,
