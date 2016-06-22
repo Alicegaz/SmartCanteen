@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'compressor',
     'djangobower',
     'crispy_forms',
+    'common',
     #'django.contrib.sites',
 
 ]

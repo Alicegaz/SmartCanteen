@@ -85,7 +85,7 @@ class MenuForm(forms.ModelForm):
 
     class Meta:
         model = Menu
-        fields = ('items', 'date', 'times')
+        fields = ('items', 'date')
 
         widgets = {
             'items': forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),

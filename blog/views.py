@@ -36,35 +36,35 @@ def post_list(request):
     #end3 = DateTime.Parse("2016-03-27T20:00:15+03").ToUniversalTime().time;
     if 7 <= timezone.now().hour <= 11:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
-        if json(request):
-            return json_response(request, posts)
-        else:
-            data = {'posts': posts}
-            return render(request, 'blog/post_list.html', data)
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
 
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
     elif 11 <= timezone.now().hour <= 16:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='обед')
-        if json(request):
-            return json_response(request, posts)
-        else:
-            data = {'posts': posts}
-            return render(request, 'blog/post_list.html', data)
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
 
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
     elif 16 <= timezone.now().hour <= 20:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='ужин')
-        if json(request):
-            return json_response(request, posts)
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
         else:
-            data = {'posts': posts}
-            return render(request, 'blog/post_list.html', data)
-
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
     else:
         posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
-        if json(request):
-            return json_response(request, posts)
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
+
         else:
-            data = {'posts': posts}
-            return render(request, 'blog/post_list.html', data)
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
 
 
 def no_permission(request):
@@ -378,7 +378,7 @@ def new_supper(request):
             post.title = 'ужин'
             #post.date = timezone.now()
             if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                              date__year=timezone.now().year, title='завтрак')>=1:
+                                              date__year=timezone.now().year, title='ужин').count()>=1:
                 post.date = timezone.now() + timedelta(days=1)
             post.save()
             form.save_m2m()
@@ -419,7 +419,7 @@ def new_dinner(request):
             post.title = 'обед'
             #post.date = timezone.now()
             if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                              date__year=timezone.now().year, title='завтрак') >=1:
+                                              date__year=timezone.now().year, title='обед').count() >=1:
                 post.date = timezone.now() + timedelta(days=1)
             post.save()
             form.save_m2m()

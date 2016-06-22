@@ -84,7 +84,7 @@ class Menu(models.Model):
     title = models.CharField(max_length=1, default='завтрак')
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
-    times = models.TimeField(help_text='UTC date and time when voting begins')
+    #times = models.TimeField(help_text='UTC date and time when voting begins')
 
     # pic = models.ImageField(blank=True, )
 

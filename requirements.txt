@@ -1,3 +1,4 @@
+common
 appdirs==1.4.0
 clang==3.8
 dj-static==0.0.6
