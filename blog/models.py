@@ -6,6 +6,9 @@ from django.utils import timezone
 from django import forms
 from django.core.exceptions import ValidationError
 from requests import auth
+from blog.widgets import *
+from blog.fields import *
+
 
 TYPE_CHOICES = (
     ('First', 'Первое'),
@@ -27,6 +30,7 @@ class Ingredient(models.Model):
     #author = models.ForeignKey('auth.User')
     weight = models.IntegerField(null=True)
     price = models.IntegerField(null=True)
+
 
     def __unicode__(self):
         return self.name
@@ -55,7 +59,6 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, verbose_name='список продуктов')
     type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
-
     # pic = models.ImageField(blank=True, )
 
     def publish(self):
@@ -71,14 +74,15 @@ class Post(models.Model):
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=1, choices=TYPE_MENU_CHOICES)
-    date = models.DateTimeField(blank=True, null=True)
+    title = models.CharField(max_length=1, default='завтрак')
+    date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
+    times = models.TimeField(help_text='UTC date and time when voting begins')
 
     # pic = models.ImageField(blank=True, )
 
     def publish(self):
-        self.published_date = timezone.now()
+        self.date = timezone.now()
         self.save()
 
     def __str__(self):

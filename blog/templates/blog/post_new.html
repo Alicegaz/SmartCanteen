@@ -1,4 +1,4 @@
-
+{% load crispy_forms_tags %}
 {% load staticfiles %}
 <html>
     <head>
@@ -14,6 +14,8 @@
              .navbar-header{
              transform: translateX(39px) !important;
              }
+             .container1 { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
+              }
 
 
 
@@ -29,7 +31,7 @@
         <div class="row">
             <div class="col-md-8">
 
-                 <form method="post" action="" enctype="multipart/form-data" class="post-form">{%  csrf_token %}
+                 <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
                           <label for="title">Название блюда:</label>
                         {{ form.title }}
                     <label for="text">Описание:</label>
@@ -42,8 +44,10 @@
                    {{form.image}}
                     <label for="ingredients">Ингредиенты:</label>
                    <div class="container1">
-                     {{ form.ingredients }}
-                       </div>
+                        <div multiple="multiple" class="selectmultiple chosen">
+                            {{ form.ingredients }}
+                            </div>
+                         </div>
                     <label for="type">Тип: </label>
                    {{ form.type }}
                    <div class="form-group">
@@ -54,7 +58,16 @@
 </div>
         </div>
     </div>
+
      {%  include 'javascripts.html' %}
+     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
+     </script>
+     <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
+     </script>
+     <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
+        type="text/css" media="screen" />
+     <script type="text/javascript">  $(".chosen").chosen();
+     </script>
 </body>
 </html>
 

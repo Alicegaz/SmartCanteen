@@ -78,17 +78,10 @@
                    background-color:lightsteelblue;
                    color:white;
                                   }
-               .row-fluid{
-            {#  margin-left:60px !important; #}
-                   margin-right:100px;
-                   lef:0;
-                   margin-top:76px !important;
 
-               }
-                #1{
-                   width: 400px !important;
-                   left: 300px !important;
-               }
+
+
+
              .menu {
                 position: fixed; /* Фиксированное положение */
                 right: 350px; /* Расстояние от правого края окна браузера */
@@ -100,9 +93,32 @@
                .text {
                 height: 1000px;
                }
-               .col-xs-12 .col-sm-6 .col-md-4 .col-lg-4
+
+               .container
                {
-                   position:fixed;
+
+                   margin-left: 30% !important;
+                   margin-right: 18% !important;
+                   padding-right: 50px !important;
+               }
+               .row-fluid{
+                   padding-right: 10% !important;
+                    margin-top:76px !important;
+                  /* margin-right: 100px !important;
+                   margin-left: 300px !important; */
+
+               }
+               .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+    float: left;
+    padding-bottom: 35px !important;
+}
+
+               .menu_head{
+                   color: #337ab7;
+                   font-size: 200%;
+                   font-family: SansSerif;
+                   margin-left:auto;
+    margin-right:auto;
                }
 
 
@@ -117,24 +133,31 @@
        {%  include 'navbar.html' %}
 
        <div class="content container">
-    <div class="row-fluid">
 
+        <div class="row-fluid">
        {#  <div class="col-md-8"> #}
+        {% if posts %}
             {% for post in posts %}
+                  <div  class="menu_head"> {{ post.title }} </div>
                 {# <div class="col-md-8">  #}
-                <div id="image-{{post.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                    {# <div class="date"> #}
                          {#{% if post.published_date %} #}
                             {#  <p>published: {{ post.published_date }}</p> #}
                        {# {% endif %} #}
                     {# </div>#}
 
-                    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a> <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>
-                        {% if post.image %}
-                         <img src="/{{post.image.url}}" height="200" width="250" float="left"/>
+               {#{% for post in posts %} #}
+                   {%  for dishes in post.items.all %}
+
+
+
+                       <div id="image-{{dishes.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                           <h2><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a> <a href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>
+                        {% if dishes.image %}
+                        <a href="{% url 'post_detail' pk=dishes.pk %}"> <img src="/{{dishes.image.url}}" height="200" width="250" float="left"/> </a>
                        {% endif %}
-                        <p>price: {{  post.price }}</p>
-                        <p>калории: {{ post.calories }}</p>
+                        <p>price: {{  dishes.price }}</p>
+                        <p>калории: {{ dishes.calories }}</p>
 
                {#{% for post in posts %} #}
                    {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
@@ -142,10 +165,16 @@
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
                 </div>
+                       {%  endfor %}
+
+                {# {%  endfor %} #}
+                {# {{ post.text|linebreaks }} #}
                  {% endfor %}
+        {% endif %}
                </div>
 
               {#  </div>  #}
+
 
         </div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
@@ -153,5 +182,15 @@
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+
+     {%  include 'javascripts.html' %}
+     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
+     </script>
+     <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
+     </script>
+     <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
+        type="text/css" media="screen" />
+     <script type="text/javascript">  $(".chosen").chosen();
+     </script>
     </body>
 </html>

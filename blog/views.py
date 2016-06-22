@@ -1,28 +1,74 @@
-from django.contrib.auth.decorators import user_passes_test
+from .models import Menu
+#from .forms import PostForm, IngredientsForm, MenuForm
+from datetime import timedelta
 
 from blog.forms import PostForm, IngredientsForm, MenuForm
-from .models import Post, Ingredient
+from blog.models import Post, Ingredient, Menu
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 #from .forms import PostForm, IngredientsForm, MenuForm
 from django.shortcuts import redirect
-from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
 from django.core import serializers
 
+
 def post_list(request):
     json = request.GET.get('json')
-    posts = Post.objects.all().order_by('published_date')
-    if not json:
-        posts = Post.objects.all().order_by('published_date')
-        return render(request, 'blog/post_list.html', {'posts': posts})
+    start_date = timezone.now()
+    end_date = start_date + timedelta(days=1)
+    end_date1 = end_date + timedelta(days=1)
+    #DATE_FORMAT = '%Y-%m-%d'
+    #start_date = datetime.strptime(start_date, DATE_FORMAT)
+    #qs = qs.filter(
+     #   start_date__year=start_date.year,
+      #  start_date__month=start_date.month,
+       # start_date__day=start_date.day
+    #)
+    #compare current date without time with one in the database
+    #now_time = datetime.now()
+    #start = DateTime.Parse("2016-03-26T07:00:15+02").ToUniversalTime().time;
+    #end = DateTime.Parse("2016-03-27T10:00:15+03").ToUniversalTime().time;
+    #start2= DateTime.Parse("2016-03-26T11:00:15+02").ToUniversalTime().time;
+    #end2 = DateTime.Parse("2016-03-27T15:00:15+03").ToUniversalTime().time;
+    #start3 = DateTime.Parse("2016-03-26T16:00:15+02").ToUniversalTime().time;
+    #end3 = DateTime.Parse("2016-03-27T20:00:15+03").ToUniversalTime().time;
+    if 7 <= timezone.now().hour <= 11:
+        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
+
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
+    elif 11 <= timezone.now().hour <= 16:
+        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='обед')
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
+
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
+    elif 16 <= timezone.now().hour <= 20:
+        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='ужин')
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return JsonResponse(data)
     else:
-        data = {'posts': serializers.serialize('json', posts)}
-        return JsonResponse(data)
+        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day, date__year=timezone.now().year, title='завтрак')
+        if not json:
+            return render(request, 'blog/post_list.html', {'posts': posts})
+
+        else:
+            data = {'posts': serializers.serialize('json', posts)}
+            return  JsonResponse(data)
+
+def no_permission(request):
+    return render(request, 'blog/no_permission.html')
+
 
 def dishes_list(request):
     json = request.GET.get('json')
@@ -108,6 +154,139 @@ def post_edit(request, pk):
     return render(request, "blog/post_edit.html", {'form': form})
 
 
+def menu_edit(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = MenuForm(request.POST or None, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            #post.published_date = timezone.now()
+
+            post_numder = post.pk
+            for ing in request.POST.getlist('items'):
+                theing = Post.objects.get(pk=ing)
+                post.items.add(theing.id)
+            post.save()
+            form.save_m2m()
+            #messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+            # return HttpResponseRedirect(instance.get_absolute_url())
+
+            context = {
+                "title": post.title,
+                "instance": post,
+                "form": form,
+            }
+            #return render(request, 'blog/post_edit.html', context)
+            return redirect('menu_detail', pk=post.pk)
+
+    else:
+        form = PostForm(instance=post)
+    return render(request, "blog/menu_edit.html", {'form': form})
+
+def menu_detail(request, pk):
+    instance = get_object_or_404(Post, pk=pk)
+    items = instance.items.all()
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "items": items,
+
+    }
+    return render(request, 'blog/menu_detail.html', context)
+
+
+def breakfast_edit(request, pk):
+    post = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        form = MenuForm(request.POST or None, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'завтрак'
+            post_numder = post.pk
+            for ing in request.POST.getlist('items'):
+                theing = Menu.objects.get(pk=ing)
+                post.items.add(theing.id)
+
+
+            post.save()
+            form.save_m2m()
+            #messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+            # return HttpResponseRedirect(instance.get_absolute_url())
+
+            context = {
+                "title": post.title,
+                "instance": post,
+                "form": form,
+            }
+            #return render(request, 'blog/post_edit.html', context)
+            return redirect('/')
+
+    else:
+        form = MenuForm(instance=post)
+    return render(request, "blog/breakfast_edit.html", {'form': form})
+
+
+def supper_edit(request, pk):
+    post = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        form = MenuForm(request.POST or None, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'ужин'
+            post_numder = post.pk
+            for ing in request.POST.getlist('items'):
+                theing = Menu.objects.get(pk=ing)
+                post.items.add(theing.id)
+            post.save()
+            form.save_m2m()
+            #messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+            # return HttpResponseRedirect(instance.get_absolute_url())
+
+            context = {
+                "title": post.title,
+                "instance": post,
+                "form": form,
+            }
+            #return render(request, 'blog/post_edit.html', context)
+            return redirect('/')
+
+    else:
+        form = MenuForm(instance=post)
+    return render(request, "blog/supper_edit.html", {'form': form})
+
+def dinner_edit(request, pk):
+    post = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        form = MenuForm(request.POST or None, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'обед'
+            post_numder = post.pk
+            for ing in request.POST.getlist('items'):
+                theing = Menu.objects.get(pk=ing)
+                post.items.add(theing.id)
+            post.save()
+            form.save_m2m()
+            #messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
+            # return HttpResponseRedirect(instance.get_absolute_url())
+
+            context = {
+                "title": post.title,
+                "instance": post,
+                "form": form,
+            }
+            #return render(request, 'blog/post_edit.html', context)
+            return redirect('/')
+
+    else:
+        form = MenuForm(instance=post)
+    return render(request, "blog/dinner_edit.html", {'form': form})
+
+
 def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST or None, request.FILES)
@@ -187,3 +366,86 @@ def post_ingredientnew(request):
     else:
         form = IngredientsForm()
     return render(request, 'blog/post_ingredientedit.html', {'form': form})
+
+
+def new_supper(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'ужин'
+            #post.date = timezone.now()
+            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
+                                              date__year=timezone.now().year, title='завтрак')>=1:
+                post.date = timezone.now() + timedelta(days=1)
+            post.save()
+            form.save_m2m()
+            # post.ingredients()
+            return redirect('/')
+    else:
+        form = MenuForm()
+    return render(request, 'blog/supper_edit.html', {'form': form})
+
+
+
+def new_breakfast(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'завтрак'
+            #post.date = timezone.now()
+            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
+                                         date__year=timezone.now().year, title='завтрак').count() >= 1:
+                post.date = timezone.now() + timedelta(days=1)
+            post.save()
+            form.save_m2m()
+            # post.ingredients()
+            return redirect('/')
+    else:
+        form = MenuForm()
+    return render(request, 'blog/breakfast_edit.html', {'form': form})
+
+
+def new_dinner(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'обед'
+            #post.date = timezone.now()
+            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
+                                              date__year=timezone.now().year, title='завтрак') >=1:
+                post.date = timezone.now() + timedelta(days=1)
+            post.save()
+            form.save_m2m()
+            # post.ingredients()
+            return redirect('/')
+    else:
+        form = MenuForm()
+    return render(request, 'blog/dinner_edit.html', {'form': form})
+
+
+
+def menu_archive(request):
+        posts = Menu.objects.all()
+        return render(request, 'blog/menu_archive.html', {'posts': posts})
+
+def post_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('blog.views.dishes_list')
+
+def menu_remove(request, pk):
+    post = get_object_or_404(Menu, pk=pk)
+    post.delete()
+    return redirect('blog.views.menu_archive')
+
+def menu_item_remove(request, pk1, pk2):
+    post = get_object_or_404(Menu, pk=pk2)
+    item=post.items.get(pk=pk1)
+    post.items.remove(item)
+    return redirect('blog.views.menu_archive')

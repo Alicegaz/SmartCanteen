@@ -9,7 +9,9 @@ urlpatterns = [
 
     url(r'^login/$', views.login, name='login.html'),
     url(r'^logout/$', views.logout, name='logout.html'),
-    url(r'^register', views.register)
+    url(r'^register/$', views.register, name='register.html'),
+    url(r'^no/permission/$', views.no_permission, name='no_permission.html'),
+    #url(r'^have_no_permission/', views.no_permission, name='no_permission'),
 ]
 
 if settings.DEBUG:

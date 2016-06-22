@@ -100,7 +100,8 @@
 		position: fixed;
 		top: 60px;
 		bottom: 0;
-		right: -60px;
+	    left:0;
+ /**  right: -60px; */
 		overflow: hidden;
 		width: 60px;
 		border-top: 1px solid #c6d0da;

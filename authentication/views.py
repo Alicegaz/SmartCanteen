@@ -9,7 +9,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 
 
-
 def login(request):
     args = {}
     args.update(csrf(request))
@@ -42,6 +41,10 @@ def create_permission(codename, name):
     return permission
 
 
+def no_permission(request):
+    return render(request, 'blog/no_permission.html')
+
+
 @permission_required('is_admin', login_url='/have_no_permission')
 def register(request):
     form = forms.NewUserForm()
@@ -60,5 +63,3 @@ def register(request):
             user.save()
             return redirect('/')
     return render(request, 'register.html', {'form': form})
-
-
