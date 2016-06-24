@@ -484,8 +484,11 @@ def menu_item_remove(request, **kwargs):
     pk = kwargs.get('pk', '')
     #post = get_object_or_404(Menu, pk)
     post = Menu.objects.get(pk=pk)
+    if post.items.count()==1:
+     post.delete()
+    else:
     #pk_url_kwarg = 'item_pk'
-    ite = post.items.get(pk=kwargs.get('item_pk', ''))
-    #ite = post.items.get(pk=pk_url_kwarg)
-    post.items.remove(ite)
+     ite = post.items.get(pk=kwargs.get('item_pk', ''))
+     #ite = post.items.get(pk=pk_url_kwarg)
+     post.items.remove(ite)
     return redirect('blog.views.menu_archive')

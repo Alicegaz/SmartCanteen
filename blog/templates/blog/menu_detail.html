@@ -185,11 +185,24 @@
 
 
         </div>
+       </div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+       <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить блюдо?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
     </body>
 </html>
 
