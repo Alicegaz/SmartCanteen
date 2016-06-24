@@ -479,8 +479,11 @@ def menu_remove(request, pk):
 
 
 def menu_item_remove(request, **kwargs):
-    pk = kwargs.get('pk', "")
-    post = get_object_or_404(Menu, pk)
+    #print(kwargs.pop('pk'))
+    #print(kwargs.get('pk', ''))
+    pk = kwargs.get('pk', '')
+    #post = get_object_or_404(Menu, pk)
+    post = Menu.objects.get(pk=pk)
     #pk_url_kwarg = 'item_pk'
     ite = post.items.get(pk=kwargs.get('item_pk', ''))
     #ite = post.items.get(pk=pk_url_kwarg)
