@@ -195,8 +195,8 @@ def menu_edit(request, pk):
     return render(request, "blog/menu_edit.html", {'form': form})
 
 
-def menu_detail(request, pk):
-    instance = get_object_or_404(Post, pk=pk)
+def menu_detail(request, pk=None):
+    instance = get_object_or_404(Menu, pk=pk)
     items = instance.items.all()
     context = {
         "title": instance.title,
@@ -205,7 +205,6 @@ def menu_detail(request, pk):
 
     }
     return render(request, 'blog/menu_detail.html', context)
-
 
 def breakfast_edit(request, pk):
     post = get_object_or_404(Menu, pk=pk)
@@ -479,8 +478,11 @@ def menu_remove(request, pk):
     return redirect('blog.views.menu_archive')
 
 
-def menu_item_remove(request, pk1, pk2):
-    post = get_object_or_404(Menu, pk=pk2)
-    item = post.items.get(pk=pk1)
-    post.items.remove(item)
+def menu_item_remove(request, **kwargs):
+    pk = kwargs.get('pk', "")
+    post = get_object_or_404(Menu, pk)
+    #pk_url_kwarg = 'item_pk'
+    ite = post.items.get(pk=kwargs.get('item_pk', ''))
+    #ite = post.items.get(pk=pk_url_kwarg)
+    post.items.remove(ite)
     return redirect('blog.views.menu_archive')

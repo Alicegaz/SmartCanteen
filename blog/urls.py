@@ -29,7 +29,11 @@ urlpatterns = [
     url(r'^supper/edit/$', views.supper_edit, name='supper_edit'),
     url(r'^supper/edit/$', views.supper_edit, name='supper_edit'),
     url(r'^post/(?P<pk>\d+)/menu/remove/$', views.menu_remove, name='menu_remove'),
-url(r'^post/(?P<pk>\d+)/menu/item/remove/$', views.menu_item_remove, name='menu_item_remove'),
+   # url(r'^post/(?P<pk>\d+)/menu/item/remove/$', views.menu_item_remove, name='menu_item_remove'),
+    url(r'^menu/(?P<pk>\d+)/$', views.menu_detail, name='menu_detail'),
+    url(r'^menu/(?P<pk>\d+)/edit/$', views.menu_edit, name='menu_edit'),
+    #url(r'^post/(?P<pk>\d+)/menu/item/remove/$', views.menu_item_remove, name='menu_item_remove'),
+    url(r'^menu/(?P<pk>\d+)/item/(?P<item_pk>\d+)/remove', views.menu_item_remove, name='menu_item_remove'),
     # url(r'^post/(?P<pk>\d+)/images/$', view.post)
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -140,7 +140,7 @@
             {% for post in posts %}
                   <div  class="menu_head"><a href="{% url 'menu_detail' pk=post.pk %}">{{ post.title }}</a>
                         <a class="btn btn-default" href="{% url 'menu_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'menu_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                 <a class="btn btn-default" href="{% url 'menu_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                     </h2> </div>
                 {# <div class="col-md-8">  #}
                     <div class="date">
@@ -149,11 +149,11 @@
                         {% endif %}
                     </div>
                {#{% for post in posts %} #}
-                   {%  for dishes in post.items.all %}
+                  {# {%  for dishes in post.items.all %}#}
 
-                       <div  class="post_head"><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a>
-                        <a class="btn btn-default" href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'menu_item_remove' pk1=dishes.pk pk2=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                      {# <div  class="post_head"><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a>#}
+                       {#<a class="btn btn-default" href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>#}
+                {# <a class="btn btn-default" href="{% url 'menu_item_remove' pk=dishes.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>#}
 
                       {#<div id="image-{{dishes.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4"> #}
                         {#<h2><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a> <a href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>#}
@@ -169,8 +169,8 @@
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
                 {# </div> #}
-                       {{ dishes }}
-                       {%  endfor %}
+                      {# {{ dishes }} #}
+                      {#{%  endfor %} #}
 
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
@@ -187,6 +187,18 @@
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+       <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
 
      {%  include 'javascripts.html' %}
      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">

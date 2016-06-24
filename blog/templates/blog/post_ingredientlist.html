@@ -19,6 +19,10 @@
                 font-size: 200% !important;
                 font-family: SansSerif !important;
                }
+              .navbar .navbar-default
+              {
+                  width:100%;
+              }
             div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d {
     margin: 0;
 		padding: 0;
@@ -153,11 +157,13 @@
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
 
+
      {%  include 'javascripts.html' %}
      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
      </script>
      <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
      </script>
+
      <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
         type="text/css" media="screen" />
      <script type="text/javascript">  $(".chosen").chosen();

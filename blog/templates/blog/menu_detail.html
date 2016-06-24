@@ -165,13 +165,18 @@
                         {% endif %}
                      </div>
             {% for item in items %}
-               <a href="{% url 'post_detail %}' pk=item.pk %}">{{ item.title }}</a>
-        {% if instance.image %}
+               {# <a href="{% url 'post_detail %}' pk=item.pk %}">{{ item.title }}</a> #}
+                <div  class="post_head"><a href="{% url 'post_detail' pk=item.pk %}">{{ item.title }}</a>
+                        <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                 <a class="btn btn-default" href="{% url 'menu_item_remove' instance.pk item.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+
+
+        {% if item.image %}
                          <img src="/{{item.image.url }}" height="200" width="250" float="left"/>
                        {% endif %}
 
-                        <p>price: {{  instance.price }}</p>
-                        <p>калории: {{ instance.calories }}</p>
+                        <p>price: {{  item.price }}</p>
+                        <p>калории: {{ item.calories }}</p>
             {% endfor %}
                 </div>
                </div>
@@ -188,32 +193,3 @@
     </body>
 </html>
 
-
-
- {% for post in posts %}
-                {# <div class="col-md-8">  #}
-                <div id="image-{{post.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                    <div class="date">
-                         {% if post.published_date %}
-                              <p>published: {{ post.published_date }}</p>
-                        {% endif %}
-                     </div>
-
-
-                    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
-                        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                    </h2>
-                        {% if post.image %}
-                        <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{post.image.url}}" height="200" width="250" float="left"/> </a>
-                       {% endif %}
-                        <p>price: {{  post.price }}</p>
-                        <p>калории: {{ post.calories }}</p>
-
-               {#{% for post in posts %} #}
-                   {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
-                       {#{%  endfor %} #}
-                {# {%  endfor %} #}
-                {# {{ post.text|linebreaks }} #}
-                </div>
-                 {% endfor %}

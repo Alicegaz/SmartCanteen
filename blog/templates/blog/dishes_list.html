@@ -167,7 +167,7 @@
 
                     <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
                         <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+                 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                     </h2>
                         {% if post.image %}
                         <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{post.image.url}}" height="200" width="250" float="left"/> </a>
@@ -194,6 +194,18 @@
   <div class="text"></div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
