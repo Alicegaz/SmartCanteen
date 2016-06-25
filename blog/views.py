@@ -11,66 +11,20 @@ from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
-from common.views import json, json_response
+from common.json_warper import json, json_response
+from common.blog_post_list import get_menu_of_currunt_time
 from django.core import serializers
 from django.shortcuts import render_to_response, redirect, render
 
 
 def post_list(request):
-    json = request.GET.get('json')
-    start_date = timezone.now()
-    end_date = start_date + timedelta(days=1)
-    end_date1 = end_date + timedelta(days=1)
-    # DATE_FORMAT = '%Y-%m-%d'
-    # start_date = datetime.strptime(start_date, DATE_FORMAT)
-    # qs = qs.filter(
-    #   start_date__year=start_date.year,
-    #  start_date__month=start_date.month,
-    # start_date__day=start_date.day
-    # )
-    # compare current date without time with one in the database
-    # now_time = datetime.now()
-    # start = DateTime.Parse("2016-03-26T07:00:15+02").ToUniversalTime().time;
-    # end = DateTime.Parse("2016-03-27T10:00:15+03").ToUniversalTime().time;
-    # start2= DateTime.Parse("2016-03-26T11:00:15+02").ToUniversalTime().time;
-    # end2 = DateTime.Parse("2016-03-27T15:00:15+03").ToUniversalTime().time;
-    # start3 = DateTime.Parse("2016-03-26T16:00:15+02").ToUniversalTime().time;
-    # end3 = DateTime.Parse("2016-03-27T20:00:15+03").ToUniversalTime().time;
-    if 7 <= timezone.now().hour <= 11:
-        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='завтрак')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
-        else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
-    elif 11 <= timezone.now().hour <= 16:
-        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='обед')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
-        else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
-    elif 16 <= timezone.now().hour <= 20:
-        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='ужин')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-        else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
+    posts = get_menu_of_currunt_time()
+    if json(request):
+        return json_response(request, posts)
     else:
-        posts = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='завтрак')
-        if not json:
-            return render(request, 'blog/post_list.html', {'posts': posts})
-
-        else:
-            data = {'posts': serializers.serialize('json', posts)}
-            return JsonResponse(data)
+        data = {'posts': posts}
+        return render(request, 'blog/post_list.html', data)
+#     TODO так делать не надо,код надо оставлять читаемым
 
 
 def no_permission(request):
@@ -78,14 +32,12 @@ def no_permission(request):
 
 
 def dishes_list(request):
-    json = request.GET.get('json')
     posts = Post.objects.all().order_by('published_date')
-    if not json:
-        posts = Post.objects.all().order_by('published_date')
-        return render(request, 'blog/dishes_list.html', {'posts': posts})
+    if json(request):
+        return json_response(request, posts)
     else:
-        data = {'posts': serializers.serialize('json', posts)}
-        return JsonResponse(data)
+        data = {'posts': posts}
+        return render(request, 'blog/dishes_list.html', data)
 
 
 def post_detail(request, pk=None):
