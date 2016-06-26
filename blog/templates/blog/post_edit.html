@@ -133,11 +133,14 @@
                    {{form.image}}
                        </div>
                     <label for="ingredients">Ингредиенты:</label>
-                 <div class="container1">
+                  <div class="container1">
                         <div multiple="multiple" class="selectmultiple chosen">
                             {{ form.ingredients }}
                             </div>
                          </div>
+                         {% for p in posts %}
+                                <input type="number" name="quantity" id="{{ingredient1.id}}" width="10px" value="0" placeholder="{{ p.name }}">
+                            {% endfor %}
                     <label for="type">Тип: </label>
                    {{ form.type }}
                    <div class="form-group">

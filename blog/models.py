@@ -30,6 +30,7 @@ class Ingredient(models.Model):
     #author = models.ForeignKey('auth.User')
     weight = models.IntegerField(null=True)
     price = models.IntegerField(null=True)
+    date = models.DateTimeField(default=timezone.now)
 
 
     def __unicode__(self):
@@ -45,7 +46,7 @@ class Ingredient(models.Model):
         #    self.fields[field].widget.attrs['class'] = 'form-control'
 
     class Meta:
-        ordering = ('name',)
+        ordering = ('date',)
 
 
 class Post(models.Model):
@@ -102,3 +103,24 @@ class Menu(models.Model):
 def clean_price(self):
     if self.clean_data.get('price') < 0:
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
+
+
+class Wasted(models.Model):
+    name = models.CharField(max_length=300)
+    weight = models.IntegerField(null=True)
+    date = models.DateTimeField(default=timezone.now)
+
+    def __unicode__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('date',)
+
+        # def __init__(self, *args, **kwargs):
+        # super(models.Model, self).__init__(*args, **kwargs)
+        # adding css classes to widgets without define the fields:
+        # for field in self.fields:
+        #    self.fields[field].widget.attrs['class'] = 'form-control'

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'djangobower',
     'crispy_forms',
     'common',
+     'django_extensions',
     #'django.contrib.sites',
 
 ]
@@ -114,7 +115,7 @@ BOWER_PATH = '/usr/bin/bower'
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-
+CACHE_BACKEND = 'dummy:///'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',

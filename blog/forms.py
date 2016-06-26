@@ -117,3 +117,5 @@ class MenuForm(forms.ModelForm):
             # class PostIngredient(models.Model):
             # post = models.ForeighKey(Post)
             # ingredient = models.ForeignKey(Ingredient)
+
+

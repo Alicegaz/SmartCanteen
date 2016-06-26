@@ -48,6 +48,10 @@
                             {{ form.ingredients }}
                             </div>
                          </div>
+                     {% for p in posts %}
+
+                                <input type="number" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
+                            {% endfor %}
                     <label for="type">Тип: </label>
                    {{ form.type }}
                    <div class="form-group">

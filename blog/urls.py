@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^menu/(?P<pk>\d+)/edit/$', views.menu_edit, name='menu_edit'),
     #url(r'^post/(?P<pk>\d+)/menu/item/remove/$', views.menu_item_remove, name='menu_item_remove'),
     url(r'^menu/(?P<pk>\d+)/item/(?P<item_pk>\d+)/remove', views.menu_item_remove, name='menu_item_remove'),
+    url(r'^post/ingredientlist/(?P<pk>\d+)/remove/$', views.ingredient_remove, name='ingredient_remove'),
     # url(r'^post/(?P<pk>\d+)/images/$', view.post)
 ] #+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
