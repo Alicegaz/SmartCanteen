@@ -7,7 +7,8 @@ def json(request):
     try:
         get_dict = request.GET
         json = get_dict.get('json')
-        if json:
+        json = str(json)
+        if json == '1' or json.lower() == 'true':
             return True
         else:
             return False
