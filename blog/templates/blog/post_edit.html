@@ -103,10 +103,77 @@
                 font-weight: normal;
                 padding-left: 20px;
              }
-               .container1 { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll; }
+               .container1 { border:2px solid #ccc; width:300px; height: 100px; color:white; background-color: white; overflow-y: scroll; }
                  .uniForm .ll textarea, .uniForm .ll input {
                     width: 100% !important;
                  }
+               input[type=text], select {
+    width: 80% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
+                                       input[type=number], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+}
+               .uniForm input[type=image], select {
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+}
+               .uniForm input, .uniForm textarea {
+border:1px solid #aaa !important;
+box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset !important;
+border-radius:2px !important;
+                   background-color:white !important;
+}
+.uniForm input:focus, .uniForm textarea:focus {
+    background: #fff !important;
+    border: 1px solid #555 !important;
+    box-shadow: 0 0 3px #aaa !important;
+}
+input#id_image.form-control{
+    width:300px !important;
+}
+input[type=number], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+    background-color: white !important;
+}
+               .uniForm label{color: #395870;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+                   margin-top: 20px;
+               }
+               .Uniform h2{
+                   margin:0;
+                   display:inline;
+                   color:black !important;
+                   font-color:black;
+                   padding-bottom: 30px !important;
+                   margin-bottom: 40px !important;
+               }
 
                                         </style>
         <title>Django Girls blog</title>
@@ -119,36 +186,51 @@
        <div class="content container">
     <div class="row-fluid">
        {#  <div class="col-md-8"> #}
-           <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                   <div class="ll">
-                    <label for="title">Название блюда:</label>
+                      <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <h2>Создавить новое блюдо</h2>
+                          <div class="form-group">
+                     <label for="title">Название блюда:</label>
                         {{ form.title }}
+                         <p class="help-block">{{ p.name }}</p>
+                     </div>
+                     <div class="form-group">
                     <label for="text">Описание:</label>
                    {{ form.text }}
-                    <label for="calories">Калории:</label>
+                     </div>
+                      <div class="form-group">
+                    <label for="text">Калории:</label>
                    {{  form.calories }}
+                      </div>
+                     <div class="form-group">
                     <label for="price">Цена:</label>
                    {{ form.price }}
+                     </div>
+                    <div class="form-group">
                     <label for="image">Изображение:</label>
                    {{form.image}}
-                       </div>
+                    </div>
                     <label for="ingredients">Ингредиенты:</label>
-                  <div class="container1">
+                   <div class="container1">
                         <div multiple="multiple" class="selectmultiple chosen">
                             {{ form.ingredients }}
                             </div>
                          </div>
-                         {% for p in posts %}
-                                <input type="number" name="quantity" id="{{ingredient1.id}}" width="10px" value="0" placeholder="{{ p.name }}">
+                 <div class="form-group">
+                     <label for="quantity">Ингредиенты</label>
+                     {% for p in posts %}
+                                <input type="number" class="form-group" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
+                                <p class="help-block">{{ p.name }}</p>
                             {% endfor %}
+                 </div>
+                 <div class="form-group">
                     <label for="type">Тип: </label>
                    {{ form.type }}
+                     </div>
                    <div class="form-group">
  <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-</form>
+                       </form>
     </div>
-
               {#  </div>  #}
 
 

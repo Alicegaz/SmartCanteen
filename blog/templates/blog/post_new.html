@@ -16,8 +16,24 @@
              }
              .container1 { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
               }
-
-
+                            input[type=text], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
+                            input[type=number], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
 
                                         </style>
         <title>Django Girls blog</title>
@@ -31,29 +47,44 @@
         <div class="row">
             <div class="col-md-8">
 
-                 <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                          <label for="title">Название блюда:</label>
+                 <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                     <div class="form-group">
+                     <label for="title">Название блюда:</label>
                         {{ form.title }}
+                     </div>
+                     <div class="form-group">
                     <label for="text">Описание:</label>
                    {{ form.text }}
+                     </div>
+                      <div class="form-group">
                     <label for="calories">Калории:</label>
                    {{  form.calories }}
+                      </div>
+                     <div class="form-group">
                     <label for="price">Цена:</label>
                    {{ form.price }}
+                     </div>
+                    <div class="form-group">
                     <label for="image">Изображение:</label>
                    {{form.image}}
+                    </div>
                     <label for="ingredients">Ингредиенты:</label>
                    <div class="container1">
                         <div multiple="multiple" class="selectmultiple chosen">
                             {{ form.ingredients }}
                             </div>
                          </div>
+                 <div class="form-group">
+                     <label for="quantity">Ингредиенты</label>
                      {% for p in posts %}
-
                                 <input type="number" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
+                                <p class="help-block">{{ p.name }}</p>
                             {% endfor %}
+                 </div>
+                 <div class="form-group">
                     <label for="type">Тип: </label>
                    {{ form.type }}
+                     </div>
                    <div class="form-group">
  <button type="submit" class="btn btn-primary">Save</button>
                         </div>
