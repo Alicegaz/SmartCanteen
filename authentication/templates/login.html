@@ -8,18 +8,78 @@
                 background-color: #f2dede !important;
                 border-color: #eed3d7 !important;
             }
-            .navbar, .navbar-default {
-                background-color: orange !important;
-            }
-            .navbar-brand{
-                color: white !important;
-                font-size: 200% !important;
-                font-family: SansSerif;
-            }
-             .navbar-header{
-             transform: translateX(39px) !important;
-
+.navbar-default {
+    background-color: #2ecc71 !important;
+    border-color: #27ae60 !important;
+	height: 60px !important;
+}
+.navbar-default .navbar-brand {
+    color: #ecf0f1 !important;
+    font-size: 200% !important;
+    font-family: SansSerif !important;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #d1ffed !important;
+}
+.navbar-default .navbar-nav > li > a {
+    color: #ecf0f1 !important;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #d1ffed !important;
+}
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #d1ffed !important;
+    background-color: #27ae60 !important;
+}
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #d1ffed !important;
+    background-color: #27ae60 !important;
+}
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #ecf0f1 !important;
+    border-bottom-color: #ecf0f1 !important;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #d1ffed !important;
+    border-bottom-color: #d1ffed !important;
+}
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #d1ffed !important;
+    border-bottom-color: #d1ffed !important;
+}
+.navbar-default .navbar-toggle {
+    border-color: #27ae60 !important;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #27ae60 !important;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #ecf0f1 !important;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #ecf0f1 !important;
+  }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #d1ffed !important;
+        background-color: #27ae60 !important;
     }
+}
+.btn-primary {
+background-color: #77DD77 !important;
+}
+.navbar-text: hover {background: #d1ffed !important;}
         </style>
         <title>Django Girls blog</title>
 
