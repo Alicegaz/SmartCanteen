@@ -121,8 +121,38 @@
                    margin-left:auto;
     margin-right:auto;
                }
-
-
+   body {
+    color: #000; /* цвет текста на странице */
+    background: #fff; /* фон */
+    margin: 0; /* обнуление полей */
+   }
+   #header {
+    height: 100px; /* высота шапки */
+    background: #fc0; /* фон */
+   }
+   #menu {
+    width: 25%; /* ширина меню */
+    height: 300px; /* высота */
+    background: #0fc; /* фон */
+    float: left; /* всплытие влево */
+   }
+   #sidebar {
+    width: 20%; /* ширина сайдбара */
+    height: 300px; /* высота */
+    background: #c0f; /* фон */
+    float: right; /* всплытие вправо */
+   }
+   #content {
+    height: 300px; /* высота контента */
+    background: #eee; /* фон */
+    margin: 0 20% 0 25%; /* боковые поля */
+   }
+   #footer {
+    height: 50px; /* высота футера */
+    color: #fff; /* цвет текста */
+    background: #000; /* фон */
+    clear: both; /* прерывание обтекания */
+   }
                                         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -132,10 +162,9 @@
         		            </head>
     <body>
        {%  include 'navbar.html' %}
-
-       <div class="content container">
-
-        <div class="row-fluid">
+       <div id="menu">меню</div>
+       <div id="sidebar">сайтбар</div>
+       <div id="content">
        {#  <div class="col-md-8"> #}
         {% if posts %}
             {% for post in posts %}
