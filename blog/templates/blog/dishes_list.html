@@ -23,14 +23,14 @@
 .navbar-default .navbar-nav > li > a:focus {
     color: #d1ffed !important;
 }
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a, 
+.navbar-default .navbar-nav > .active > a:hover, 
 .navbar-default .navbar-nav > .active > a:focus {
     color: #d1ffed !important;
     background-color: #27ae60 !important;
 }
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a, 
+.navbar-default .navbar-nav > .open > a:hover, 
 .navbar-default .navbar-nav > .open > a:focus {
     color: #d1ffed !important;
     background-color: #27ae60 !important;
@@ -44,8 +44,8 @@
     border-top-color: #d1ffed !important;
     border-bottom-color: #d1ffed !important;
 }
-.navbar-default .navbar-nav > .open > a .caret,
-.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a .caret, 
+.navbar-default .navbar-nav > .open > a:hover .caret, 
 .navbar-default .navbar-nav > .open > a:focus .caret {
     border-top-color: #d1ffed !important;
     border-bottom-color: #d1ffed !important;
@@ -130,57 +130,79 @@
                    color:white;
                                   }
                .settings:hover{
-            {#   padding:22px; #}
+            {#  padding:22px;  #}
                    background-color:lightsteelblue;
                    color:white;
                                   }
-
-
-
-
+               .row-fluid{
+                   margin-left:60px !important;
+                   margin-top:76px !important;
+               }
+                #1{
+                   width: 400px !important;
+                   left: 300px !important;
+               }
              .menu {
-                position: fixed; /* Фиксированное положение */
-                right: 350px; /* Расстояние от правого края окна браузера */
+              position: fixed; /* Фиксированное положение */
+                right: 360px; /* Расстояние от правого края окна браузера */
                 bottom: 10%; /* Расстояние сверху */
                 padding: 10px; /* Поля вокруг текста */ /* Цвет фона */
                 color:red !important;
-                font-size:50px;
+                font-size:67px;
                }
                .text {
                 height: 1000px;
                }
+               .ch-item {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    cursor: default;
+    box-shadow:
+        inset 0 0 0 16px rgba(255,255,255,0.6),
+        0 1px 2px rgba(0,0,0,0.1);
 
-               .container
-               {
-
-                   margin-left: 30% !important;
-                   margin-right: 18% !important;
-                   padding-right: 50px !important;
-               }
-               .row-fluid{
-                   padding-right: 10% !important;
-                    margin-top:76px !important;
-                  /* margin-right: 100px !important;
-                   margin-left: 300px !important; */
-
-               }
-               .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
-    float: left;
-    padding-bottom: 35px !important;
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
-               .menu_head{
-                   color: #337ab7;
-                   font-size: 200%;
-                   font-family: SansSerif;
-                   margin-left:auto;
-    margin-right:auto;
-               }
+.ch-info {
+    position: absolute;
+    background: rgba(63,147,147, 0.8);
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+    opacity: 0;
 
+    -webkit-transition: all 0.4s ease-in-out;
+    -moz-transition: all 0.4s ease-in-out;
+    -o-transition: all 0.4s ease-in-out;
+    -ms-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -o-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0);
+
+    -webkit-backface-visibility: hidden;
+}
+
+.ch-item:hover {
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.1),
+        0 1px 2px rgba(0,0,0,0.1);
+}
+.glyphicon.glyphicon-plus-sign {
+    color: #77DD77 !important;
+}
 
                                         </style>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
@@ -189,61 +211,49 @@
        {%  include 'navbar.html' %}
 
        <div class="content container">
-
-        <div class="row-fluid">
+    <div class="row-fluid">
+    <div class="post">
        {#  <div class="col-md-8"> #}
-        {% if posts %}
             {% for post in posts %}
-                  <div  class="menu_head"><a href="{% url 'menu_detail' pk=post.pk %}">{{ post.title }}</a>
-                        <a class="btn btn-default" href="{% url 'menu_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'menu_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                    </h2> </div>
                 {# <div class="col-md-8">  #}
+                <div id="image-{{post.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                     <div class="date">
-                         {% if post.date %}
-                            <p>published: {{ post.date }}</p>
+                         {% if post.published_date %}
+                              <p>published: {{ post.published_date }}</p>
                         {% endif %}
-                    </div>
-               {#{% for post in posts %} #}
-                  {# {%  for dishes in post.items.all %}#}
+                     </div>
 
-                      {# <div  class="post_head"><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a>#}
-                       {#<a class="btn btn-default" href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>#}
-                {# <a class="btn btn-default" href="{% url 'menu_item_remove' pk=dishes.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>#}
 
-                      {#<div id="image-{{dishes.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4"> #}
-                        {#<h2><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a> <a href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>#}
-                        {#{% if dishes.image %}#}
-                        {#<a href="{% url 'post_detail' pk=dishes.pk %}"> <img src="/{{dishes.image.url}}" height="200" width="250" float="left"/> </a> #}
-                       {#{% endif %} #}
-                        {# <p>price: {{  dishes.price }}</p> #}
-                        {# <p>калории: {{ dishes.calories }}</p> #}
+                    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                    </h2>
+                        {% if post.image %}
+                        <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{post.image.url}}" height="200" width="250" float="left"/> </a>
+                       {% endif %}
+                        <p>price: {{  post.price }}</p>
+                        <p>калории: {{ post.calories }}</p>
 
                {#{% for post in posts %} #}
                    {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
                        {#{%  endfor %} #}
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
-                {# </div> #}
-                      {# {{ dishes }} #}
-                      {#{%  endfor %} #}
-
-                {# {%  endfor %} #}
-                {# {{ post.text|linebreaks }} #}
+                </div>
                  {% endfor %}
-        {% endif %}
+    </div>
                </div>
 
               {#  </div>  #}
 
 
         </div>
+       <div class="menu"><a href="{% url 'post_new' %}">
+           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+  <div class="text"></div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-    <script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
-       <script>
+        <script>
          function confirmDelete ()
          {
              if (confirm("Вы уверены, что хотите удалить меню?")) {
@@ -255,15 +265,8 @@
                  }
          }
        </script>
-
-     {%  include 'javascripts.html' %}
-     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
-     </script>
-     <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
-     </script>
-     <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
-        type="text/css" media="screen" />
-     <script type="text/javascript">  $(".chosen").chosen();
-     </script>
+    <script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
     </body>
 </html>
