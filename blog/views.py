@@ -333,7 +333,7 @@ def post_new(request):
     else:
         context['form'] = PostForm()
         context['posts'] = Ingredient.objects.all()
-    return render(request, 'blog/post_edit.html', context)
+    return render(request, 'blog_templates/post_edit.html', context)
 
 
 def new_menu(request):
