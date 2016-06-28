@@ -353,19 +353,26 @@ input[type=number], select {
 </div>
        <div class="page-container">
        {#  <div class="col-md-8"> #}
-           <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                    <div class="container1">
-                        <div multiple="multiple" class="selectmultiple chosen">
-                            {{ form.items}}
+           <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <h2>Составить новое блюдо</h2>
+                      <div class="form-group">
+                    <label for="date">Калории:</label>
+                   {{  form.date }}
+                      </div>
+                     <div class="form-group">
+                    <label for="title">Цена:</label>
+                   {{ form.title }}
+                     </div>
+                   <div class="container1">
+                        <div multiple="items" class="selectmultiple chosen">
+                            {{ form.items }}
                             </div>
                          </div>
-                     <label for="date">Дата</label>
-                        {{ form.date }}
-               {{ form.title }}
-                 <div class="form-group">
+
+                   <div class="form-group">
  <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                </form>
+                       </form>
     </div>
 
               {#  </div>  #}
