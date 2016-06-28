@@ -252,19 +252,16 @@ def dinner_edit(request, pk):
             }
             # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('/')
-
     else:
         form = MenuForm(instance=post)
     return render(request, "blog_templates/dinner_edit.html", {'form': form})
 
 
-
 def post_new(request):
-    context = {}
+    context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            print(request.POST.getlist('quantity'))
             post = form.save(request=request, quantity_list=request.POST.getlist('quantity'))
             # post = form.save(commit=False)
             # post.author = request.user
@@ -290,10 +287,11 @@ def post_new(request):
             # form.save_m2m()
             # # post.ingredients()
             return redirect('post_detail', pk=post.pk)
+        else:
+            context['form'] = form
     else:
         context['form'] = PostForm()
-        context['posts'] = Ingredient.objects.all()
-    return render(request, 'blog_templates/post_edit.html', context)
+    return render(request, 'blog_templates/post_new.html', context)
 
 
 def new_menu(request):

@@ -54,9 +54,8 @@ class PostForm(forms.ModelForm):
         instance.save()
         quantity_list = kwargs['quantity_list']
         for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
-            print(item)
-            print(quantity)
             ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
+            ing_r.save()
         return instance
 
     def __init__(self, *args, **kwargs):
