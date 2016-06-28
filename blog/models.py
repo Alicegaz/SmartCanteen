@@ -77,7 +77,7 @@ class Post(models.Model):
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=1, default='завтрак')
+    title = models.CharField(max_length=60, choices=TYPE_MENU_CHOICES)
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
 

@@ -1,11 +1,11 @@
 from django.db import connection
 
-from .models import Menu, Post
+from .models import Menu
 # from .forms import PostForm, IngredientsForm, MenuForm
 from datetime import timedelta
 
 from blog.forms import PostForm, IngredientsForm, MenuForm
-from blog.models import Post, Ingredient, Menu, Post
+from blog.models import Post, Ingredient, Menu
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 # from .forms import PostForm, IngredientsForm, MenuForm
@@ -27,7 +27,7 @@ def post_list(request):
         return json_response(request, posts)
     else:
         data = {'posts': posts}
-        return render(request, 'blog/post_list.html', data)
+        return render(request, 'blog_templates/post_list.html', data)
 #     TODO так делать не надо,код надо оставлять читаемым
 
 
@@ -64,7 +64,7 @@ def post_list(request):
                                           date__year=timezone.now().year, title='завтрак')
     current = timezone.now()
     if not json:
-            return render(request, 'blog/post_list.html', {'posts1': posts1, 'posts2':posts2, 'posts3':posts3, 'posts4':posts4})
+            return render(request, 'blog_templates/post_list.html', {'posts1': posts1, 'posts2':posts2, 'posts3':posts3, 'posts4':posts4})
 
     else:
             data = {'posts1': serializers.serialize('json', posts1), 'posts2': serializers.serialize('json', posts2), 'posts3': serializers.serialize('json', posts3), 'posts4': serializers.serialize('json', posts4), 'current': serializers.serialize('json', current)}
@@ -74,7 +74,7 @@ def post_list(request):
 
 
 def no_permission(request):
-    return render(request, 'blog/no_permission.html')
+    return render(request, 'blog_templates/no_permission.html')
 
 
 def dishes_list(request):
@@ -83,7 +83,7 @@ def dishes_list(request):
         return json_response(request, posts)
     else:
         data = {'posts': posts}
-        return render(request, 'blog/dishes_list.html', data)
+        return render(request, 'blog_templates/dishes_list.html', data)
 
 
 def post_detail(request, pk=None):
@@ -95,7 +95,7 @@ def post_detail(request, pk=None):
         "ingredientss": ingredientss,
 
     }
-    return render(request, 'blog/post_detail.html', context)
+    return render(request, 'blog_templates/post_detail.html', context)
 
 
 def mymodal(request, pk=None):
@@ -107,7 +107,7 @@ def mymodal(request, pk=None):
         "ingredientss": ingredientss,
 
     }
-    return render(request, 'blog/mymodal.html', context)
+    return render(request, 'blog_templates/mymodal.html', context)
 
 
 # @user_passes_test(user.is_stuff, '/have_no_permission')
@@ -117,19 +117,19 @@ def post_admin(request):
         args = {}
         args.update(csrf(request))
         args['username'] = auth.get_user(request).is_superuser
-        return render(request, 'blog/post_admin.html', args)
+        return render(request, 'blog_templates/post_admin.html', args)
     else:
         return HttpResponse("У вас нет прав администратора")
 
 
         # def post_ingredientlist(request):
         #    ingredientss = Ingredient.objects.all()
-        #   return render(request, 'blog/post_ingredientlist', {'ingredientss': ingredientss})
+        #   return render(request, 'blog_templates/post_ingredientlist', {'ingredientss': ingredientss})
 
 
 def post_ingredientlist(request):
     posts = Ingredient.objects.all()
-    return render(request, 'blog/post_ingredientlist.html', {'posts': posts})
+    return render(request, 'blog_templates/post_ingredientlist.html', {'posts': posts})
 
 
 def post_edit(request, pk):
@@ -155,13 +155,13 @@ def post_edit(request, pk):
                 "form": form,
                 "posts":posts,
             }
-            # return render(request, 'blog/post_edit.html', context)
+            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('post_detail', pk=post.pk)
 
     else:
         form = PostForm(instance=post)
         posts = Ingredient.objects.all()
-    return render(request, "blog/post_edit.html", {'form': form, 'posts': posts})
+    return render(request, "blog_templates/post_edit.html", {'form': form, 'posts': posts})
 
 
 def menu_edit(request, pk):
@@ -187,12 +187,12 @@ def menu_edit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            # return render(request, 'blog/post_edit.html', context)
+            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('menu_detail', pk=post.pk)
 
     else:
         form = PostForm(instance=post)
-    return render(request, "blog/menu_edit.html", {'form': form})
+    return render(request, "blog_templates/menu_edit.html", {'form': form})
 
 
 def menu_detail(request, pk=None):
@@ -204,7 +204,7 @@ def menu_detail(request, pk=None):
         "items": items,
 
     }
-    return render(request, 'blog/menu_detail.html', context)
+    return render(request, 'blog_templates/menu_detail.html', context)
 
 
 def breakfast_edit(request, pk):
@@ -230,12 +230,12 @@ def breakfast_edit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            # return render(request, 'blog/post_edit.html', context)
+            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('/')
 
     else:
         form = MenuForm(instance=post)
-    return render(request, "blog/breakfast_edit.html", {'form': form})
+    return render(request, "blog_templates/breakfast_edit.html", {'form': form})
 
 
 def supper_edit(request, pk):
@@ -260,12 +260,12 @@ def supper_edit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            # return render(request, 'blog/post_edit.html', context)
+            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('/')
 
     else:
         form = MenuForm(instance=post)
-    return render(request, "blog/supper_edit.html", {'form': form})
+    return render(request, "blog_templates/supper_edit.html", {'form': form})
 
 
 def dinner_edit(request, pk):
@@ -290,12 +290,12 @@ def dinner_edit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            # return render(request, 'blog/post_edit.html', context)
+            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('/')
 
     else:
         form = MenuForm(instance=post)
-    return render(request, "blog/dinner_edit.html", {'form': form})
+    return render(request, "blog_templates/dinner_edit.html", {'form': form})
 
 
 
@@ -346,10 +346,10 @@ def new_menu(request):
             post.save()
             form.save_m2m()
             # post.ingredients()
-            return redirect('post_list')
+            return redirect('/')
     else:
         form = MenuForm()
-    return render(request, 'blog/new_menu.html', {'form': form})
+    return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
 def post_ingredientdetail(request, pk=None):
@@ -359,7 +359,7 @@ def post_ingredientdetail(request, pk=None):
         "instance": instance1,
         "username": auth.get_user(request).is_superuser
     }
-    return render(request, 'blog/post_ingredientdetail.html', context)
+    return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
 def post_ingredientedit(request, pk):
@@ -383,7 +383,7 @@ def post_ingredientedit(request, pk):
             return redirect('post_ingredientdetail', pk=post.pk)
     else:
         form = IngredientsForm(instance=post)
-    return render(request, 'blog/post_ingredientedit.html', {'form': form})
+    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
 def post_ingredientnew(request):
@@ -395,7 +395,7 @@ def post_ingredientnew(request):
             return redirect('post_ingredientdetail', pk=post.pk)
     else:
         form = IngredientsForm()
-    return render(request, 'blog/post_ingredientedit.html', {'form': form})
+    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
 def new_supper(request):
@@ -415,10 +415,10 @@ def new_supper(request):
             return redirect('/')
     else:
         form = MenuForm()
-    return render(request, 'blog/supper_edit.html', {'form': form})
+    return render(request, 'blog_templates/supper_edit.html', {'form': form})
 
 
-def new_breakfast(request):
+"""def new_breakfast(request):
     args = {}
     args.update(csrf(request))
     i = 0
@@ -427,25 +427,7 @@ def new_breakfast(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            """for ingredient in post.ingredients.all:
-                if ingredient.weight > 0 and Ingredient.get(name=ingredient.name).weight - MenuForm(
-                        request.POST.cleaned_data['weight']) > 0:
-                    ingredient.weight = Ingredient.get(name=ingredient.name).weight - MenuForm(
-                        request.POST.cleaned_data['weight'])
-                else:
-                    i = i + 1
-                    args['new_breakfast_error'] = args['new_breakfast_error'] + ", " + ingredient.name
 
-            if i > 0:
-                return render_to_response('new_breakfast.html', args)
-            else:
-                for ingredient in post.ingredients.all:
-                    if ingredient.weight > 0 and Ingredient.get(name=ingredient.name).weight - MenuForm(
-                            request.POST.cleaned_data['weight']) > 0:
-                        ingredient.weight = Ingredient.get(name=ingredient.name).weight - MenuForm(
-                            request.POST.cleaned_data['weight'])
-                        ingredient.weight.save()
-             """
             post.title = 'завтрак'
 
             # post.date = timezone.now()
@@ -458,7 +440,26 @@ def new_breakfast(request):
             return redirect('/')
     else:
         form = MenuForm()
-    return render(request, 'blog/breakfast_edit.html', {'form': form})
+    return render(request, 'blog_templates/breakfast_edit.html', {'form': form})
+"""
+def new_breakfast(request):
+    if request.method == 'POST':
+        form = MenuForm(request.POST or None)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.title = 'завтрак'
+            # post.date = timezone.now()
+            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
+                                         date__year=timezone.now().year, title='обед').count() >= 1:
+                post.date = timezone.now() + timedelta(days=1)
+            post.save()
+            form.save_m2m()
+            # post.ingredients()
+            return redirect('/')
+    else:
+        form = MenuForm()
+    return render(request, 'blog_templates/dinner_edit.html', {'form': form})
 
 
 def new_dinner(request):
@@ -478,24 +479,24 @@ def new_dinner(request):
             return redirect('/')
     else:
         form = MenuForm()
-    return render(request, 'blog/dinner_edit.html', {'form': form})
+    return render(request, 'blog_templates/dinner_edit.html', {'form': form})
 
 
 def menu_archive(request):
     posts = Menu.objects.all()
-    return render(request, 'blog/menu_archive.html', {'posts': posts})
+    return render(request, 'blog_templates/menu_archive.html', {'posts': posts})
 
 
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    return redirect('blog.views.dishes_list')
+    return redirect('blog_templates.views.dishes_list')
 
 
 def menu_remove(request, pk):
     post = get_object_or_404(Menu, pk=pk)
     post.delete()
-    return redirect('blog.views.menu_archive')
+    return redirect('blog_templates.views.menu_archive')
 
 
 def menu_item_remove(request, **kwargs):
@@ -511,11 +512,11 @@ def menu_item_remove(request, **kwargs):
         ite = post.items.get(pk=kwargs.get('item_pk', ''))
         # ite = post.items.get(pk=pk_url_kwarg)
         post.items.remove(ite)
-    return redirect('blog.views.menu_archive')
+    return redirect('blog_templates.views.menu_archive')
 
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     wast = Post.objects.all(pk = post.pk, name = post.name)
     post.delete()
     wast.delete()
-    return redirect('blog.views.post_ingredientlist')
+    return redirect('blog_templates.views.post_ingredientlist')

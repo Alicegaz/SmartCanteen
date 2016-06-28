@@ -1,7 +1,7 @@
 {% load staticfiles %}
 <html>
     <head>
-                      <style>
+           <style>
 .navbar-default {
     background-color: #2ecc71 !important;
     border-color: #27ae60 !important;
@@ -23,14 +23,14 @@
 .navbar-default .navbar-nav > li > a:focus {
     color: #d1ffed !important;
 }
-.navbar-default .navbar-nav > .active > a, 
-.navbar-default .navbar-nav > .active > a:hover, 
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #d1ffed !important;
     background-color: #27ae60 !important;
 }
-.navbar-default .navbar-nav > .open > a, 
-.navbar-default .navbar-nav > .open > a:hover, 
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     color: #d1ffed !important;
     background-color: #27ae60 !important;
@@ -44,8 +44,8 @@
     border-top-color: #d1ffed !important;
     border-bottom-color: #d1ffed !important;
 }
-.navbar-default .navbar-nav > .open > a .caret, 
-.navbar-default .navbar-nav > .open > a:hover .caret, 
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
 .navbar-default .navbar-nav > .open > a:focus .caret {
     border-top-color: #d1ffed !important;
     border-bottom-color: #d1ffed !important;
@@ -75,10 +75,6 @@
                 font-size: 200% !important;
                 font-family: SansSerif !important;
                }
-                .navbar .navbar-default
-              {
-                  width:100% !important;
-              }
             div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d {
     margin: 0;
 		padding: 0;
@@ -138,7 +134,10 @@
                    background-color:lightsteelblue;
                    color:white;
                                   }
-               
+
+
+
+
              .menu {
                 position: fixed; /* Фиксированное положение */
                 right: 350px; /* Расстояние от правого края окна браузера */
@@ -178,10 +177,7 @@
     margin-right:auto;
                }
 
-.navbar-text: hover {background: #d1ffed !important;}
-.glyphicon.glyphicon-plus-sign {
-    color: green !important;
-}
+
                                         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -198,41 +194,44 @@
        {#  <div class="col-md-8"> #}
         {% if posts %}
             {% for post in posts %}
-                  <div  class="menu_head"> {{ post.title }} </div>
+                  <div  class="menu_head"><a href="{% url 'menu_detail' pk=post.pk %}">{{ post.title }}</a>
+                        <a class="btn btn-default" href="{% url 'menu_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                 <a class="btn btn-default" href="{% url 'menu_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                    </h2> </div>
                 {# <div class="col-md-8">  #}
-                   {# <div class="date"> #}
-                         {#{% if post.published_date %} #}
-                            {#  <p>published: {{ post.published_date }}</p> #}
-                       {# {% endif %} #}
-                    {# </div>#}
-
+                    <div class="date">
+                         {% if post.date %}
+                            <p>published: {{ post.date }}</p>
+                        {% endif %}
+                    </div>
                {#{% for post in posts %} #}
-                   {%  for dishes in post.items.all %}
+                  {# {%  for dishes in post.items.all %}#}
 
+                      {# <div  class="post_head"><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a>#}
+                       {#<a class="btn btn-default" href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>#}
+                {# <a class="btn btn-default" href="{% url 'menu_item_remove' pk=dishes.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>#}
 
-
-                       <div id="image-{{dishes.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                           <h2><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a> <a href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>
-                        {% if dishes.image %}
-                        <a href="{% url 'post_detail' pk=dishes.pk %}"> <img src="/{{dishes.image.url}}" height="200" width="250" float="left"/> </a>
-                       {% endif %}
-                        <p>price: {{  dishes.price }}</p>
-                        <p>калории: {{ dishes.calories }}</p>
+                      {#<div id="image-{{dishes.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4"> #}
+                        {#<h2><a href="{% url 'post_detail' pk=dishes.pk %}">{{ dishes.title }}</a> <a href="{% url 'post_edit' pk=dishes.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h2>#}
+                        {#{% if dishes.image %}#}
+                        {#<a href="{% url 'post_detail' pk=dishes.pk %}"> <img src="/{{dishes.image.url}}" height="200" width="250" float="left"/> </a> #}
+                       {#{% endif %} #}
+                        {# <p>price: {{  dishes.price }}</p> #}
+                        {# <p>калории: {{ dishes.calories }}</p> #}
 
                {#{% for post in posts %} #}
                    {#<p> {%  for dishes in post.ingredients.all %}{{ ingredients }} </p> #}
                        {#{%  endfor %} #}
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
-                </div>
-                       {%  endfor %}
+                {# </div> #}
+                      {# {{ dishes }} #}
+                      {#{%  endfor %} #}
 
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
                  {% endfor %}
         {% endif %}
-
-
                </div>
 
               {#  </div>  #}
@@ -244,6 +243,18 @@
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+       <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
 
      {%  include 'javascripts.html' %}
      <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">

@@ -1,0 +1,145 @@
+{% load staticfiles %}
+<html>
+    <head>
+           <style>
+            .navbar, .navbar-default {
+                background-color: orange !important;
+                height:60px;
+            }
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
+               h2{
+                   color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif !important;
+               }
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d {
+    margin: 0;
+		padding: 0;
+		background: white;
+		/* color: #5f6f81; */
+		/* list-style: none; */
+		/* text-transform: none; */
+		/* font-weight: 300; */
+		/* font-family: 'Lato', Arial, sans-serif; */
+		line-height: 60px;
+}
+
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d li:hover {
+   background-color: lightsteelblue;
+}
+               .glyphicon.glyphicon-cog{
+    color:  #fff;
+                   left:13px;
+                   top:-2px;
+                   font-size:24px;
+}
+               .glyphicon.glyphicon-cog:hover{
+                   color: steelblue;
+
+               }
+               .glyphicon.glyphicon-plus-sign {
+                  color:red;
+               }
+               .glyphicon.glyphicon-plus-sign:hover {
+              -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(0, 0, 0, 0.1);
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+               }
+               .navbar .navbar-nav > li:hover {
+              color: steelblue;
+               }
+               .gn-menu .gn-submenu{
+                display:none !important;
+                   color:white !important;
+            }
+               .gn-menu > li:hover .gn-submenu {
+                   display:block !important;
+               }
+               a:hover{
+                   color: steelblue !important;
+               }
+               .settings {
+            {#  padding:22px; #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+               .settings:hover{
+            {#   padding:22px; #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+
+
+
+
+             .menu {
+                position: fixed; /* Фиксированное положение */
+                right: 350px; /* Расстояние от правого края окна браузера */
+                bottom: 10%; /* Расстояние сверху */
+                padding: 10px; /* Поля вокруг текста */ /* Цвет фона */
+                color:red !important;
+                font-size:50px;
+               }
+               .text {
+                height: 1000px;
+               }
+
+               .container
+               {
+
+                   margin-left: 30% !important;
+                   margin-right: 18% !important;
+                   padding-right: 50px !important;
+               }
+               .row-fluid{
+                   padding-right: 10% !important;
+                    margin-top:76px !important;
+                  /* margin-right: 100px !important;
+                   margin-left: 300px !important; */
+
+               }
+               .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
+    float: left;
+    padding-bottom: 35px !important;
+}
+
+
+
+                                        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <title>Django Girls blog</title>
+          {% include 'stylesheets.html' %}
+            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+        		            </head>
+    <body>
+       {%  include 'navbar.html' %}
+
+       <div class="content container">
+        <div class="row-fluid">
+       {#  <div class="col-md-8"> #}
+
+             <h1>Извините, у вас нет прав на бодавление новых пользователей :(</h1>
+               </div>
+
+              {#  </div>  #}
+
+
+        </div>
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+    <script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+    </body>
+</html>
