@@ -42,7 +42,7 @@ def create_permission(codename, name):
 
 
 def no_permission(request):
-    return render(request, 'blog/no_permission.html')
+    return render(request, 'blog_templates/no_permission.html')
 
 
 @permission_required('is_admin', login_url='/have_no_permission')

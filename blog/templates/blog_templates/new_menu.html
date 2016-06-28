@@ -1,0 +1,63 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+<html>
+    <head>
+         <style>
+            .navbar, .navbar-default {
+                background-color: orange !important;
+            }
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
+              .container1 { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
+              }
+             form label.radio, form label.checkbox {
+                font-weight: normal;
+                padding-left: 20px;
+             }
+
+                                        </style>
+        <title>Django Girls blog</title>
+          {% include 'stylesheets.html' %}
+        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    </head>
+    <body>
+    {%  include 'navbar.html' %}
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+                <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                    <label for="items1">Завтрак</label>
+                    <div class="container1">
+                        <div multiple="multiple" class="selectmultiple chosen">
+                            {{ form.items}}
+                            </div>
+                         </div>
+                    {{ form.title }}
+                    <label for="date">Дата</label>
+                    {{ form.date }}
+                 <div class="form-group">
+ <button type="submit" class="btn btn-primary">Save</button>
+                        </div>                       </form>
+
+</div>
+        </div>
+    </div>
+     {%  include 'javascripts.html' %}
+     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
+     </script>
+     <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
+     </script>
+     <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
+        type="text/css" media="screen" />
+     <script type="text/javascript">  $(".chosen").chosen();
+     </script>
+</body>
+</html>
+
+

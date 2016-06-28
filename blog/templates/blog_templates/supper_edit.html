@@ -1,0 +1,153 @@
+{% load staticfiles %}
+<html>
+    <head>
+           <style>
+            .navbar, .navbar-default {
+                background-color: orange !important;
+                height:60px;
+            }
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
+               h2{
+                   color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif !important;
+               }
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d {
+    margin: 0;
+		padding: 0;
+		background: white;
+		/* color: #5f6f81; */
+		/* list-style: none; */
+		/* text-transform: none; */
+		/* font-weight: 300; */
+		/* font-family: 'Lato', Arial, sans-serif; */
+		line-height: 60px;
+}
+
+            div#not-google-plus-nav ul#gn-menu li#k nav#m div#n ul#d li:hover {
+   background-color: lightsteelblue;
+}
+               .glyphicon.glyphicon-cog{
+    color:  #fff;
+                   left:13px;
+                   top:-2px;
+                   font-size:24px;
+}
+               .glyphicon.glyphicon-cog:hover{
+                   color: steelblue;
+
+               }
+               .glyphicon.glyphicon-plus-sign {
+                  color:red;
+               }
+               .glyphicon.glyphicon-plus-sign:hover {
+              -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 0px rgba(0, 0, 0, 0.3);
+              box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.3), 0 1px 0px rgba(0, 0, 0, 0.1);
+              width: 100%;
+              height: 100%;
+              border-radius: 50%;
+               }
+               .navbar .navbar-nav > li:hover {
+              color: steelblue;
+               }
+               .gn-menu .gn-submenu{
+                display:none !important;
+                   color:white !important;
+            }
+               .gn-menu > li:hover .gn-submenu {
+                   display:block !important;
+               }
+               a:hover{
+                   color: steelblue !important;
+               }
+               .settings {
+            {#  padding:22px; #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+               .settings:hover{
+            {#  padding:22px;  #}
+                   background-color:lightsteelblue;
+                   color:white;
+                                  }
+               .row-fluid{
+                   margin-left:60px !important;
+                   margin-top:76px !important;
+               }
+                #1{
+                   width: 400px !important;
+                   left: 300px !important;
+               }
+             .menu {
+              position: fixed; /* Фиксированное положение */
+                right: 360px; /* Расстояние от правого края окна браузера */
+                bottom: 10%; /* Расстояние сверху */
+                padding: 10px; /* Поля вокруг текста */ /* Цвет фона */
+                color:red !important;
+                font-size:67px;
+               }
+               .text {
+                height: 1000px;
+               }
+   .container1 { border:2px solid #ccc; width:300px; height: 100px; overflow-y: scroll;
+              }
+             form label.radio, form label.checkbox {
+                font-weight: normal;
+                padding-left: 20px;
+             }
+
+                                        </style>
+        <title>Django Girls blog</title>
+          {% include 'stylesheets.html' %}
+            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+        		            </head>
+    <body>
+       {%  include 'navbar.html' %}
+
+       <div class="content container">
+    <div class="row-fluid">
+       {#  <div class="col-md-8"> #}
+            <form method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                    <label for="items">Ужин</label>
+                    <div class="container1">
+                        <div multiple="multiple" class="selectmultiple chosen">
+                            {{ form.items}}
+                            </div>
+                         </div>
+                     <label for="date">Дата</label>
+                        {{ form.date }}
+                 <div class="form-group">
+ <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                </form>
+    </div>
+
+              {#  </div>  #}
+
+
+        </div>
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+    <script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js">
+     </script>
+     <script type="text/javascript" src="{{ STATIC_URL }}js/chosen/chosen.jquery.min.js">
+     </script>
+     <link rel="stylesheet" href="{{ STATIC_URL }}js/chosen/chosen.css"
+        type="text/css" media="screen" />
+     <script type="text/javascript">  $(".chosen").chosen();
+     </script>
+    </body>
+</html>
+
+

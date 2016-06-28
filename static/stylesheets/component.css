@@ -315,14 +315,14 @@ input.gn-search:focus {
 
 
 .gn-menu-wrapper.gn-open-all {
-		width: 340px
+		width: 25%
 }
 
 .gn-menu-wrapper.gn-open-all .gn-submenu li {
 		height: 60px
 }
 
-@media screen and (max-width: 422px) { 
+@media screen and (max-width: 422px) {
 	.gn-menu-wrapper.gn-open-all {
 			-webkit-transform: translateX(0px);
 			-moz-transform: translateX(0px);
