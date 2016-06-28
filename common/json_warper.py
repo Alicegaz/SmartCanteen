@@ -16,14 +16,27 @@ def json(request):
         return False
 
 
-def json_response(request, data):
-    json_data = []
-    try:
-        for instance in data:
-            json_data.append(instance.get_json_object())
-    except TypeError:
-        json_data = {'data': serializers.serialize('json', data)}
-        return JsonResponse(json_data)
+def json_response(data):
+    json_data = {}
+    item_list_of_data = data.items()
+    for item in item_list_of_data:
+        print(item)
+        print(1)
+        name, data = item
+        try:
+            if data.__iter__:
+                print(data.__iter__)
+                data_list = []
+                for instance in data:
+                    print(instance)
+                    data_list.append(instance.get_json_object())
+                    print(data_list)
+                json_data[name] = data_list
+            else:
+                json_data[name] = data.get_json_object
+        except AttributeError:
+            print(4)
+            json_data[name] = str(data)
     return HttpResponse(json_module.dumps(json_data).__str__())
 
 

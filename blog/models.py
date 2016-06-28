@@ -34,11 +34,11 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
-        # def __init__(self, *args, **kwargs):
-        # super(models.Model, self).__init__(*args, **kwargs)
-        # adding css classes to widgets without define the fields:
-        # for field in self.fields:
-        #    self.fields[field].widget.attrs['class'] = 'form-control'
+    def get_json_object(self):
+        dic = self.__dict__
+        dic['date'] = self.date.isocalendar()
+        dic.pop('_state')
+        return dic
 
     class Meta:
         ordering = ('date',)
@@ -62,7 +62,7 @@ class Post(models.Model):
 
     def get_json_object(self):
         dic = self.__dict__
-        dic['published_date'] = self.published_date.isocalendar()
+        dic['created_date'] = self.created_date.isocalendar()
         dic['image'] = self.image.url
         dic.pop('_state')
         return dic
