@@ -1,11 +1,6 @@
-from itertools import chain
-
 from django.db import models
-from django.forms import RadioSelect, CheckboxSelectMultiple, CheckboxInput
 from django.utils import timezone
-from django import forms
 from django.core.exceptions import ValidationError
-from requests import auth
 from blog.widgets import *
 from blog.fields import *
 
@@ -57,14 +52,7 @@ class Post(models.Model):
     price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
-    published_date = models.DateTimeField(blank=True, null=True)
-    ingredients = models.ManyToManyField(Ingredient, verbose_name='список продуктов')
     type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
-    # pic = models.ImageField(blank=True, )
-
-    def publish(self):
-        self.published_date = timezone.now()
-        self.save()
 
     def __str__(self):
         return self.title
@@ -74,20 +62,24 @@ class Post(models.Model):
 
     def get_json_object(self):
         dic = self.__dict__
-        dic['created_date'] = self.created_date.isocalendar()
         dic['published_date'] = self.published_date.isocalendar()
         dic['image'] = self.image.url
         dic.pop('_state')
         return dic
+
+    def get_ingredients(self):
+        ing_relation = IngDishRelation.objects.filter(dish=self)
+        result = []
+        for instance in ing_relation:
+            result.append(instance.ingredient)
+        return result
+
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=1, default='завтрак')
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
-    #times = models.TimeField(help_text='UTC date and time when voting begins')
-
-    # pic = models.ImageField(blank=True, )
 
     def publish(self):
         self.date = timezone.now()
@@ -105,22 +97,24 @@ def clean_price(self):
         raise ValidationError("Значение цены должно быть положительным!", code="invalid")
 
 
-class Wasted(models.Model):
-    name = models.CharField(max_length=300)
-    weight = models.IntegerField(null=True)
-    date = models.DateTimeField(default=timezone.now)
+class History(models.Model):
+    dish = models.ForeignKey(Post)
+    ingredient = models.ForeignKey(Ingredient)
+    amount = models.IntegerField()
+    date = models.DateField(default=timezone.now)
 
-    def __unicode__(self):
-        return self.name
+    def add_history_instance(self, relation):
+        self.dish = relation.dish
+        self.ingredient = relation.ingredient
+        self.amount = relation.amount
+        self.save()
 
-    def __str__(self):
-        return self.name
 
-    class Meta:
-        ordering = ('date',)
+class IngDishRelation(models.Model):
+    dish = models.ForeignKey(Post, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=False)
 
-        # def __init__(self, *args, **kwargs):
-        # super(models.Model, self).__init__(*args, **kwargs)
-        # adding css classes to widgets without define the fields:
-        # for field in self.fields:
-        #    self.fields[field].widget.attrs['class'] = 'form-control'
+    def substract_from_ingredient(self):
+        self.ingredient.weight -= self.amount
+        History.add_history_instance(relation=self)

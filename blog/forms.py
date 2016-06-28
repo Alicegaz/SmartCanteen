@@ -3,8 +3,7 @@ from itertools import chain
 
 from django import forms
 from django.forms import ChoiceField, CheckboxSelectMultiple, CheckboxInput, SelectDateWidget
-from django.utils.html import conditional_escape
-from django.utils.safestring import mark_safe
+from .models import IngDishRelation
 
 from .models import Menu
 from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES
@@ -36,7 +35,6 @@ class PostForm(forms.ModelForm):
 
     # type = forms.ChiceField(widget=forms.RadioSelect, choices = TYPE_CHOICES)
 
-
     class Meta:
         model = Post
         fields = ('title', 'text', 'calories', 'price', 'image', 'ingredients', 'type')
@@ -50,14 +48,15 @@ class PostForm(forms.ModelForm):
         return [label for value, label in self.fields['ingredients'].choices if value in self['ingredients'].vallue()]
 
     def save(self, *args, **kwargs):
-        instance = super(PostForm, self).save(*args, **kwargs)
-        if instance.pk:
-            for ingredient in instance.ingredients.all():
-                if ingredient not in self.cleaned_data['ingredients']:
-                    instance.ingredients.remove(ingredient)
-            for ingredient in self.cleaned_data['ingredients']:
-                if ingredient not in instance.ingredients.all():
-                    instance.ingredients.add(ingredient)
+        request = kwargs['request']
+        instance = super(PostForm, self).save(commit=False)
+        instance.author = request.user
+        instance.save()
+        quantity_list = kwargs['quantity_list']
+        for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
+            print(item)
+            print(quantity)
+            ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
         return instance
 
     def __init__(self, *args, **kwargs):
@@ -66,6 +65,7 @@ class PostForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
             self.fields['ingredients'].widget.attrs['class'] = 'chosen'
+
 
 
 

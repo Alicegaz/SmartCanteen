@@ -1,11 +1,11 @@
 from django.db import connection
 
-from .models import Menu, Wasted
+from .models import Menu, Post
 # from .forms import PostForm, IngredientsForm, MenuForm
 from datetime import timedelta
 
 from blog.forms import PostForm, IngredientsForm, MenuForm
-from blog.models import Post, Ingredient, Menu, Wasted
+from blog.models import Post, Ingredient, Menu, Post
 from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 # from .forms import PostForm, IngredientsForm, MenuForm
@@ -78,7 +78,7 @@ def no_permission(request):
 
 
 def dishes_list(request):
-    posts = Post.objects.all().order_by('published_date')
+    posts = Post.objects.all().order_by('created_date')
     if json(request):
         return json_response(request, posts)
     else:
@@ -88,7 +88,7 @@ def dishes_list(request):
 
 def post_detail(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
-    ingredientss = instance.ingredients.all()
+    ingredientss = instance.get_ingredients()
     context = {
         "title": instance.title,
         "instance": instance,
@@ -300,38 +300,40 @@ def dinner_edit(request, pk):
 
 
 def post_new(request):
-    args = {}
+    context = {}
     if request.method == 'POST':
-        form = PostForm(request.POST or None, request.FILES)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            i=0
-            ingredients1 = Ingredient.objects.all()
-            post.published_date = timezone.now()
             print(request.POST.getlist('quantity'))
-            for item in request.POST.getlist('quantity'):
-                i=i+1
-                if int(item) !=0:
-                  w = Wasted.objects.all().get(pk=i)
-                  w.weight = int(item)
-                  w.save()
-                  if Ingredient.objects.all().get(name=w.name, pk=i).weight >0:
-                      ingr = Ingredient.objects.all().get(name=w.name, pk=i)
-                      ingr.weight = ingr.weight - w.weight
-                      ingr.save()
-                  else:
-                      args['login_error'] = "нет на складе продукта"
-                      args['login_error'] = args['login_error']+w.name
-                      return render_to_response('post_new', args)
-            post.save()
-            form.save_m2m()
-            # post.ingredients()
+            post = form.save(request=request, quantity_list=request.POST.getlist('quantity'))
+            # post = form.save(commit=False)
+            # post.author = request.user
+            # i=0
+            # ingredients1 = Ingredient.objects.all()
+            # post.published_date = timezone.now()
+            # print(request.POST.getlist('quantity'))
+            # for item in request.POST.getlist('quantity'):
+            #     i=i+1
+            #     if int(item) !=0:
+            #       w = Wasted.objects.all().get(pk=i)
+            #       w.weight = int(item)
+            #       w.save()
+            #       if Ingredient.objects.all().get(name=w.name, pk=i).weight >0:
+            #           ingr = Ingredient.objects.all().get(name=w.name, pk=i)
+            #           ingr.weight = ingr.weight - w.weight
+            #           ingr.save()
+            #       else:
+            #           args['login_error'] = "нет на складе продукта"
+            #           args['login_error'] = args['login_error']+w.name
+            #           return render_to_response('post_new', args)
+            # post.save()
+            # form.save_m2m()
+            # # post.ingredients()
             return redirect('post_detail', pk=post.pk)
     else:
-        form = PostForm()
-        posts = Ingredient.objects.all()
-    return render(request, 'blog/post_edit.html', {'form': form, 'posts': posts})
+        context['form'] = PostForm()
+        context['posts'] = Ingredient.objects.all()
+    return render(request, 'blog/post_edit.html', context)
 
 
 def new_menu(request):
@@ -386,15 +388,10 @@ def post_ingredientedit(request, pk):
 
 def post_ingredientnew(request):
     if request.method == 'POST':
-        form = IngredientsForm(request.POST or None)
+        form = IngredientsForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            # post.author = request.user
-            # post.published_date = timezone.now()
-            w = Wasted(name=post.name, weight=0)
-            w.save()
             post.save()
-
             return redirect('post_ingredientdetail', pk=post.pk)
     else:
         form = IngredientsForm()
@@ -518,7 +515,7 @@ def menu_item_remove(request, **kwargs):
 
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
-    wast = Wasted.objects.all(pk = post.pk, name = post.name)
+    wast = Post.objects.all(pk = post.pk, name = post.name)
     post.delete()
     wast.delete()
     return redirect('blog.views.post_ingredientlist')
