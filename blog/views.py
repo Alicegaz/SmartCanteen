@@ -23,54 +23,12 @@ from django.shortcuts import render_to_response, redirect, render
 
 def post_list(request):
     posts = get_menu_of_currunt_time()
+    data = {'posts': posts}
     if json(request):
-        return json_response(request, posts)
+        return json_response(data)
     else:
-        data = {'posts': posts}
         return render(request, 'blog_templates/post_list.html', data)
 #     TODO так делать не надо,код надо оставлять читаемым
-
-
-"""def post_list(request):
-    json = request.GET.get('json')
-    start_date = timezone.now()
-    end_date = start_date + timedelta(days=1)
-    end_date1 = end_date + timedelta(days=1)
-    # DATE_FORMAT = '%Y-%m-%d'
-    # start_date = datetime.strptime(start_date, DATE_FORMAT)
-    # qs = qs.filter(
-    #   start_date__year=start_date.year,
-    #  start_date__month=start_date.month,
-    # start_date__day=start_date.day
-    # )
-    # compare current date without time with one in the database
-    # now_time = datetime.now()
-    # start = DateTime.Parse("2016-03-26T07:00:15+02").ToUniversalTime().time;
-    # end = DateTime.Parse("2016-03-27T10:00:15+03").ToUniversalTime().time;
-    # start2= DateTime.Parse("2016-03-26T11:00:15+02").ToUniversalTime().time;
-    # end2 = DateTime.Parse("2016-03-27T15:00:15+03").ToUniversalTime().time;
-    # start3 = DateTime.Parse("2016-03-26T16:00:15+02").ToUniversalTime().time;
-    # end3 = DateTime.Parse("2016-03-27T20:00:15+03").ToUniversalTime().time;
-    posts1 = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='завтрак')
-
-    posts2 = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='обед')
-
-    posts3 = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='ужин')
-
-    posts4 = Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                          date__year=timezone.now().year, title='завтрак')
-    current = timezone.now()
-    if not json:
-            return render(request, 'blog_templates/post_list.html', {'posts1': posts1, 'posts2':posts2, 'posts3':posts3, 'posts4':posts4})
-
-    else:
-            data = {'posts1': serializers.serialize('json', posts1), 'posts2': serializers.serialize('json', posts2), 'posts3': serializers.serialize('json', posts3), 'posts4': serializers.serialize('json', posts4), 'current': serializers.serialize('json', current)}
-            return JsonResponse(data)
-
-"""
 
 
 def no_permission(request):
@@ -79,22 +37,24 @@ def no_permission(request):
 
 def dishes_list(request):
     posts = Post.objects.all().order_by('created_date')
+    data = {'posts': posts}
     if json(request):
-        return json_response(request, posts)
+        return json_response(data)
     else:
-        data = {'posts': posts}
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
 def post_detail(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
-    ingredientss = instance.get_ingredients()
+    ingredients = instance.get_ingredients()
     context = {
         "title": instance.title,
         "instance": instance,
-        "ingredientss": ingredientss,
+        "ingredients": ingredients,
 
     }
+    if json(request):
+        return json_response(context)
     return render(request, 'blog_templates/post_detail.html', context)
 
 
@@ -292,19 +252,16 @@ def dinner_edit(request, pk):
             }
             # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('/')
-
     else:
         form = MenuForm(instance=post)
     return render(request, "blog_templates/dinner_edit.html", {'form': form})
 
 
-
 def post_new(request):
-    context = {}
+    context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            print(request.POST.getlist('quantity'))
             post = form.save(request=request, quantity_list=request.POST.getlist('quantity'))
             # post = form.save(commit=False)
             # post.author = request.user
@@ -330,10 +287,11 @@ def post_new(request):
             # form.save_m2m()
             # # post.ingredients()
             return redirect('post_detail', pk=post.pk)
+        else:
+            context['form'] = form
     else:
         context['form'] = PostForm()
-        context['posts'] = Ingredient.objects.all()
-    return render(request, 'blog_templates/post_edit.html', context)
+    return render(request, 'blog_templates/post_new.html', context)
 
 
 def new_menu(request):
