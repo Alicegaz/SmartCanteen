@@ -116,7 +116,7 @@ def post_edit(request, pk):
                 "posts":posts,
             }
             # return render(request, 'blog_templates/post_edit.html', context)
-            return redirect('post_detail', pk=post.pk)
+            return redirect('dishes_list')
 
     else:
         form = PostForm(instance=post)
@@ -286,7 +286,7 @@ def post_new(request):
             # post.save()
             # form.save_m2m()
             # # post.ingredients()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('dishes_list')
         else:
             context['form'] = form
     else:
@@ -338,7 +338,7 @@ def post_ingredientedit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            return redirect('post_ingredientdetail', pk=post.pk)
+            return redirect('post_ingredientlist')
     else:
         form = IngredientsForm(instance=post)
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
@@ -350,7 +350,7 @@ def post_ingredientnew(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('post_ingredientdetail', pk=post.pk)
+            return redirect('post_ingredientlist')
     else:
         form = IngredientsForm()
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})

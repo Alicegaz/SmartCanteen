@@ -58,6 +58,17 @@ class PostForm(forms.ModelForm):
             ing_r.save()
         return instance
 
+    def save_object(self, *args, **kwargs):
+        instance = super(PostForm, self).save(commit=False)
+        instance.author = kwargs['request'].user
+        instance.save()
+        for ing_r in IngDishRelation.objects.filter(dish=instance):
+            ing_r.delete()
+        quantity_list = kwargs['quantity_list']
+        for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
+            ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
+            ing_r.save()
+
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
