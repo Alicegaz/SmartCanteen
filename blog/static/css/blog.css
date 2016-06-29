@@ -18,3 +18,11 @@
     width: 42px;
     height: 42px;
 }
+.post .date{
+     float: right;
+        color: #828282;
+}
+a.btn.btn-default
+{
+    float:right;
+}
