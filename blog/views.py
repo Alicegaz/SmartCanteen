@@ -448,13 +448,13 @@ def menu_archive(request):
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    return redirect('blog_templates.views.dishes_list')
+    return redirect('blog.views.dishes_list')
 
 
 def menu_remove(request, pk):
     post = get_object_or_404(Menu, pk=pk)
     post.delete()
-    return redirect('blog_templates.views.menu_archive')
+    return redirect('blog.views.menu_archive')
 
 
 def menu_item_remove(request, **kwargs):
@@ -470,11 +470,9 @@ def menu_item_remove(request, **kwargs):
         ite = post.items.get(pk=kwargs.get('item_pk', ''))
         # ite = post.items.get(pk=pk_url_kwarg)
         post.items.remove(ite)
-    return redirect('blog_templates.views.menu_archive')
+    return redirect('blog.views.menu_archive')
 
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
-    wast = Post.objects.all(pk = post.pk, name = post.name)
     post.delete()
-    wast.delete()
-    return redirect('blog_templates.views.post_ingredientlist')
+    return redirect('blog.views.post_ingredientlist')
