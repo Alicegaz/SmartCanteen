@@ -240,6 +240,8 @@
     color: #77DD77 !important;
 }
 
+
+
                                         </style>
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
@@ -280,12 +282,8 @@
        {#  <div class="col-md-8"> #}
             {% for post in posts %}
                 {# <div class="col-md-8">  #}
+                <div class="post">
                 <div id="image-{{post.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                    <div class="date">
-                         {% if post.published_date %}
-                              <p>published: {{ post.published_date }}</p>
-                        {% endif %}
-                     </div>
 
 
                     <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
@@ -295,6 +293,11 @@
                         {% if post.image %}
                         <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{post.image.url}}" height="200" width="250" float="left"/> </a>
                        {% endif %}
+                <div class="date">
+                         {% if post.created_date %}
+                              <p>published: {{ post.created_date }}</p>
+                        {% endif %}
+                     </div>
                         <p>price: {{  post.price }}</p>
                         <p>калории: {{ post.calories }}</p>
 
@@ -303,6 +306,7 @@
                        {#{%  endfor %} #}
                 {# {%  endfor %} #}
                 {# {{ post.text|linebreaks }} #}
+                </div>
                 </div>
                  {% endfor %}
     </div>
