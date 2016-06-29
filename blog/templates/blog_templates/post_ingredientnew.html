@@ -1,75 +1,19 @@
 {% load staticfiles %}
 <html>
     <head>
-                      <style>
-            .navbar-default {
-    background-color: #2ecc71 !important;
-    border-color: #27ae60 !important;
-	height: 60px !important;
-}
-.navbar-default .navbar-brand {
-    color: #ecf0f1 !important;
-    font-size: 200% !important;
-    font-family: SansSerif !important;
-}
-.navbar-default .navbar-brand:hover,
-.navbar-default .navbar-brand:focus {
-    color: #d1ffed !important;
-}
-.navbar-default .navbar-nav > li > a {
-    color: #ecf0f1 !important;
-}
-.navbar-default .navbar-nav > li > a:hover,
-.navbar-default .navbar-nav > li > a:focus {
-    color: #d1ffed !important;
-}
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > .active > a:focus {
-    color: #d1ffed !important;
-    background-color: #27ae60 !important;
-}
-.navbar-default .navbar-nav > .open > a,
-.navbar-default .navbar-nav > .open > a:hover,
-.navbar-default .navbar-nav > .open > a:focus {
-    color: #d1ffed !important;
-    background-color: #27ae60 !important;
-}
-.navbar-default .navbar-nav > .dropdown > a .caret {
-    border-top-color: #ecf0f1 !important;
-    border-bottom-color: #ecf0f1 !important;
-}
-.navbar-default .navbar-nav > .dropdown > a:hover .caret,
-.navbar-default .navbar-nav > .dropdown > a:focus .caret {
-    border-top-color: #d1ffed !important;
-    border-bottom-color: #d1ffed !important;
-}
-.navbar-default .navbar-nav > .open > a .caret,
-.navbar-default .navbar-nav > .open > a:hover .caret,
-.navbar-default .navbar-nav > .open > a:focus .caret {
-    border-top-color: #d1ffed !important;
-    border-bottom-color: #d1ffed !important;
-}
-.navbar-default .navbar-toggle {
-    border-color: #27ae60 !important;
-}
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
-    background-color: #27ae60 !important;
-}
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #ecf0f1 !important;
-}
-@media (max-width: 767px) {
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-        color: #ecf0f1 !important;
-  }
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
-    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #d1ffed !important;
-        background-color: #27ae60 !important;
-    }
-}
+           <style>
+            .navbar, .navbar-default {
+                background-color: orange !important;
+                height:60px;
+            }
+            .navbar-brand{
+                color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif;
+            }
+             .navbar-header{
+             transform: translateX(39px) !important;
+             }
                h2{
                    color: white !important;
                 font-size: 200% !important;
@@ -153,65 +97,265 @@
                .text {
                 height: 1000px;
                }
-               .ch-item {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    position: relative;
-    cursor: default;
-    box-shadow:
-        inset 0 0 0 16px rgba(255,255,255,0.6),
-        0 1px 2px rgba(0,0,0,0.1);
+  #header {
+    height: 100px; /* высота шапки */
+    background: #fc0; /* фон */
+   }
+   #menu2 {
+    width: 200px; /* ширина меню */
+    height: 30px; /* высота */
+    background: #0fc; /* фон */
+    float: left; /* всплытие влево */
+   }
+   .content{
+    height: 100% !important; /* высота контента */
+    background: #eee !important; /* фон */
+    margin: 0 20% 0 25% !important; /* боковые поля */
+   }
+   #footer {
+    height: 50px; /* высота футера */
+    color: #fff; /* цвет текста */
+    background: #000; /* фон */
+    clear: both; /* прерывание обтекания */
+   }
+               div.page-container {
+  max-width: 75%;
+  min-width: 800px;
+  padding: 0;
+                   height: 300px !important; /* высота контента */
+    background: #eee !important; /* фон */
+    margin: 0 30px 0 200px !important; /* боковые поля */
+  }
 
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    -ms-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
+             .main-menu {
+    box-shadow:2px 2px 8px #000000;
+    border-radius:3px;
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+                 width: 200px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    float:left;
+    background-color:white;
+    margin-top:10px;
 }
-
-.ch-info {
-    position: absolute;
-    background: rgba(63,147,147, 0.8);
-    width: inherit;
-    height: inherit;
-    border-radius: 50%;
-    opacity: 0;
-
-    -webkit-transition: all 0.4s ease-in-out;
-    -moz-transition: all 0.4s ease-in-out;
-    -o-transition: all 0.4s ease-in-out;
-    -ms-transition: all 0.4s ease-in-out;
-    transition: all 0.4s ease-in-out;
-
-    -webkit-transform: scale(0);
-    -moz-transform: scale(0);
-    -o-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-
-    -webkit-backface-visibility: hidden;
+.main-menu, .main-menu ul {
+    list-style:none;
+    padding:0;
+    width:200px;
 }
-
-.ch-item:hover {
-    box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,0.1),
-        0 1px 2px rgba(0,0,0,0.1);
+.main-menu ul {
+    position:relative;
+    z-index:-1;
 }
-.navbar-text: hover {background: #d1ffed !important;}
-       </style>
+.main-menu li {
+    position:relative;
+    z-index:140;
+}
+.main-menu ul li {
+    margin-top:-23px;
+
+    -moz-transition:  0.4s linear 0.4s;
+    -ms-transition: 0.4s linear 0.4s;
+    -o-transition: 0.4s linear 0.4s;
+    -webkit-transition: 0.4s linear 0.4s;
+    transition: 0.4s linear 0.4s;
+}
+.main-menu li a {
+    background-color:#d4d5d8;
+    color:#000;
+    display:block;
+    font-size:12px;
+    font-weight:bold;
+    line-height:50px;
+    outline:0;
+    padding-left:15px;
+    text-decoration:none;
+}
+.main-menu li #sub-menu {
+    background:#d4d5d8 url("../images/down.gif") no-repeat;
+}
+.main-menu li a + img {
+    cursor:pointer;
+    display:none;
+    height:40px;
+    left:0;
+    position:absolute;
+    top:0;
+    width:200px;
+}
+.main-menu li a img {
+    border-width:0px;
+    height:36px;
+    line-height:40px;
+    margin-right:8px;
+    vertical-align:middle;
+    width:24px;
+}
+.main-menu li a:hover {
+    background-color:#bcbdc1;
+}
+.main-menu ul li a {
+    background-color:#eee;
+    border-bottom:1px solid #ccc;
+    color:#000;
+    font-size:11px;
+    line-height:22px;
+}
+.main-menu ul li a:hover {
+    background-color:#ddd;
+    color:#444;
+}
+.main-menu ul li:nth-child(odd) a img {
+    background:url("../images/bulb2.png") no-repeat;
+}
+.main-menu a#sub-menu:focus {
+    background:#bcbdc1;
+    outline:0;
+}
+.main-menu a:focus ~ ul li {
+    margin-top:0;
+
+    -moz-transition:  0.4s linear;
+    -ms-transition: 0.4s linear;
+    -o-transition: 0.4s linears;
+    -webkit-transition: 0.4s linears;
+    transition: 0.4s linear;
+}
+.main-menu a:focus + img, .main-menu a:active + img {
+    display:block;
+}
+.main-menu a#sub-menu:active {
+    background:#bcbdc1;
+    outline:0;
+}
+.main-menu a:active ~ ul li {
+    margin-top:0;
+}
+.main-menu ul:hover li {
+    margin-top:0;
+}
+               .container1 { border:2px solid #ccc; width:300px; height: 100px; color:white; background-color: white; overflow-y: scroll; }
+                 .uniForm .ll textarea, .uniForm .ll input {
+                    width: 80% !important;
+                 }
+               input[type=text], select {
+    width: 80% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+}
+                                       input[type=number], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+}
+               .uniForm input[type=image], select {
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 20px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+}
+               .uniForm input, .uniForm textarea {
+border:1px solid #aaa !important;
+box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset !important;
+border-radius:2px !important;
+                   background-color:white !important;
+}
+.uniForm input:focus, .uniForm textarea:focus {
+    background: #fff !important;
+    border: 1px solid #555 !important;
+    box-shadow: 0 0 3px #aaa !important;
+}
+input#id_image.form-control{
+    width:300px !important;
+}
+input[type=number], select {
+    width: 100% !important;
+    padding: 12px 20px !important;
+    margin: 8px 0 !important;
+    display: inline-block !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+    width:100px !important;
+    background-color: white !important;
+}
+               .uniForm label{color: #395870;
+  display: block;
+  font-weight: bold;
+  margin-bottom: 10px;
+                   margin-top: 20px;
+               }
+               .Uniform h2{
+                   margin:0;
+                   display:inline;
+                   color:black !important;
+                   font-color:black;
+                   padding-bottom: 30px !important;
+                   margin-bottom: 40px !important;
+               }
+               .sidebar{
+                   width: 300px; /* ширина меню */
+    height: 500px; /* высота */
+    float: left; /* всплытие влево */
+               }
+.form-group {
+    margin: 0 30px 0 100px !important;
+}
+                                        </style>
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+
         		            </head>
     <body>
        {%  include 'navbar.html' %}
-
-       <div class="content container">
-    <div class="row-fluid">
+    <div class="sidebar">
+<ul class="main-menu">
+            <li><a href="#company" class="gn-icon gn-icon-earth" id="sub-menu" tabindex="1">Персонал</a>
+               <ul>
+                    <li><a class="gn-icon gn-icon-help">Управление</a></li>
+                   <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
+               </ul>
+    </li>
+            <li><a href="#services" class="gn-icon gn-icon-help" id="sub-menu" tabindex="1">Информация</a>
+                <ul>
+                    <li><a class="gn-icon gn-icon-article">Акции</a></li>
+                    <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
+                </ul>
+            </li>
+            <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>
+                <ul>
+                    <li><a href="{% url 'dishes_list' %}" class="gn-icon gn-icon-search">Блюда</a></li>
+                    <li><a href="{% url 'post_ingredientlist' %}" class="gn-icon gn-icon-pictures">Продукты</a></li>
+                </ul>
+    </li>
+            <li><a href="#contacts" class="gn-icon gn-icon-help">Создать меню</a>
+                <ul>
+                    <li><a href="{% url 'menu_archive' %}" class="gn-icon gn-icon-search">Архив</a></li>
+                                    <li><a href="{% url 'new_menu' %}" class="gn-icon gn-icon-search">Создать меню</a></li>
+                                                    </ul>
+    </li>
+        </ul>
+</div>
+       <div class="page-container">
        {#  <div class="col-md-8"> #}
             <form method="post" action="" enctype="multipart/form-data" class="post-form">{%  csrf_token %}
-                        {{ form.as_p }}
+                <h2>Составить новое блюдо</h2>
+                {{ form.as_p }}
                     <div class="form-group">
  <button type="submit" class="btn btn-primary">Save</button>
                         </div>
@@ -220,13 +364,35 @@
 
               {#  </div>  #}
 
-
-        </div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
 

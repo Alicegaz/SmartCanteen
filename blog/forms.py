@@ -62,7 +62,7 @@ class PostForm(forms.ModelForm):
         super(PostForm, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
         for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+            #self.fields[field].widget.attrs['class'] = 'form-control'
             self.fields['ingredients'].widget.attrs['class'] = 'chosen'
 
 
