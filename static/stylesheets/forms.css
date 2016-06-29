@@ -280,10 +280,10 @@ div.page-container-inner {
 }
  .container1 { border:2px solid #ccc; width:300px; height: 100px; color:white; background-color: white; overflow-y: scroll; }
                  .uniForm .ll textarea, .uniForm .ll input {
-                    width: 40% !important;
+                    width: 80% !important;
                  }
                input[type=text], select {
-    width: 40% !important;
+    width: 80% !important;
     padding: 12px 20px !important;
     margin: 8px 0 !important;
     display: inline-block !important;
@@ -358,10 +358,11 @@ input[type=number] {
 .form-group {
      margin: 0 30px 0 100px !important;
 }
-
-textarea {
-    overflow: auto;
-    vertical-align: top;
-    height: 100px;
-    width: 40%;
-}
+.page-container h2{
+                   margin:0;
+                   display:inline;
+                   color:black !important;
+                   font-color:black;
+                   padding-bottom: 40px !important;
+                   margin-bottom: 40px !important;
+               }
