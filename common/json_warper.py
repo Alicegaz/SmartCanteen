@@ -35,7 +35,6 @@ def json_response(data):
                 data_list = []
                 for instance in data:
                     data_list.append(instance.get_json_object())
-                    print(data_list)
                 json_data[name] = data_list
             else:
                 json_data[name] = data.get_json_object()
