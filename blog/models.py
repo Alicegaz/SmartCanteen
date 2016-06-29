@@ -22,11 +22,9 @@ TYPE_MENU_CHOICES = (
 
 class Ingredient(models.Model):
     name = models.CharField(max_length=300)
-    #author = models.ForeignKey('auth.User')
     weight = models.IntegerField(null=True)
     price = models.IntegerField(null=True)
     date = models.DateTimeField(default=timezone.now)
-
 
     def __unicode__(self):
         return self.name
@@ -75,26 +73,27 @@ class Post(models.Model):
         return result
 
 
+class IngDishRelation(models.Model):
+    dish = models.ForeignKey(Post, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    amount = models.IntegerField(null=False)
+
+    def subtract_from_ingredient(self):
+        self.ingredient.weight -= self.amount
+        History.add_history_instance(relation=self)
+
+
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=60, choices=TYPE_MENU_CHOICES)
     date = models.DateTimeField(default=timezone.now)
-    items = models.ManyToManyField(Post)
-
-    def publish(self):
-        self.date = timezone.now()
-        self.save()
+    items = models.ManyToManyField(IngDishRelation)
 
     def __str__(self):
         return self.title
 
     def __unicode__(self):
         return self.choice_text
-
-
-def clean_price(self):
-    if self.clean_data.get('price') < 0:
-        raise ValidationError("Значение цены должно быть положительным!", code="invalid")
 
 
 class History(models.Model):
@@ -108,13 +107,3 @@ class History(models.Model):
         self.ingredient = relation.ingredient
         self.amount = relation.amount
         self.save()
-
-
-class IngDishRelation(models.Model):
-    dish = models.ForeignKey(Post, on_delete=models.CASCADE)
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    amount = models.IntegerField(null=False)
-
-    def substract_from_ingredient(self):
-        self.ingredient.weight -= self.amount
-        History.add_history_instance(relation=self)

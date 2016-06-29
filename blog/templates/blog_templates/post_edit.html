@@ -38,47 +38,64 @@
         </ul>
 </div>
        <div class="page-container">
-       {#  <div class="col-md-8"> #}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <h2>Составить новое блюдо</h2>
-                          <div class="form-group">
-                     <label for="title">Название блюда:</label>
-                        {{ form.title }}
-                         <p class="help-block">{{ p.name }}</p>
-                     </div>
-                      <div class="form-group">
-                    <label for="text">Калории:</label>
-                   {{  form.calories }}
-                      </div>
-                     <div class="form-group">
-                    <label for="price">Цена:</label>
-                   {{ form.price }}
-                     </div>
-                    <div class="form-group">
-                    <label for="image">Изображение:</label>
-                   {{form.image}}
-                    </div>
-                    <label for="ingredients">Ингредиенты:</label>
-                   <div class="container1">
-                        <div multiple="multiple" class="selectmultiple chosen">
-                            {{ form.ingredients }}
-                            </div>
-                         </div>
-                 <div class="form-group">
-                     <label for="quantity">Ингредиенты</label>
-                     {% for p in posts %}
-                                <input type="number" class="form-group" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
-                                <p class="help-block">{{ p.name }}</p>
-                            {% endfor %}
-                 </div>
-                 <div class="form-group">
-                    <label for="type">Тип: </label>
-                   {{ form.type }}
-                     </div>
-                   <div class="form-group">
- <button type="submit" class="btn btn-primary">Save</button>
+                      <h2>Измнить блюдо</h2>
+                        <div class="form-group">
+                            {{ form.title.errors }}
+                            <label for="title">Название блюда:</label>
+                                {{ form.title }}
                         </div>
-                       </form>
+
+                        <div class="form-group">
+                            {{ form.text.errors }}
+                            <label for="text">Text</label>
+                            {{ form.text }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.calories.errors }}
+                            <label for="text">Калории:</label>
+                            {{  form.calories }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.price.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.price }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.image.errors }}
+                            <label for="image">Изображение:</label>
+                            {{form.image}}
+                        </div>
+                        <div class="form-group">
+                        <label for="ingredients">Ингредиенты:</label></div>
+                        {{ form.ingredients.errors }}
+                        <div class="container1">
+                            <div multiple="multiple" class="selectmultiple chosen">
+                                {{ form.ingredients }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quantity">Ингредиенты</label>
+                                {% for p in posts %}
+                                    <input type="number" class="form-group" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
+                                    <p class="help-block">{{ p.name }}</p>
+                                {% endfor %}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.type.errors }}
+                            <label for="type">Тип: </label>
+                            {{ form.type }}
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+            </form>
     </div>
 
               {#  </div>  #}
