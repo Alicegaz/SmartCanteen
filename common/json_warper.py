@@ -20,8 +20,6 @@ def json_response(data):
     json_data = {}
     item_list_of_data = data.items()
     for item in item_list_of_data:
-        print(item)
-        print(1)
         name, data = item
         try:
             if data.__iter__:
