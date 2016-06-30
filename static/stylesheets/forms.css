@@ -154,7 +154,7 @@ div.page-container {
     padding: 0;
     height: 300px !important; /* высота контента */
     background: #eee !important; /* фон */
-    margin: 0 30px 0 200px !important; /* боковые поля */
+    margin: 0 30px 0 300px !important; /* боковые поля */
 }
 
 div.page-container-inner {
