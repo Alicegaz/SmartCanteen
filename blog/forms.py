@@ -55,7 +55,9 @@ class PostForm(forms.ModelForm):
         instance = super(PostForm, self).save(commit=False)
         request = kwargs['request']
         instance.author = request.user
-        instance.image = get_image_from_request(request)
+        image = get_image_from_request(request)
+        if image:
+            instance.image = image
         instance.save()
         for ing_r in IngDishRelation.objects.filter(dish=instance):
             ing_r.delete()

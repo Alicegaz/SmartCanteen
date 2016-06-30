@@ -1,5 +1,4 @@
-from django.core import serializers
-from django.http import JsonResponse,HttpResponse
+from django.http import HttpResponse
 import json as json_module
 
 
@@ -26,21 +25,29 @@ def is_iterable(obj):
         return False
 
 
+def generate_json(data):
+    if type(data) == dict:
+        result = {}
+        item_list_of_data = data.items()
+        for item in item_list_of_data:
+            name, data = item
+            result[name] = generate_json(data)
+        return result
+    elif hasattr(data, '__iter__'):
+        result = []
+        for item in data:
+            result.append(generate_json(item))
+        return result
+    elif hasattr(data, 'get_json_object'):
+        return data.get_json_object()
+    elif isinstance(data, str):
+        return str(data)
+    else:
+        raise TypeError
+
+
 def json_response(data):
-    json_data = {}
-    item_list_of_data = data.items()
-    for item in item_list_of_data:
-        name, data = item
-        try:
-            if is_iterable(data):
-                data_list = []
-                for instance in data:
-                    data_list.append(instance.get_json_object())
-                json_data[name] = data_list
-            else:
-                json_data[name] = data.get_json_object()
-        except AttributeError:
-            json_data[name] = str(data)
+    json_data = generate_json(data)
     return HttpResponse(json_module.dumps(json_data).__str__())
 
 

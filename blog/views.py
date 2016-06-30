@@ -1,34 +1,23 @@
-from django.db import connection
-
-from .models import Menu
-# from .forms import PostForm, IngredientsForm, MenuForm
 from datetime import timedelta
-
 from blog.forms import PostForm, IngredientsForm, MenuForm
 from blog.models import Post, Ingredient, Menu
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
-# from .forms import PostForm, IngredientsForm, MenuForm
-from django.shortcuts import redirect
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_currunt_time
-from django.core import serializers
-from django.shortcuts import render_to_response, redirect, render
-
-
+from django.shortcuts import redirect, render
 
 
 def post_list(request):
     posts = get_menu_of_currunt_time()
     data = {'posts': posts}
     if json(request):
-        return json_response(data)
+        return json_response(posts)
     else:
         return render(request, 'blog_templates/post_list.html', data)
-#     TODO так делать не надо,код надо оставлять читаемым
 
 
 def no_permission(request):
@@ -39,7 +28,7 @@ def dishes_list(request):
     posts = Post.objects.all().order_by('created_date')
     data = {'posts': posts}
     if json(request):
-        return json_response(data)
+        return json_response(posts)
     else:
         return render(request, 'blog_templates/dishes_list.html', data)
 
@@ -48,7 +37,6 @@ def post_detail(request, pk=None):
     instance = get_object_or_404(Post, pk=pk)
     ingredients = instance.get_ingredients()
     context = {
-        "title": instance.title,
         "instance": instance,
         "ingredients": ingredients,
 
@@ -143,7 +131,6 @@ def menu_detail(request, pk=None):
     instance = get_object_or_404(Menu, pk=pk)
     items = instance.items.all()
     context = {
-        "title": instance.title,
         "instance": instance,
         "items": items,
 
@@ -246,30 +233,7 @@ def post_new(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(request=request, quantity_list=request.POST.getlist('quantity'))
-            # post = form.save(commit=False)
-            # post.author = request.user
-            # i=0
-            # ingredients1 = Ingredient.objects.all()
-            # post.published_date = timezone.now()
-            # print(request.POST.getlist('quantity'))
-            # for item in request.POST.getlist('quantity'):
-            #     i=i+1
-            #     if int(item) !=0:
-            #       w = Wasted.objects.all().get(pk=i)
-            #       w.weight = int(item)
-            #       w.save()
-            #       if Ingredient.objects.all().get(name=w.name, pk=i).weight >0:
-            #           ingr = Ingredient.objects.all().get(name=w.name, pk=i)
-            #           ingr.weight = ingr.weight - w.weight
-            #           ingr.save()
-            #       else:
-            #           args['login_error'] = "нет на складе продукта"
-            #           args['login_error'] = args['login_error']+w.name
-            #           return render_to_response('post_new', args)
-            # post.save()
-            # form.save_m2m()
-            # # post.ingredients()
+            form.save(request=request, quantity_list=request.POST.getlist('quantity'))
             return redirect('dishes_list')
         else:
             context['form'] = form
@@ -455,6 +419,7 @@ def menu_item_remove(request, **kwargs):
         # ite = post.items.get(pk=pk_url_kwarg)
         post.items.remove(ite)
     return redirect('blog.views.menu_archive')
+
 
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
