@@ -1,10 +1,11 @@
 from django import forms
-from datetime import timezone
 from django.forms import ChoiceField
 from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation
 from blog.fields import *
+from django.utils import timezone
 from common.request import get_image_from_request
 from common.blog_post_list import get_menu_of_current_time
+from django.forms.extras.widgets import SelectDateWidget
 
 class ElectionTimesForm(forms.Form):
   # times
@@ -83,6 +84,7 @@ class MenuForm(forms.ModelForm):
         required=False,
     )
     title = forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES)
+    date = forms.DateField(widget=SelectDateWidget(), initial=timezone.now)
 
     class Meta:
         model = Menu
@@ -90,6 +92,7 @@ class MenuForm(forms.ModelForm):
 
         widgets = {
             'items': forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
+            'date': forms.DateField(widget=SelectDateWidget(), initial=timezone.now),
             'title': forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES),
         }
 
@@ -97,7 +100,7 @@ class MenuForm(forms.ModelForm):
         return [label for value, label in self.fields['items'].choices if value in self['items'].vallue()]
 
     def save(self, *args, **kwargs):
-        menus = get_menu_of_current_time(self.cleaned_data['title'])
+        menus = get_menu_of_current_time(title=self.cleaned_data['title'], time=self.cleaned_data['date'])
         for menu in menus:
             menu.delete()
         instance = super(MenuForm, self).save(*args, **kwargs)

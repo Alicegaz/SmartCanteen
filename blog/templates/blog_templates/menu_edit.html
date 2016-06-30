@@ -2,6 +2,7 @@
 <html>
     <head>
            <style>
+           <style>
             .navbar, .navbar-default {
                 background-color: orange !important;
                 height:60px;
@@ -315,6 +316,7 @@ input[type=number], select {
 .form-group {
      margin: 0 30px 0 100px !important;
 }
+
                                         </style>
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
@@ -353,26 +355,34 @@ input[type=number], select {
 </div>
        <div class="page-container">
        {#  <div class="col-md-8"> #}
-           <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <h2>Составить новое блюдо</h2>
-                      <div class="form-group">
-                    <label for="date">Калории:</label>
-                   {{  form.date }}
-                      </div>
-                     <div class="form-group">
-                    <label for="title">Цена:</label>
-                   {{ form.title }}
-                     </div>
-                   <div class="container1">
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                <h2>Составить новое блюдо</h2>
+                <div class="form-group">
+                    {{ form.title.errors }}
+                    <label for="title">Тип:</label>
+                    {{ form.title }}
+                </div>
+
+                <div class="form-group">
+                    <label for="items">Блюда:</label>
+                    {{ form.items.errors }}
+                    <div class="container1">
                         <div multiple="items" class="selectmultiple chosen">
                             {{ form.items }}
-                            </div>
-                         </div>
-
-                   <div class="form-group">
- <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                       </form>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.date.errors }}
+                    <label for="date">Дата:</label>
+                    {{  form.date }}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
     </div>
 
               {#  </div>  #}
