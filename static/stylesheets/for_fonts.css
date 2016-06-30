@@ -1,0 +1,41 @@
+@font-face {
+		font-weight: normal;
+		font-style: normal;
+		font-family: 'ecoicons';
+	    src: url("../fonts/linecons/linecons.eot");
+		src: url("../fonts/linecons/linecons.eot?#iefix") format("embedded-opentype"), url("../fonts/linecons/linecons.woff") format("woff"), url("../fonts/linecons/linecons.ttf") format("truetype"), url("../fonts/linecons/linecons.svg#icomoon") format("svg");
+
+}
+.icon:before {
+	font-family: 'linecons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 0.8em;
+	font-size: 1.2em;
+	-webkit-font-smoothing: antialiased;
+	color: #337ab7 !important;
+}
+
+.icon:before {
+	font-family: 'linecons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	display: inline-block;
+	vertical-align: bottom;
+	margin-right: 0.8em;
+	font-size: 1.2em;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-lab:before {
+	content: "\e017";
+}
