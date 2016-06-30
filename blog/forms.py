@@ -1,20 +1,13 @@
 from datetime import timezone
-from itertools import chain
-
 from django import forms
-from django.forms import ChoiceField, CheckboxSelectMultiple, CheckboxInput, SelectDateWidget
+from django.forms import ChoiceField
 from .models import IngDishRelation
-
 from .models import Menu
 from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES
 from django.utils import timezone
 from django.forms.extras.widgets import SelectDateWidget
-import re
-from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import Widget, Select, MultiWidget
-from django.utils.safestring import mark_safe
-from blog.widgets import *
 from blog.fields import *
+from common.request import get_image_from_request
 
 
 class ElectionTimesForm(forms.Form):
@@ -53,6 +46,20 @@ class PostForm(forms.ModelForm):
         instance.author = request.user
         instance.save()
         quantity_list = kwargs['quantity_list']
+        for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
+            ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
+            ing_r.save()
+        return instance
+
+    def save_object(self, **kwargs):
+        instance = super(PostForm, self).save(commit=False)
+        request = kwargs['request']
+        instance.author = request.user
+        instance.image = get_image_from_request(request)
+        instance.save()
+        for ing_r in IngDishRelation.objects.filter(dish=instance):
+            ing_r.delete()
+        quantity_list = request.POST.getlist('quantity')
         for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
             ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
             ing_r.save()

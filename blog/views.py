@@ -7,7 +7,7 @@ from datetime import timedelta
 from blog.forms import PostForm, IngredientsForm, MenuForm
 from blog.models import Post, Ingredient, Menu
 from django.utils import timezone
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 # from .forms import PostForm, IngredientsForm, MenuForm
 from django.shortcuts import redirect
 from django.http import HttpResponse, JsonResponse
@@ -93,35 +93,19 @@ def post_ingredientlist(request):
 
 
 def post_edit(request, pk):
+    context = {}
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.published_date = timezone.now()
-            posts = Ingredient.objects.all()
-            post_numder = post.pk
-            for ing in request.POST.getlist('ingredients'):
-                theing = Ingredient.objects.get(pk=ing)
-                post.ingredients.add(theing.id)
-            post.save()
-            form.save_m2m()
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-            context = {
-                "title": post.title,
-                "instance": post,
-                "form": form,
-                "posts":posts,
-            }
-            # return render(request, 'blog_templates/post_edit.html', context)
-            return redirect('post_detail', pk=post.pk)
-
+            post = form.save_object(request=request)
+            return redirect('dishes_list')
+        else:
+            context['form'] = form
     else:
-        form = PostForm(instance=post)
-        posts = Ingredient.objects.all()
-    return render(request, "blog_templates/post_edit.html", {'form': form, 'posts': posts})
+        context['form'] = PostForm(instance=post)
+        context['posts'] = Ingredient.objects.all()
+    return render(request, "blog_templates/post_edit.html", context)
 
 
 def menu_edit(request, pk):
@@ -286,7 +270,7 @@ def post_new(request):
             # post.save()
             # form.save_m2m()
             # # post.ingredients()
-            return redirect('post_detail', pk=post.pk)
+            return redirect('dishes_list')
         else:
             context['form'] = form
     else:
@@ -338,7 +322,7 @@ def post_ingredientedit(request, pk):
                 "instance": post,
                 "form": form,
             }
-            return redirect('post_ingredientdetail', pk=post.pk)
+            return redirect('post_ingredientlist')
     else:
         form = IngredientsForm(instance=post)
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
@@ -350,7 +334,7 @@ def post_ingredientnew(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('post_ingredientdetail', pk=post.pk)
+            return redirect('post_ingredientlist')
     else:
         form = IngredientsForm()
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})

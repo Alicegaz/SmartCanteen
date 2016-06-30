@@ -6,24 +6,25 @@ import json as json_module
 def json(request):
     try:
         get_dict = request.GET
-        json = get_dict.get('json')
-        json = str(json)
-        if json == '1' or json.lower() == 'true':
+        json_str = get_dict.get('json')
+        json_str = str(json_str)
+        if json_str == '1' or json_str.lower() == 'true':
             return True
         else:
             return False
-    except:
+    except Exception:
         return False
 
 
-def is_iterable(object):
+def is_iterable(obj):
     try:
-        if object.__iter__:
+        if obj.__iter__:
             return True
         else:
             return False
     except AttributeError:
         return False
+
 
 def json_response(data):
     json_data = {}
