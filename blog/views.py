@@ -7,12 +7,12 @@ from django.http import HttpResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
 from common.json_warper import json, json_response
-from common.blog_post_list import get_menu_of_currunt_time
+from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 
 
 def post_list(request):
-    posts = get_menu_of_currunt_time()
+    posts = get_menu_of_current_time()
     data = {'posts': posts}
     if json(request):
         return json_response(posts)
@@ -248,10 +248,8 @@ def new_menu(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.date = timezone.now()
             post.save()
             form.save_m2m()
-            # post.ingredients()
             return redirect('/')
     else:
         form = MenuForm()
