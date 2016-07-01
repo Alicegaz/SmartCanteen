@@ -4,7 +4,6 @@ from blog.models import Menu
 
 def __get_title_of_current_time(time):
     hour = time.hour
-    print(hour)
     if 11 <= hour <= 16:
         return 'обед'
     elif 16 <= hour <= 22:

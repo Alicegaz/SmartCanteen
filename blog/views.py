@@ -14,7 +14,6 @@ from django.shortcuts import redirect, render
 def post_list(request):
     posts = get_menu_of_current_time()
     data = {'posts': posts}
-    print(posts)
     if json(request):
         return json_response(posts)
     else:
