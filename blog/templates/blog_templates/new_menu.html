@@ -355,31 +355,33 @@ input[type=number], select {
        <div class="page-container">
        {#  <div class="col-md-8"> #}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <h2>Составить новое блюдо</h2>
-                           <div class="form-group">
+                <h2>Составить новое блюдо</h2>
+                <div class="form-group">
+                    {{ form.title.errors }}
                     <label for="title">Тип:</label>
-                   {{ form.title }}
-                     </div>
+                    {{ form.title }}
+                </div>
+
                 <div class="form-group">
                     <label for="items">Блюда:</label>
-                          <div class="container1">
+                    {{ form.items.errors }}
+                    <div class="container1">
                         <div multiple="items" class="selectmultiple chosen">
                             {{ form.items }}
-                            </div>
-                         </div>
-                    </div>
-                          <div class="form-group">
-                    <label for="date">Дата:</label>
-                   {{  form.date }}
-                      </div>
-
-
-
-
-                   <div class="form-group">
- <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                       </form>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.date.errors }}
+                    <label for="date">Дата:</label>
+                    {{  form.date }}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
     </div>
 
               {#  </div>  #}

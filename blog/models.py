@@ -83,11 +83,15 @@ class IngDishRelation(models.Model):
         History.add_history_instance(relation=self)
 
 
+class MenuObject(models.Model):
+    ing_dish_relations = models.ManyToManyField(IngDishRelation)
+
+
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=60, choices=TYPE_MENU_CHOICES)
     date = models.DateTimeField(default=timezone.now)
-    items = models.ManyToManyField(IngDishRelation)
+    items = models.ManyToManyField(Post)
 
     def __str__(self):
         return self.title

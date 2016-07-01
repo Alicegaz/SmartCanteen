@@ -1,14 +1,11 @@
-from datetime import timezone
 from django import forms
 from django.forms import ChoiceField
-from .models import IngDishRelation
-from .models import Menu
-from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES
-from django.utils import timezone
-from django.forms.extras.widgets import SelectDateWidget
+from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation
 from blog.fields import *
+from django.utils import timezone
 from common.request import get_image_from_request
-
+from common.blog_post_list import get_menu_of_current_time
+from django.forms.extras.widgets import SelectDateWidget
 
 class ElectionTimesForm(forms.Form):
   # times
@@ -16,7 +13,6 @@ class ElectionTimesForm(forms.Form):
                                    widget=SplitSelectDateTimeWidget)
   voting_ends_at = SplitDateTimeField(help_text = 'UTC date and time when voting ends',
                                    widget=SplitSelectDateTimeWidget)
-
 
 
 class PostForm(forms.ModelForm):
@@ -49,6 +45,7 @@ class PostForm(forms.ModelForm):
         for (item, quantity) in zip(self.cleaned_data.get('ingredients'), quantity_list):
             ing_r = IngDishRelation.objects.create(dish=instance, ingredient=item, amount=quantity)
             ing_r.save()
+
         return instance
 
     def save_object(self, **kwargs):
@@ -75,8 +72,6 @@ class PostForm(forms.ModelForm):
             self.fields['ingredients'].widget.attrs['class'] = 'chosen'
 
 
-
-
 class IngredientsForm(forms.ModelForm):
     class Meta:
         model = Ingredient
@@ -89,19 +84,15 @@ class MenuForm(forms.ModelForm):
         required=False,
     )
     title = forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES)
-    #title = forms.CharField()
     date = forms.DateField(widget=SelectDateWidget(), initial=timezone.now)
-    #times = forms.TimeField(widget=SelectTimeWidget(twelve_hr=True), label=u'Time')
 
     class Meta:
         model = Menu
-        fields = ('items', 'date', 'title')
+        fields = ('items', 'title')
 
         widgets = {
             'items': forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
             'date': forms.DateField(widget=SelectDateWidget(), initial=timezone.now),
-            #'times': forms.TimeField(widget=SelectTimeWidget(twelve_hr=True), label=u'Time')
-            # default=datetime.now
             'title': forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES),
         }
 
@@ -109,6 +100,8 @@ class MenuForm(forms.ModelForm):
         return [label for value, label in self.fields['items'].choices if value in self['items'].vallue()]
 
     def save(self, *args, **kwargs):
+        menu = get_menu_of_current_time(title=self.cleaned_data['title'], time=self.cleaned_data['date'])
+        menu.delete()
         instance = super(MenuForm, self).save(*args, **kwargs)
         if instance.pk:
             for item in instance.items.all():

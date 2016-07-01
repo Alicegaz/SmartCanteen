@@ -7,12 +7,12 @@ from django.http import HttpResponse
 from django.contrib import auth
 from django.template.context_processors import csrf
 from common.json_warper import json, json_response
-from common.blog_post_list import get_menu_of_currunt_time
+from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 
 
 def post_list(request):
-    posts = get_menu_of_currunt_time()
+    posts = get_menu_of_current_time()
     data = {'posts': posts}
     if json(request):
         return json_response(posts)
@@ -97,33 +97,21 @@ def post_edit(request, pk):
 
 
 def menu_edit(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    post = get_object_or_404(Menu, pk=pk)
     if request.method == "POST":
-        form = MenuForm(request.POST or None, instance=post)
+        form = MenuForm(request.POST, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            # post.published_date = timezone.now()
-
-            post_numder = post.pk
-            for ing in request.POST.getlist('items'):
-                theing = Post.objects.get(pk=ing)
-                post.items.add(theing.id)
             post.save()
-            form.save_m2m()
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-
             context = {
                 "title": post.title,
                 "instance": post,
                 "form": form,
             }
-            # return render(request, 'blog_templates/post_edit.html', context)
             return redirect('menu_detail', pk=post.pk)
-
     else:
-        form = PostForm(instance=post)
+        form = MenuForm(instance=post)
     return render(request, "blog_templates/menu_edit.html", {'form': form})
 
 
@@ -248,10 +236,8 @@ def new_menu(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.date = timezone.now()
             post.save()
             form.save_m2m()
-            # post.ingredients()
             return redirect('/')
     else:
         form = MenuForm()
