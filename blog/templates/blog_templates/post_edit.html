@@ -4,6 +4,14 @@
 <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
+        <style>
+             .block1{
+                display: inline-block;
+            }
+            .block1 label{
+                dispaly:block;
+            }
+        </style>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 
         		            </head>
@@ -81,8 +89,10 @@
                         <div class="form-group">
                             <label for="quantity">Ингредиенты</label>
                                 {% for p in posts %}
-                                    <input type="number" class="form-group" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
+                                    <div class="block1">
+                                    <input type="number" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
                                     <p class="help-block">{{ p.name }}</p>
+                                    </div>
                                 {% endfor %}
                         </div>
 
@@ -118,6 +128,7 @@
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+    {% include 'javascripts.html' %}
     </body>
 </html>
 
