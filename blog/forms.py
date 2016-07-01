@@ -100,9 +100,8 @@ class MenuForm(forms.ModelForm):
         return [label for value, label in self.fields['items'].choices if value in self['items'].vallue()]
 
     def save(self, *args, **kwargs):
-        menus = get_menu_of_current_time(title=self.cleaned_data['title'], time=self.cleaned_data['date'])
-        for menu in menus:
-            menu.delete()
+        menu = get_menu_of_current_time(title=self.cleaned_data['title'], time=self.cleaned_data['date'])
+        menu.delete()
         instance = super(MenuForm, self).save(*args, **kwargs)
         if instance.pk:
             for item in instance.items.all():

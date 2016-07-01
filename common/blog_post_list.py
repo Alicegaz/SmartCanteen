@@ -15,4 +15,4 @@ def __get_title_of_current_time(time):
 def get_menu_of_current_time(time=timezone.now(), title=None):
     if not title:
         title = __get_title_of_current_time(time)
-    return Menu.objects.all().filter(date__month=time.month, date__day=time.day, date__year=time.year, title=title)
+    return Menu.objects.all().get(date__month=time.month, date__day=time.day, date__year=time.year, title=title)
