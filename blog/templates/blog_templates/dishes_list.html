@@ -42,7 +42,7 @@
                }
              .menu {
               position: fixed; /* Фиксированное положение */
-                right: 360px; /* Расстояние от правого края окна браузера */
+                right: 70px; /* Расстояние от правого края окна браузера */
                 bottom: 10%; /* Расстояние сверху */
                 padding: 10px; /* Поля вокруг текста */ /* Цвет фона */
                 color:red !important;
@@ -215,7 +215,11 @@ background-color: #eaf0ff;
             .page-container{
                 height: 100%;
             }
-
+#socializ{
+                top:80px;
+                position: fixed;
+                z-index: 1000;
+            }
                                         </style>
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
@@ -224,7 +228,7 @@ background-color: #eaf0ff;
         		            </head>
     <body>
        {%  include 'navbar.html' %}
-    <div class="sidebar">
+    <div class="sidebar" id="socializ">
 <ul class="main-menu">
             <li><a href="#company" class="gn-icon gn-icon-earth" id="sub-menu" tabindex="1">Персонал</a>
                <ul>

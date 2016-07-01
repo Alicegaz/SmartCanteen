@@ -315,6 +315,11 @@ input[type=number], select {
 .form-group {
      margin: 0 30px 0 100px !important;
 }
+               #socializ{
+                top:80px;
+                position: fixed;
+                z-index: 1000;
+            }
                                         </style>
          <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
         <title>Django Girls blog</title>
@@ -324,15 +329,15 @@ input[type=number], select {
         		            </head>
     <body>
        {%  include 'navbar.html' %}
-    <div class="sidebar">
+    <div class="sidebar" id="socializ">
 <ul class="main-menu">
-            <li><a href="#company" class="gn-icon gn-icon-earth" tabindex="1">Персонал</a>
+            <li><a href="#company" class="gn-icon gn-icon-earth">Персонал</a>
                <ul>
                     <li><a class="gn-icon gn-icon-help">Управление</a></li>
                    <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
                </ul>
     </li>
-            <li><a href="#services" class="gn-icon gn-icon-help" tabindex="1">Информация</a>
+            <li><a href="#services" class="gn-icon gn-icon-help">Информация</a>
                 <ul>
                     <li><a class="gn-icon gn-icon-article">Акции</a></li>
                     <li><a class="gn-icon gn-icon-earth">Контакты</a></li>

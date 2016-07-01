@@ -22,7 +22,7 @@
     {% block scrip %}
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-        <script>
+        <script type="text/javascript">
          function confirmDelete ()
          {
              if (confirm("Вы уверены, что хотите удалить меню?")) {
@@ -34,6 +34,8 @@
                  }
          }
        </script>
+        {%  include 'javascripts.html' %}
+
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>

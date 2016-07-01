@@ -30,6 +30,11 @@ tr:hover td{
   color: #6699ff !important;
   background: #e8edff;
 }
+            #socializ{
+                top:80px;
+                position: fixed;
+                z-index: 1000;
+            }
             </style>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 
@@ -37,15 +42,15 @@ tr:hover td{
     <body>
        {%  include 'navbar.html' %}
        {% if user.is_authenticated %}
-    <div class="sidebar">
+    <div class="sidebar" id="socializ">
 <ul class="main-menu">
-            <li><a href="#company" class="gn-icon gn-icon-earth" id="sub-menu" tabindex="1">Персонал</a>
+            <li><a href="#company" class="gn-icon gn-icon-earth">Персонал</a>
                <ul>
                     <li><a class="gn-icon gn-icon-help">Управление</a></li>
                    <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
                </ul>
     </li>
-            <li><a href="#services" class="gn-icon gn-icon-help" id="sub-menu" tabindex="1">Информация</a>
+            <li><a href="#services" class="gn-icon gn-icon-help">Информация</a>
                 <ul>
                     <li><a class="gn-icon gn-icon-article">Акции</a></li>
                     <li><a class="gn-icon gn-icon-earth">Контакты</a></li>

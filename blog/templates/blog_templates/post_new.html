@@ -1,57 +1,8 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<html>
-    <head>
-         <link href="{% static "stylesheets/post_new.css" %}" rel="stylesheet">
-        <title>Django Girls blog</title>
-          {% include 'stylesheets.html' %}
-        <style>
-            .block1{
-                display: inline-block;
-            }
-            .block1 label{
-                dispaly:block;
-            }
-        </style>
-            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
-
-        		            </head>
-    <body>
-       {%  include 'navbar.html' %}
-        <div class="sidebar">
-            <ul class="main-menu">
-                <li><a href="#company" class="gn-icon gn-icon-earth" tabindex="1">Персонал</a>
-                    <ul>
-                        <li><a class="gn-icon gn-icon-help">Управление</a></li>
-                        <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#services" class="gn-icon gn-icon-help" tabindex="1">Информация</a>
-                    <ul>
-                        <li><a class="gn-icon gn-icon-article">Акции</a></li>
-                        <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>
-                    <ul>
-                        <li><a href="{% url 'dishes_list' %}" class="gn-icon gn-icon-search">Блюда</a></li>
-                        <li><a href="{% url 'post_ingredientlist' %}" class="gn-icon gn-icon-pictures">Продукты</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#contacts" class="gn-icon gn-icon-help">Создать меню</a>
-                    <ul>
-                        <li><a href="{% url 'menu_archive' %}" class="gn-icon gn-icon-search">Архив</a></li>
-                        <li><a href="{% url 'new_menu' %}" class="gn-icon gn-icon-search">Создать меню</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <div class="page-container">
+    {% block content %}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <h2>Составить новое блюдо</h2>
+                      <h2>Изменить блюдо</h2>
                         <div class="form-group">
                             {{ form.title.errors }}
                             <label for="title">Название блюда:</label>
@@ -111,12 +62,11 @@
                         </div>
             </form>
     </div>
+        {%  endblock %}
 
+              {#  </div>  #}
 
-        </div>
-       <div class="menu"><a href="{% url 'post_new' %}">
-           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
-  <div class="text"></div>
+{% block scrip %}
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
         <script>
@@ -134,6 +84,19 @@
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
-    {%  include 'javascripts.html' %}
-    </body>
-</html>
+
+    {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

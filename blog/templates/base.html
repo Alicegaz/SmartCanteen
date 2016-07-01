@@ -5,12 +5,24 @@
         <title>Nazvanie</title>
         {% include 'stylesheets.html' %}
         <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
-
+   <style>
+            .block1{
+                display: inline-block;
+            }
+            .block1 label{
+                dispaly:block;
+            }
+            #socializ{
+                top:80px;
+                position: fixed;
+                z-index: 1000;
+            }
+        </style>
     </head>
     <body>
        {%  include 'navbar.html' %}
         {% if user.is_authenticated %}
-            <div class="sidebar">
+            <div class="sidebar" id="socializ">
             <ul class="main-menu">
                 <li><a href="#company" class="gn-icon gn-icon-earth" tabindex="1">Персонал</a>
                     <ul>
