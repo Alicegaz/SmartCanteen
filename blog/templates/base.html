@@ -2,6 +2,7 @@
 <html>
     <head>
         <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
         <title>Nazvanie</title>
         {% include 'stylesheets.html' %}
         <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
@@ -17,6 +18,9 @@
                 position: fixed;
                 z-index: 1000;
             }
+       .errorlist li{
+           color:red;
+       }
         </style>
     </head>
     <body>

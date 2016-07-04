@@ -9,7 +9,7 @@
                                 {{ form.title }}
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="in">
                             {{ form.text.errors }}
                             <label for="text">Text</label>
                             {{ form.text }}
@@ -41,12 +41,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" id="quant">
                             <label for="quantity">Ингредиенты</label>
                                 {% for p in posts %}
                                     <div class="block1">
-                                    <input type="number" class="form-group" name="quantity" id="{{ingredient1.id}}" value="0" placeholder="{{ p.name }}">
-                                    <p class="help-block">{{ p.name }}</p>
+                                    <input type="number" class="form-group" name="quantity" id="{{p.id}}" value="0" style="display:none !important;" placeholder="{{ p.name }}">
+                                    <p class="help-block" style="display:none !important;">{{ p.name }}</p>
                                     </div>
                                 {% endfor %}
                         </div>
@@ -81,22 +81,49 @@
                  }
          }
        </script>
-    <script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
 
+   <script type="text/javascript">
+    function attachCheckboxHandlers() {
+    // get reference to element containing toppings checkboxes
+    var el = document.getElementById('id_ingredients');
+    console.log("string", el);
+
+    // get reference to input elements in toppings container element
+    var tops = el.getElementsByTagName('input');
+
+    // assign updateTotal function to onclick property of each checkbox
+    for (var i=0, len=tops.length; i<len; i++) {
+        if ( tops[i].type === 'checkbox' ) {
+            tops[i].onclick = updateTotal;
+        }
+    }
+}
+
+// called onclick of toppings checkboxes
+function updateTotal(e) {
+    // 'this' is reference to checkbox clicked on
+    var form = this.form;
+    // get current value in total text box, using parseFloat since it is a string
+    var val = parseInt(this.value);
+
+    // if check box is checked, add its value to val, otherwise subtract it
+    if ( this.checked ) {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: block !important';
+        el2[val-1].style.cssText = 'display: block !important';
+    } else {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: none !important';
+        el2[val-1].style.cssText = 'display: none !important';
+
+    }
+
+}
+     attachCheckboxHandlers();
+    </script>
+    {% include 'javascripts.html' %}
     {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
