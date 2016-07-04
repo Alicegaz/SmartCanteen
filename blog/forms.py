@@ -101,7 +101,10 @@ class MenuForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         menu = get_menu_of_current_time(title=self.cleaned_data['title'], time=self.cleaned_data['date'])
-        menu.delete()
+        try:
+            menu.delete()
+        except AttributeError:
+            pass
         instance = super(MenuForm, self).save(*args, **kwargs)
         if instance.pk:
             for item in instance.items.all():
