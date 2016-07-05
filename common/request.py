@@ -1,6 +1,5 @@
 
 def get_image_from_request(request):
-    print(request.FILES)
     files = request.FILES
     try:
         images = files['image']
