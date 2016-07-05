@@ -33,6 +33,8 @@ urlpatterns = [
     url(r'^menu/(?P<pk>\d+)/edit/$', views.menu_edit, name='menu_edit'),
     url(r'^menu/(?P<pk>\d+)/item/(?P<item_pk>\d+)/remove', views.menu_item_remove, name='menu_item_remove'),
     url(r'^post/ingredientlist/(?P<pk>\d+)/remove/$', views.ingredient_remove, name='ingredient_remove'),
+    url(r'^schedule_new/$', views.schedule_new, name='schedule_new'),
+    url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 ]
 
 if settings.DEBUG:

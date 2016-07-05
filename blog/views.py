@@ -1,6 +1,6 @@
 from datetime import timedelta
-from blog.forms import PostForm, IngredientsForm, MenuForm
-from blog.models import Post, Ingredient, Menu
+from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
+from blog.models import Post, Ingredient, Menu, Schedule
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
@@ -13,7 +13,11 @@ from django.shortcuts import redirect, render
 
 def post_list(request):
     posts = get_menu_of_current_time()
-    data = {'posts': posts}
+    if Schedule.objects.all().count() > 0:
+       schedule = Schedule.objects.all().latest('date')
+       data = {'posts': posts, 'schedule': schedule}
+    else:
+        data = {'posts': posts}
     if json(request):
         return json_response(posts)
     else:
@@ -411,3 +415,39 @@ def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
     return redirect('blog.views.post_ingredientlist')
+
+
+
+
+def schedule_new(request):
+        if request.method == 'POST':
+            form = ScheduleForm(request.POST, request.FILES)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.save()
+                return redirect('/')
+        else:
+            form = ScheduleForm()
+        return render(request, 'blog_templates/schedule_new.html', {'form': form})
+
+def schedule_edit(request, pk):
+    post = get_object_or_404(Schedule, pk=pk)
+    if request.method == "POST":
+        form = ScheduleForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save_object(request=request)
+            return redirect('/')
+    else:
+        form = ScheduleForm(instance=post)
+    return render(request, "blog_templates/schedule_edit.html", {'form': form})
+
+def post_ingredientnew(request):
+    if request.method == 'POST':
+        form = IngredientsForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('post_ingredientlist')
+    else:
+        form = IngredientsForm()
+    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
