@@ -1,239 +1,113 @@
-from datetime import timedelta
-from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
-from blog.models import Post, Ingredient, Menu, Schedule
-from django.utils import timezone
+from blog.forms import PostForm, IngredientsForm, MenuForm
+from blog.models import Post, Ingredient, Menu
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
 from django.contrib import auth
-from django.template.context_processors import csrf
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
-
-
-def post_list(request):
-    posts = get_menu_of_current_time()
-    if Schedule.objects.all().count() > 0:
-       schedule = Schedule.objects.all().latest('date')
-       data = {'posts': posts, 'schedule': schedule}
-    else:
-        data = {'posts': posts}
-    if json(request):
-        return json_response(posts)
-    else:
-        return render(request, 'blog_templates/post_list.html', data)
-
-
-def no_permission(request):
-    return render(request, 'blog_templates/no_permission.html')
+from blog.controllers.dish import dish_edit as dish_change, create_dish
+from blog.controllers.menu import menu_edit as change_menu
 
 
 def dishes_list(request):
-    posts = Post.objects.all().order_by('created_date')
-    data = {'posts': posts}
+    dishes = Post.objects.all().order_by('created_date')
+    data = {'posts': dishes}
     if json(request):
-        return json_response(posts)
+        return json_response(dishes)
     else:
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
-def post_detail(request, pk=None):
-    instance = get_object_or_404(Post, pk=pk)
-    ingredients = instance.get_ingredients()
+def dish_details(request, pk=None):
+    dish = get_object_or_404(Post, pk=pk)
+    ingredients = dish.get_ingredients()
     context = {
-        "instance": instance,
+        "instance": dish,
         "ingredients": ingredients,
-
     }
     if json(request):
         return json_response(context)
     return render(request, 'blog_templates/post_detail.html', context)
 
-
-def mymodal(request, pk=None):
-    instance = get_object_or_404(Post, pk=pk)
-    ingredientss = instance.ingredients.all()
-    context = {
-        "title": instance.title,
-        "instance": instance,
-        "ingredientss": ingredientss,
-
-    }
-    return render(request, 'blog_templates/mymodal.html', context)
-
-
-# @user_passes_test(user.is_stuff, '/have_no_permission')
-def post_admin(request):
-    if request.user.is_superuser:
-
-        args = {}
-        args.update(csrf(request))
-        args['username'] = auth.get_user(request).is_superuser
-        return render(request, 'blog_templates/post_admin.html', args)
-    else:
-        return HttpResponse("У вас нет прав администратора")
-
-
-        # def post_ingredientlist(request):
-        #    ingredientss = Ingredient.objects.all()
-        #   return render(request, 'blog_templates/post_ingredientlist', {'ingredientss': ingredientss})
-
-
-def post_ingredientlist(request):
-    posts = Ingredient.objects.all()
-    return render(request, 'blog_templates/post_ingredientlist.html', {'posts': posts})
-
-
-def post_edit(request, pk):
+# TODO need roles
+def dish_edit(request, pk):
     context = {}
-    post = get_object_or_404(Post, pk=pk)
+    dish = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save_object(request=request)
+        dish = dish_change(request, dish)
+        if dish is not False:
             return redirect('dishes_list')
         else:
-            context['form'] = form
+            return redirect('no_permission')
     else:
-        context['form'] = PostForm(instance=post)
+        context['form'] = PostForm(instance=dish)
         context['posts'] = Ingredient.objects.all()
     return render(request, "blog_templates/post_edit.html", context)
 
 
-def menu_edit(request, pk):
-    post = get_object_or_404(Menu, pk=pk)
-    if request.method == "POST":
-        form = MenuForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            context = {
-                "title": post.title,
-                "instance": post,
-                "form": form,
-            }
-            return redirect('menu_detail', pk=post.pk)
-    else:
-        form = MenuForm(instance=post)
-    return render(request, "blog_templates/menu_edit.html", {'form': form})
-
-
-def menu_detail(request, pk=None):
-    instance = get_object_or_404(Menu, pk=pk)
-    items = instance.items.all()
-    context = {
-        "instance": instance,
-        "items": items,
-
-    }
-    return render(request, 'blog_templates/menu_detail.html', context)
-
-
-def breakfast_edit(request, pk):
-    post = get_object_or_404(Menu, pk=pk)
-    if request.method == "POST":
-        form = MenuForm(request.POST or None, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'завтрак'
-            post_numder = post.pk
-            for ing in request.POST.getlist('items'):
-                theing = Menu.objects.get(pk=ing)
-                post.items.add(theing.id)
-
-            post.save()
-            form.save_m2m()
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-
-            context = {
-                "title": post.title,
-                "instance": post,
-                "form": form,
-            }
-            # return render(request, 'blog_templates/post_edit.html', context)
-            return redirect('/')
-
-    else:
-        form = MenuForm(instance=post)
-    return render(request, "blog_templates/breakfast_edit.html", {'form': form})
-
-
-def supper_edit(request, pk):
-    post = get_object_or_404(Menu, pk=pk)
-    if request.method == "POST":
-        form = MenuForm(request.POST or None, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'ужин'
-            post_numder = post.pk
-            for ing in request.POST.getlist('items'):
-                theing = Menu.objects.get(pk=ing)
-                post.items.add(theing.id)
-            post.save()
-            form.save_m2m()
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-
-            context = {
-                "title": post.title,
-                "instance": post,
-                "form": form,
-            }
-            # return render(request, 'blog_templates/post_edit.html', context)
-            return redirect('/')
-
-    else:
-        form = MenuForm(instance=post)
-    return render(request, "blog_templates/supper_edit.html", {'form': form})
-
-
-def dinner_edit(request, pk):
-    post = get_object_or_404(Menu, pk=pk)
-    if request.method == "POST":
-        form = MenuForm(request.POST or None, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'обед'
-            post_numder = post.pk
-            for ing in request.POST.getlist('items'):
-                theing = Menu.objects.get(pk=ing)
-                post.items.add(theing.id)
-            post.save()
-            form.save_m2m()
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-
-            context = {
-                "title": post.title,
-                "instance": post,
-                "form": form,
-            }
-            # return render(request, 'blog_templates/post_edit.html', context)
-            return redirect('/')
-    else:
-        form = MenuForm(instance=post)
-    return render(request, "blog_templates/dinner_edit.html", {'form': form})
-
-
-def post_new(request):
+# TODO need roles
+def new_dish(request):
     context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save(request=request, quantity_list=request.POST.getlist('quantity'))
+        dish = create_dish(request)
+        if dish is not False:
             return redirect('dishes_list')
         else:
-            context['form'] = form
+            return redirect('no_permission')
     else:
         context['form'] = PostForm()
     return render(request, 'blog_templates/post_new.html', context)
 
 
+# TODO запретить удалять не админам
+def dish_remove(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.delete()
+    return redirect('blog.views.dishes_list')
+
+
+def menu_out(request):
+    menu = get_menu_of_current_time()
+    data = {'posts': menu}
+    if json(request):
+        return json_response(menu)
+    else:
+        return render(request, 'blog_templates/post_list.html', data)
+
+
+# TODO запретить видеть не админам
+def menu_list(request):
+    menu = Menu.objects.all()
+    return render(request, 'blog_templates/menu_archive.html', {'posts': menu})
+
+
+# TODO запретить видеть не админам
+def menu_detail(request, pk=None):
+    menu = get_object_or_404(Menu, pk=pk)
+    items = menu.items.all()
+    context = {
+        "instance": menu,
+        "items": items,
+    }
+    return render(request, 'blog_templates/menu_detail.html', context)
+
+
+# TODO need remake
+def menu_edit(request, pk):
+    menu = get_object_or_404(Menu, pk=pk)
+    if request.method == "POST":
+        menu = change_menu(request, menu)
+        if menu is not False:
+            print(menu)
+            return redirect('menu_detail', pk=menu)
+        else:
+            return redirect('no_permission')
+    else:
+        form = MenuForm(instance=menu)
+    return render(request, "blog_templates/menu_edit.html", {'form': form})
+
+
+# TODO need remake
 def new_menu(request):
     if request.method == 'POST':
         form = MenuForm(request.POST or None, request.FILES)
@@ -248,7 +122,33 @@ def new_menu(request):
     return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
-def post_ingredientdetail(request, pk=None):
+# TODO запретить удалять не админам
+def menu_remove(request, pk):
+    menu = get_object_or_404(Menu, pk=pk)
+    menu.delete()
+    return redirect('blog.views.menu_archive')
+
+
+# TODO запретить удалять не админам
+def menu_item_remove(request, **kwargs):
+    pk = kwargs.get('pk', '')
+    post = Menu.objects.get(pk=pk)
+    if post.items.count() == 1:
+        post.delete()
+    else:
+        ite = post.items.get(pk=kwargs.get('item_pk', ''))
+        post.items.remove(ite)
+    return redirect('blog.views.menu_archive')
+
+
+# TODO запретить видеть не админам
+def ingredient_list(request):
+    ingredients = Ingredient.objects.all()
+    return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
+
+
+# TODO запретить видеть не админам
+def ingredient_detail(request, pk=None):
     instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {
         "title": instance1.name,
@@ -258,7 +158,8 @@ def post_ingredientdetail(request, pk=None):
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
-def post_ingredientedit(request, pk):
+# TODO need remake
+def ingredient_edit(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     if request.method == "POST":
         form = IngredientsForm(request.POST or None, instance=post)
@@ -282,7 +183,8 @@ def post_ingredientedit(request, pk):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-def post_ingredientnew(request):
+# TODO need remake
+def new_ingredient(request):
     if request.method == 'POST':
         form = IngredientsForm(request.POST)
         if form.is_valid():
@@ -294,160 +196,40 @@ def post_ingredientnew(request):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-def new_supper(request):
-    if request.method == 'POST':
-        form = MenuForm(request.POST or None)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'ужин'
-            # post.date = timezone.now()
-            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                         date__year=timezone.now().year, title='ужин').count() >= 1:
-                post.date = timezone.now() + timedelta(days=1)
-            post.save()
-            form.save_m2m()
-            # post.ingredients()
-            return redirect('/')
-    else:
-        form = MenuForm()
-    return render(request, 'blog_templates/supper_edit.html', {'form': form})
-
-
-"""def new_breakfast(request):
-    args = {}
-    args.update(csrf(request))
-    i = 0
-    if request.method == 'POST':
-        form = MenuForm(request.POST or None)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-
-            post.title = 'завтрак'
-
-            # post.date = timezone.now()
-            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                         date__year=timezone.now().year, title='завтрак').count() >= 1:
-                post.date = timezone.now() + timedelta(days=1)
-            post.save()
-            form.save_m2m()
-            # post.ingredients()
-            return redirect('/')
-    else:
-        form = MenuForm()
-    return render(request, 'blog_templates/breakfast_edit.html', {'form': form})
-"""
-def new_breakfast(request):
-    if request.method == 'POST':
-        form = MenuForm(request.POST or None)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'завтрак'
-            # post.date = timezone.now()
-            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                         date__year=timezone.now().year, title='обед').count() >= 1:
-                post.date = timezone.now() + timedelta(days=1)
-            post.save()
-            form.save_m2m()
-            # post.ingredients()
-            return redirect('/')
-    else:
-        form = MenuForm()
-    return render(request, 'blog_templates/dinner_edit.html', {'form': form})
-
-
-def new_dinner(request):
-    if request.method == 'POST':
-        form = MenuForm(request.POST or None)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.title = 'обед'
-            # post.date = timezone.now()
-            if Menu.objects.all().filter(date__month=timezone.now().month, date__day=timezone.now().day,
-                                         date__year=timezone.now().year, title='обед').count() >= 1:
-                post.date = timezone.now() + timedelta(days=1)
-            post.save()
-            form.save_m2m()
-            # post.ingredients()
-            return redirect('/')
-    else:
-        form = MenuForm()
-    return render(request, 'blog_templates/dinner_edit.html', {'form': form})
-
-
-def menu_archive(request):
-    posts = Menu.objects.all()
-    return render(request, 'blog_templates/menu_archive.html', {'posts': posts})
-
-
-def post_remove(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-    post.delete()
-    return redirect('blog.views.dishes_list')
-
-
-def menu_remove(request, pk):
-    post = get_object_or_404(Menu, pk=pk)
-    post.delete()
-    return redirect('blog.views.menu_archive')
-
-
-def menu_item_remove(request, **kwargs):
-    # print(kwargs.pop('pk'))
-    # print(kwargs.get('pk', ''))
-    pk = kwargs.get('pk', '')
-    # post = get_object_or_404(Menu, pk)
-    post = Menu.objects.get(pk=pk)
-    if post.items.count() == 1:
-        post.delete()
-    else:
-        # pk_url_kwarg = 'item_pk'
-        ite = post.items.get(pk=kwargs.get('item_pk', ''))
-        # ite = post.items.get(pk=pk_url_kwarg)
-        post.items.remove(ite)
-    return redirect('blog.views.menu_archive')
-
-
+# TODO запретить удалять не админам
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
     return redirect('blog.views.post_ingredientlist')
 
 
+# TODO создать страницу
+def no_permission(request):
+    return render(request, 'blog_templates/no_permission.html')
 
 
-def schedule_new(request):
-        if request.method == 'POST':
-            form = ScheduleForm(request.POST, request.FILES)
-            if form.is_valid():
-                post = form.save(commit=False)
-                post.save()
-                return redirect('/')
-        else:
-            form = ScheduleForm()
-        return render(request, 'blog_templates/schedule_new.html', {'form': form})
+# TODO оценить полезнсть этого метода
+def mymodel(request, pk=None):
+    instance = get_object_or_404(Post, pk=pk)
+    ingredientss = instance.ingredients.all()
+    context = {
+        "title": instance.title,
+        "instance": instance,
+        "ingredientss": ingredientss,
 
-def schedule_edit(request, pk):
-    post = get_object_or_404(Schedule, pk=pk)
-    if request.method == "POST":
-        form = ScheduleForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save_object(request=request)
-            return redirect('/')
-    else:
-        form = ScheduleForm(instance=post)
-    return render(request, "blog_templates/schedule_edit.html", {'form': form})
+    }
+    return render(request, 'blog_templates/mymodal.html', context)
 
-def post_ingredientnew(request):
-    if request.method == 'POST':
-        form = IngredientsForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
-            return redirect('post_ingredientlist')
-    else:
-        form = IngredientsForm()
-    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
+
+# TODO оценить полезнсть этого метода
+# @user_passes_test(user.is_stuff, '/have_no_permission')
+# def post_admin(request):
+#     if request.user.is_superuser:
+#
+#         args = {}
+#         args.update(csrf(request))
+#         args['username'] = auth.get_user(request).is_superuser
+#         return render(request, 'blog_templates/post_admin.html', args)
+#     else:
+#         return HttpResponse("У вас нет прав администратора")
+
