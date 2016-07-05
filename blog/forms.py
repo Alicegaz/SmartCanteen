@@ -1,6 +1,8 @@
 from django import forms
-from django.forms import ChoiceField
-from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation
+from django.forms import ChoiceField, TimeField
+
+from blog.widgets import SelectTimeWidget
+from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation, Schedule
 from blog.fields import *
 from django.utils import timezone
 from common.request import get_image_from_request
@@ -125,3 +127,32 @@ class MenuForm(forms.ModelForm):
             # ingredient = models.ForeignKey(Ingredient)
 
 
+class ScheduleForm(forms.ModelForm):
+    monfr1 = TimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SelectTimeWidget)
+    stsn1 = TimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SelectTimeWidget)
+    dinner1 = TimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SelectTimeWidget)
+    breakfast1 = TimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SelectTimeWidget)
+    supper1 = TimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SelectTimeWidget)
+    monfr2 = TimeField(help_text='UTC date and time when voting begins',
+                      widget=SelectTimeWidget)
+
+    stsn2 = TimeField(help_text='UTC date and time when voting begins',
+                     widget=SelectTimeWidget)
+    dinner2 = TimeField(help_text='UTC date and time when voting begins',
+                       widget=SelectTimeWidget)
+    breakfast2 = TimeField(help_text='UTC date and time when voting begins',
+                          widget=SelectTimeWidget)
+    supper2 = TimeField(help_text='UTC date and time when voting begins',
+                       widget=SelectTimeWidget)
+
+    class Meta:
+        model = Schedule
+        fields = ('monfr1', 'stsn1', 'dinner1', 'breakfast1', 'supper1', 'monfr2', 'stsn2', 'dinner2', 'breakfast2', 'supper2', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super(ScheduleForm, self).__init__(*args, **kwargs)

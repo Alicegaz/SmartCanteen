@@ -111,3 +111,20 @@ class History(models.Model):
         self.ingredient = relation.ingredient
         self.amount = relation.amount
         self.save()
+
+
+class Schedule(models.Model):
+    monfr1 = models.DateTimeField(auto_now=True, null=True)
+    stsn1 = models.DateTimeField(auto_now=True, null=True)
+    dinner1 = models.DateTimeField(auto_now=True, null=True)
+    breakfast1 = models.DateTimeField(auto_now=True, null=True)
+    supper1 = models.DateTimeField(auto_now=True, null=True)
+    monfr2 = models.DateTimeField(auto_now=True, null=True)
+    stsn2 = models.DateTimeField(auto_now=True, null=True)
+    dinner2 = models.DateTimeField(auto_now=True, null=True)
+    breakfast2 = models.DateTimeField(auto_now=True, null=True)
+    supper2 = models.DateTimeField(auto_now=True, null=True)
+    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='фон')
+    date = models.DateField(default=timezone.now)
+    def __str__(self):
+        return self.stsn1

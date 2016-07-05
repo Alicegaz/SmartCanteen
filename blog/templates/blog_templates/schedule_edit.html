@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+    {% block content %}
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <h2>Изменить блюдо</h2>
+                        <div class="form-group">
+
+                            <label for="title">Пн-Пт:</label>
+                            {{ form.monfr1.errors }}
+                                {{ form.monfr1 }} -
+                            {{ form.monfr2.errors }}
+                            {{ from.monfr2}}
+                        </div>
+
+                        <div class="form-group" id="in">
+                            {{ form.sbsn1.errors }}
+                            <label for="text">Сб-Вс</label>
+                            {{ form.sbsn1 }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.breakfast1.errors }}
+                            <label for="text">Завтрак:</label>
+                            {{  form.breakfast1 }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.dinner1.errors }}
+                            <label for="price">Обед:</label>
+                            {{ form.dinner1 }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.supper1.errors }}
+                            <label for="price">Ужин:</label>
+                            {{ form.supper1 }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.image.errors }}
+                            <label for="image">Изображение:</label>
+                            {{form.image}}
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+            </form>
+    </div>
+        {%  endblock %}
+
+              {#  </div>  #}
+
+{% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+
+
+    {% include 'javascripts.html' %}
+    {% endblock %}

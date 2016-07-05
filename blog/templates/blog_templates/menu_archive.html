@@ -54,6 +54,11 @@ tr:hover td{
                 <ul>
                     <li><a class="gn-icon gn-icon-article">Акции</a></li>
                     <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
+                    {%  if schedule  %}
+                        <li><a href="{% url 'schedule_new' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
+                            {% else %}
+                        <li><a href="{% url 'schedule_edit' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
+                            {% endif %}
                 </ul>
             </li>
             <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>

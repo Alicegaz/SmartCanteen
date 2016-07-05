@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+    {% block content %}
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <h2>Создать расписание</h2>
+
+                 <div class="form-group" id="quant">
+                            <label for="monrf1">Пн-Пт:</label>
+                                    <div class="block1">
+                                        {{ from.monfr1.errors }}
+                                    {{ form.monfr1 }} -
+                                        {{ form.monfr2.errors }}
+                                    {{ form.monfr2 }}
+                                    </div>
+                        </div>
+
+
+
+
+                        <div class="form-group" id="quant">
+                            <label for="monrf1">Сб-Вс:</label>
+                                    <div class="block1">
+                                        {{ from.stsn1.errors }}
+                                    {{ form.stsn1 }} -
+                                        {{ form.stsn2.errors }}
+                                    {{ form.stsn2 }}
+                                    </div>
+                        </div>
+
+                       <div class="form-group" id="quant">
+                            <label for="monrf1">Завтрак:</label>
+                                    <div class="block1">
+                                        {{ from.breakfast1.errors }}
+                                    {{ form.breakfast1 }} -
+                                        {{ form.breakfast2.errors }}
+                                    {{ form.breakfast2 }}
+                                    </div>
+                        </div>
+
+                       <div class="form-group" id="quant">
+                            <label for="monrf1">Обед:</label>
+                                    <div class="block1">
+                                        {{ from.dinner1.errors }}
+                                    {{ form.dinner1 }} -
+                                        {{ form.dinner2.errors }}
+                                    {{ form.dinner2 }}
+                                    </div>
+                        </div>
+
+                        <div class="form-group" id="quant">
+                            <label for="monrf1">Ужин:</label>
+                                    <div class="block1">
+                                        {{ from.supper1.errors }}
+                                    {{ form.supper1 }} -
+                                        {{ form.supper2.errors }}
+                                    {{ form.supper2 }}
+                                    </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.image.errors }}
+                            <label for="image">Изображение:</label>
+                            {{form.image}}
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+            </form>
+    </div>
+        {%  endblock %}
+
+              {#  </div>  #}
+
+{% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+
+
+    {% include 'javascripts.html' %}
+    {% endblock %}
