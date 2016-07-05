@@ -6,7 +6,7 @@ def __get_title_of_current_time(time):
     hour = time.hour
     if 11 <= hour <= 16:
         return 'обед'
-    elif 16 <= hour <= 22:
+    elif 16 <= hour <= 23:
         return 'ужин'
     else:
         return 'завтрак'
