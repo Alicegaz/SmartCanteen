@@ -1,5 +1,5 @@
-from blog.forms import PostForm, IngredientsForm, MenuForm
-from blog.models import Post, Ingredient, Menu
+from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
+from blog.models import Post, Ingredient, Menu, Schedule
 from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from common.json_warper import json, json_response
@@ -233,3 +233,25 @@ def mymodel(request, pk=None):
 #     else:
 #         return HttpResponse("У вас нет прав администратора")
 
+def schedule_new(request):
+        if request.method == 'POST':
+            form = ScheduleForm(request.POST, request.FILES)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.save()
+                return redirect('/')
+        else:
+            form = ScheduleForm()
+        return render(request, 'blog_templates/schedule_new.html', {'form': form})
+
+
+def schedule_edit(request, pk):
+    post = get_object_or_404(Schedule, pk=pk)
+    if request.method == "POST":
+        form = ScheduleForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save_object(request=request)
+            return redirect('/')
+    else:
+        form = ScheduleForm(instance=post)
+    return render(request, "blog_templates/schedule_edit.html", {'form': form})

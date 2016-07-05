@@ -77,7 +77,6 @@
                         <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
                         {%  if schedule  %}
                                 <li><a href="{% url 'schedule_edit' pk=schedule.pk %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-
                         {% else %}
                          <li><a href="{% url 'schedule_new' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
                     {% endif %}
