@@ -21,7 +21,7 @@ from django.utils.safestring import mark_safe
 
 import re
 from django.utils.safestring import mark_safe
-from compat import basestring
+
 
 
 class MultiSelectWidget(forms.SelectMultiple):
