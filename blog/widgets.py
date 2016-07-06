@@ -21,7 +21,6 @@ from django.utils.safestring import mark_safe
 
 import re
 from django.utils.safestring import mark_safe
-from setuptools.compat import basestring
 
 
 
