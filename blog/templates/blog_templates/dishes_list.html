@@ -267,11 +267,6 @@ background-color: #eaf0ff;
                 <ul>
                     <li><a class="gn-icon gn-icon-article">Акции</a></li>
                     <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
-                    {%  if schedule  %}
-                        <li><a href="{% url 'schedule_edit' pk=schedule.pk %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-                            {% else %}
-                        <li><a href="{% url 'schedule_new' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-                            {% endif %}
                 </ul>
             </li>
             <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>
@@ -303,12 +298,15 @@ background-color: #eaf0ff;
 
 
                     <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
-                        <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                    </h2>
+                         </h2>
                         {% if post.image %}
                         <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{post.image.url}}" height="200" width="250" float="left"/> </a>
                        {% endif %}
+                <p>
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                   </p>
                         <p>price: {{  post.price }}</p>
                         <p>калории: {{ post.calories }}</p>
 
@@ -332,7 +330,7 @@ background-color: #eaf0ff;
   <div class="text"></div>
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-        <script type="text/javascript">
+        <script>
          function confirmDelete ()
          {
              if (confirm("Вы уверены, что хотите удалить меню?")) {
@@ -344,7 +342,7 @@ background-color: #eaf0ff;
                  }
          }
        </script>
-    <script type="text/javascript">
+    <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
     {% include 'javascripts.html' %}

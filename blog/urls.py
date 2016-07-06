@@ -37,6 +37,8 @@ urlpatterns = [
 
     url(r'^schedule_new/$', views.schedule_new, name='schedule_new'),
     url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
+
+
 ]
 
 if settings.DEBUG:

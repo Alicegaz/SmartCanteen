@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, redirect, render
 from authentication.models import User
 from django.template.context_processors import csrf
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
+from blog.models import Schedule, Post
 
 
 def login(request):
@@ -37,7 +39,7 @@ def logout(request):
 
 def create_permission(codename, name):
     content_type = ContentType.objects.get_for_model(User)
-    permission = Permission.objects.create(codename=codename, name=name, content_type=content_type)
+    permission = Permission.objects.create(codename='can_add', name='can add a user', content_type=content_type)
     return permission
 
 
@@ -45,9 +47,14 @@ def no_permission(request):
     return render(request, 'blog_templates/no_permission.html')
 
 
-@permission_required('is_admin', login_url='/have_no_permission')
+@permission_required('blog.can_add', raise_exception=True)
 def register(request):
     form = forms.NewUserForm()
+    content_type = ContentType.objects.get_for_model(Post)
+    content_type1 = ContentType.objects.get_for_model(Schedule)
+    if Permission.objects.all().count() == 0:
+        Permission.objects.create(codename='can_add', name='can add a user', content_type=content_type)
+        Permission.objects.create(codename='can_edit_schedule', name='can edit scheudle', content_type=content_type1)
     if request.POST:
         form = forms.NewUserForm(request.POST)
         if form.is_valid():
@@ -56,9 +63,12 @@ def register(request):
             role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
             if role == 'is_admin' or role == 'is_cashier':
-                permission = create_permission(role, 'user''role')
+                if role == 'is_admin':
+                   permission = Permission.objects.get(codename='can_add')
+                elif role == 'is_cashier':
+                   permission = Permission.objects.get(codename='can_edit_schedule')
             else:
-                return redirect('/have_no_permision')
+                return redirect('/auth/no_permision')
             user.user_permissions.add(permission)
             user.save()
             return redirect('/')
