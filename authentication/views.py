@@ -47,15 +47,24 @@ def no_permission(request):
     return render(request, 'blog_templates/no_permission.html')
 
 
+def ensure_permissions():
+    content_type = ContentType.objects.get_for_model(Post)
+    content_type1 = ContentType.objects.get_for_model(Schedule)
+    try:
+        Permission.objects.create(codename='can_add', name='can add a user', content_type=content_type)
+    except Exception:
+        pass
+    try:
+        Permission.objects.create(codename='can_edit_schedule', name='can edit scheudle', content_type=content_type1)
+    except:
+        pass
+
+
 @permission_required('blog.can_add', raise_exception=True)
 def register(request):
     form = forms.NewUserForm()
-    content_type = ContentType.objects.get_for_model(Post)
-    content_type1 = ContentType.objects.get_for_model(Schedule)
-    if Permission.objects.all().count() == 0:
-        Permission.objects.create(codename='can_add', name='can add a user', content_type=content_type)
-        Permission.objects.create(codename='can_edit_schedule', name='can edit scheudle', content_type=content_type1)
     if request.POST:
+        ensure_permissions()
         form = forms.NewUserForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
@@ -64,9 +73,9 @@ def register(request):
             user = User.objects.create_user(username=username, password=password)
             if role == 'is_admin' or role == 'is_cashier':
                 if role == 'is_admin':
-                   permission = Permission.objects.get(codename='can_add')
+                    permission = Permission.objects.get(codename='can_add')
                 elif role == 'is_cashier':
-                   permission = Permission.objects.get(codename='can_edit_schedule')
+                    permission = Permission.objects.get(codename='can_edit_schedule')
             else:
                 return redirect('/auth/no_permision')
             user.user_permissions.add(permission)

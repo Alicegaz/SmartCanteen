@@ -46,6 +46,7 @@
     <div class="well">
         <form action="/auth/register/" method="post">
             {% csrf_token %}
+            {{ form.errors }}
             <label for="username">Имя пользователя</label>
             {{ form.username }}
             <label for="password">Пароль</label>
