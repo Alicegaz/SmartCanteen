@@ -1,5 +1,6 @@
 from django import forms
 from django.conf import settings
+from django.utils import six
 from django.utils.safestring import mark_safe
 import re
 from django.forms.extras.widgets import SelectDateWidget
@@ -21,6 +22,7 @@ from django.utils.safestring import mark_safe
 import re
 from django.utils.safestring import mark_safe
 from setuptools.compat import basestring
+
 
 
 class MultiSelectWidget(forms.SelectMultiple):
@@ -121,7 +123,7 @@ class SelectTimeWidget(Widget):
                     self.meridiem_val = 'a.m.'
         except AttributeError:
             hour_val = minute_val = 0
-            if isinstance(value, basestring):
+            if isinstance(value, six.string_types):
                 match = RE_TIME.match(value)
                 if match:
                     time_groups = match.groups();
