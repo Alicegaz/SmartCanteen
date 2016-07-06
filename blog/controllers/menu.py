@@ -1,5 +1,6 @@
 from common.permission import have_permission
 from common.blog_post_list import get_menu_of_current_time
+from blog.models import Menu, Post
 import datetime
 
 
@@ -37,6 +38,20 @@ def delete_menus_of_current_time(time, title):
         pass
 
 
+def have_items(post_dict):
+    try:
+        post_dict.get('items')
+    except Exception:
+        return False
+    return True
+
+
+def add_dishes_to_menu(post_dict, menu):
+    items_list = post_dict.getlist('items')
+    items_list = [Post.objects.get(id=item) for item in items_list]
+    menu.items = items_list
+
+
 # TODO need roles
 def menu_edit(request, menu):
     user = have_permission(request)
@@ -46,6 +61,8 @@ def menu_edit(request, menu):
         if request_has_date(request.POST):
             time = add_date(request.POST, menu)
             delete_menus_of_current_time(time, request_dict.get('title'))
+        if have_items(request_dict):
+            add_dishes_to_menu(request_dict, menu)
         for item in request_dict.items():
             key, value = item
             if key in obj_dict:
@@ -53,4 +70,14 @@ def menu_edit(request, menu):
                     obj_dict[key] = value
         menu.save()
         return menu.id
+    return False
+
+
+def create_menu(request):
+    user = have_permission(request)
+    if user:
+        request_dict = request.POST
+        menu = Menu(title=request_dict.pop())
+        menu.save()
+        return menu_edit(request, menu)
     return False

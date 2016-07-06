@@ -6,7 +6,8 @@ from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.dish import dish_edit as dish_change, create_dish
-from blog.controllers.menu import menu_edit as change_menu
+from blog.controllers.menu import menu_edit as change_menu, create_menu
+from blog.controllers.ingredient import ingredient_change, create_ingredient
 
 
 def dishes_list(request):
@@ -28,6 +29,7 @@ def dish_details(request, pk=None):
     if json(request):
         return json_response(context)
     return render(request, 'blog_templates/post_detail.html', context)
+
 
 # TODO need roles
 def dish_edit(request, pk):
@@ -92,13 +94,12 @@ def menu_detail(request, pk=None):
     return render(request, 'blog_templates/menu_detail.html', context)
 
 
-# TODO need remake
+# TODO need roles
 def menu_edit(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     if request.method == "POST":
         menu = change_menu(request, menu)
         if menu is not False:
-            print(menu)
             return redirect('menu_detail', pk=menu)
         else:
             return redirect('no_permission')
@@ -107,16 +108,14 @@ def menu_edit(request, pk):
     return render(request, "blog_templates/menu_edit.html", {'form': form})
 
 
-# TODO need remake
+# TODO need roles
 def new_menu(request):
     if request.method == 'POST':
-        form = MenuForm(request.POST or None, request.FILES)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.author = request.user
-            post.save()
-            form.save_m2m()
+        menu_id = create_menu(request)
+        if menu_id is not False:
             return redirect('/')
+        else:
+            return redirect('no_permission')
     else:
         form = MenuForm()
     return render(request, 'blog_templates/new_menu.html', {'form': form})
@@ -158,39 +157,28 @@ def ingredient_detail(request, pk=None):
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
-# TODO need remake
+# TODO need roles
 def ingredient_edit(request, pk):
-    post = get_object_or_404(Ingredient, pk=pk)
+    ingredient = get_object_or_404(Ingredient, pk=pk)
     if request.method == "POST":
-        form = IngredientsForm(request.POST or None, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            # post.author = request.user
-            # post.published_date = timezone.now()
-            post.save()
-            form.save_m2m()
-            # post_numder = post.pk
-            # messages.success(request, "<a href='#'>Item</a> Saved", extra_tags='html_safe')
-            # return HttpResponseRedirect(instance.get_absolute_url())
-            context = {
-                "title": post.name,
-                "instance": post,
-                "form": form,
-            }
+        ingredient = ingredient_change(request, ingredient)
+        if ingredient is not False:
             return redirect('post_ingredientlist')
+        else:
+            return redirect('no_permission')
     else:
-        form = IngredientsForm(instance=post)
+        form = IngredientsForm(instance=ingredient)
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-# TODO need remake
+# TODO need roles
 def new_ingredient(request):
     if request.method == 'POST':
-        form = IngredientsForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.save()
+        ingredient = create_ingredient(request)
+        if ingredient is not False:
             return redirect('post_ingredientlist')
+        else:
+            return redirect('no_permission')
     else:
         form = IngredientsForm()
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
