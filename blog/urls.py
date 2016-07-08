@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^ingredient/(?P<pk>\d+)/remove/$', views.ingredient_remove, name='ingredient_remove'),
 
     # menu urls
-    url(r'^menu/$', views.menu_list, name='menu_archive'),
+    url(r'^menu/$', views.history_out, name='menu_archive'),
     url(r'^menu/new/$', views.new_menu, name='new_menu'),
     url(r'^menu/(?P<pk>\d+)/remove/$', views.menu_remove, name='menu_remove'),
     url(r'^menu/(?P<pk>\d+)/$', views.menu_detail, name='menu_detail'),

@@ -81,22 +81,20 @@ tr:hover td{
        <div class="page-container">
        {#  <div class="col-md-8"> #}
        <h2>Архив меню</h2>
-            {% if posts %}
+            {% if history %}
                 <table>
                 <tr>
-                <th>Название</th><th>Дата</th><th>Изменить</th><th>Удалить</th>
+                <th>Название</th><th>Дата</th><th>Изменить</th>
                 </tr>
-            {% for post in posts %}
+            {% for item in history %}
                 <tr>
-                <td><a href="{% url 'menu_detail' pk=post.pk %}">{{ post.title }}</a></td>
+                <td><a href="{% url 'menu_detail' pk=item.menu.pk %}">{{ item.menu.title }}</a></td>
                        <td>
-                         {% if post.date %}{{ post.date }}
+                         {% if item.menu.date %}{{ item.menu.date }}
                         {% endif %}
                        </td>
-                        <td><a class="btn btn-default" href="{% url 'menu_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                 <td><a class="btn btn-default" href="{% url 'menu_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td><a class="btn btn-default" href="{% url 'menu_edit' pk=item.menu.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></td>
                 </tr>
-
                  {% endfor %}
                 </table>
         {% endif %}

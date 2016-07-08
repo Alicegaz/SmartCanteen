@@ -1,5 +1,5 @@
 from common.permission import have_permission
-from blog.models import Menu, Post
+from blog.models import Menu, Post, History
 
 
 def delete_date(post_dict):
@@ -36,9 +36,9 @@ def menu_edit(request, menu):
             key, value = item
             if key in obj_dict:
                 if value:
-                    obj_dict[key] = value
+                    obj_dict[key] = value[0]
         menu.save()
-        return menu.id
+        return menu
     return False
 
 
@@ -46,8 +46,13 @@ def create_menu(request):
     user = have_permission(request)
     if user:
         request_dict = request.POST
-        menu = Menu(title=request_dict.pop('title'))
+        menu = Menu(title=request_dict.pop('title')[0])
         menu.author = user
         menu.save()
         return menu_edit(request, menu)
     return False
+
+
+def add_to_history(menu):
+    History.objects.create(menu=menu)
+
