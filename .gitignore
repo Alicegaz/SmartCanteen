@@ -6,7 +6,5 @@ db.sqlite3
 .idea
 venv/
 migrations
-media
 images
-media
 node_modules
