@@ -1,5 +1,5 @@
 from common.permission import have_permission
-from blog.models import Menu, Post, History
+from blog.models import Menu, Post, History, IngDishRelation
 
 
 def delete_date(post_dict):
@@ -54,5 +54,10 @@ def create_menu(request):
 
 
 def add_to_history(menu):
-    History.objects.create(menu=menu)
+    if menu.enable_to_subtract_from_ingredient():
+        menu.subtract_from_ingredient()
+        History.objects.create(menu=menu)
+        return True
+    else:
+        return False
 

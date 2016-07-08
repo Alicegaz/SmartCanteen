@@ -22,9 +22,19 @@ def dishes_list(request):
 def dish_details(request, pk=None):
     dish = get_object_or_404(Post, pk=pk)
     ingredients = dish.get_ingredients()
+
+    class IngAm:
+        ingredient = None
+        amount = None
+    ing_list = []
+    for ing in ingredients:
+        new_one = IngAm()
+        new_one.ingredient = ing
+        new_one.amount = dish.get_amount(ing)
+        ing_list.append(new_one)
     context = {
         "instance": dish,
-        "ingredients": ingredients,
+        "ingredients": ing_list,
     }
     if json(request):
         return json_response(context)
@@ -96,20 +106,27 @@ def menu_detail(request, pk=None):
 
 # TODO need roles
 def menu_edit(request, pk):
-    return new_menu(request)
+    return new_menu(request, pk)
 
 
 # TODO need roles
-def new_menu(request):
+def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
         if menu is not False:
-            add_to_history(menu)
-            return redirect('/')
+            status = add_to_history(menu)
+            if status:
+                return redirect('/')
+            else:
+                return render(request, 'blog_templates/not_enough_ingredient.html')
+        #         TODO create page
         else:
             return redirect('no_permission')
     else:
-        form = MenuForm()
+        if pk is not None:
+            form = MenuForm(instance=Menu.objects.get(id=pk))
+        else:
+            form = MenuForm()
     return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
