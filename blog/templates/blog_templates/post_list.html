@@ -50,13 +50,19 @@
             {% for dish in posts.items.all %}
                 <div class="post">
                     <div id="image-{{dish.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                        <h2><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
-                            <a class="btn btn-default" href="{% url 'post_edit' pk=dish.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a class="btn btn-default" href="{% url 'post_remove' pk=dish.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                        </h2>
                         {% if dish.image %}
                             <a href="{% url 'post_detail' pk=dish.pk %}"> <img src="/{{dish.image.url}}" height="200" width="250" float="left"/> </a>
                         {% endif %}
+                         <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                         </h2>
+                <p>
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                   </p>
+                        <p>price: {{  post.price }}</p>
+                        <p>калории: {{ post.calories }}</p>
+
                         <p>price: {{  dish.price }}</p>
                         <p>калории: {{ dish.calories }}</p>
                     </div>
