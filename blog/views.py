@@ -1,12 +1,12 @@
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
-from blog.models import Post, Ingredient, Menu, Schedule
+from blog.models import Post, Ingredient, Menu, Schedule, History
 from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.dish import dish_edit as dish_change, create_dish
-from blog.controllers.menu import menu_edit as change_menu, create_menu
+from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 
 
@@ -78,9 +78,9 @@ def menu_out(request):
 
 
 # TODO запретить видеть не админам
-def menu_list(request):
-    menu = Menu.objects.all()
-    return render(request, 'blog_templates/menu_archive.html', {'posts': menu})
+def history_out(request):
+    history = History.objects.all()
+    return render(request, 'blog_templates/history.html', {'history': history})
 
 
 # TODO запретить видеть не админам
@@ -96,23 +96,15 @@ def menu_detail(request, pk=None):
 
 # TODO need roles
 def menu_edit(request, pk):
-    menu = get_object_or_404(Menu, pk=pk)
-    if request.method == "POST":
-        menu = change_menu(request, menu)
-        if menu is not False:
-            return redirect('menu_detail', pk=menu)
-        else:
-            return redirect('no_permission')
-    else:
-        form = MenuForm(instance=menu)
-    return render(request, "blog_templates/menu_edit.html", {'form': form})
+    return new_menu(request)
 
 
 # TODO need roles
 def new_menu(request):
     if request.method == 'POST':
-        menu_id = create_menu(request)
-        if menu_id is not False:
+        menu = create_menu(request)
+        if menu is not False:
+            add_to_history(menu)
             return redirect('/')
         else:
             return redirect('no_permission')
@@ -125,7 +117,7 @@ def new_menu(request):
 def menu_remove(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     menu.delete()
-    return redirect('blog.views.menu_archive')
+    return redirect('menu_archive')
 
 
 # TODO запретить удалять не админам

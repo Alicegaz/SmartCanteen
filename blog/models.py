@@ -83,13 +83,9 @@ class IngDishRelation(models.Model):
         History.add_history_instance(relation=self)
 
 
-class MenuObject(models.Model):
-    ing_dish_relations = models.ManyToManyField(IngDishRelation)
-
-
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=60, choices=TYPE_MENU_CHOICES)
+    title = models.CharField(max_length=60)
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
 
@@ -101,16 +97,7 @@ class Menu(models.Model):
 
 
 class History(models.Model):
-    dish = models.ForeignKey(Post)
-    ingredient = models.ForeignKey(Ingredient)
-    amount = models.IntegerField()
-    date = models.DateField(default=timezone.now)
-
-    def add_history_instance(self, relation):
-        self.dish = relation.dish
-        self.ingredient = relation.ingredient
-        self.amount = relation.amount
-        self.save()
+    menu = models.ForeignKey(Menu)
 
 
 class Schedule(models.Model):
