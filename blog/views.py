@@ -8,6 +8,7 @@ from django.shortcuts import redirect, render
 from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
+from django.contrib.auth.decorators import permission_required
 
 
 def dishes_list(request):
@@ -41,7 +42,7 @@ def dish_details(request, pk=None):
     return render(request, 'blog_templates/post_detail.html', context)
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def dish_edit(request, pk):
     context = {}
     dish = get_object_or_404(Post, pk=pk)
@@ -57,7 +58,7 @@ def dish_edit(request, pk):
     return render(request, "blog_templates/post_edit.html", context)
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def new_dish(request):
     context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
@@ -71,7 +72,7 @@ def new_dish(request):
     return render(request, 'blog_templates/post_new.html', context)
 
 
-# TODO запретить удалять не админам
+@permission_required('blog.can_add', raise_exception=True)
 def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
@@ -87,13 +88,13 @@ def menu_out(request):
         return render(request, 'blog_templates/post_list.html', data)
 
 
-# TODO запретить видеть не админам
+@permission_required('blog.can_add', raise_exception=True)
 def history_out(request):
     history = History.objects.all()
     return render(request, 'blog_templates/history.html', {'history': history})
 
 
-# TODO запретить видеть не админам
+@permission_required('blog.can_add', raise_exception=True)
 def menu_detail(request, pk=None):
     menu = get_object_or_404(Menu, pk=pk)
     items = menu.items.all()
@@ -104,12 +105,12 @@ def menu_detail(request, pk=None):
     return render(request, 'blog_templates/menu_detail.html', context)
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -130,14 +131,14 @@ def new_menu(request, pk=None):
     return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
-# TODO запретить удалять не админам
+@permission_required('blog.can_add', raise_exception=True)
 def menu_remove(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     menu.delete()
     return redirect('menu_archive')
 
 
-# TODO запретить удалять не админам
+@permission_required('blog.can_add', raise_exception=True)
 def menu_item_remove(request, **kwargs):
     pk = kwargs.get('pk', '')
     post = Menu.objects.get(pk=pk)
@@ -149,13 +150,13 @@ def menu_item_remove(request, **kwargs):
     return redirect('blog.views.menu_archive')
 
 
-# TODO запретить видеть не админам
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
 
 
-# TODO запретить видеть не админам
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_detail(request, pk=None):
     instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {
@@ -166,7 +167,7 @@ def ingredient_detail(request, pk=None):
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_edit(request, pk):
     ingredient = get_object_or_404(Ingredient, pk=pk)
     if request.method == "POST":
@@ -180,7 +181,7 @@ def ingredient_edit(request, pk):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-# TODO need roles
+@permission_required('blog.can_add', raise_exception=True)
 def new_ingredient(request):
     if request.method == 'POST':
         ingredient = create_ingredient(request)
@@ -193,7 +194,7 @@ def new_ingredient(request):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-# TODO запретить удалять не админам
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
@@ -247,7 +248,7 @@ def schedule_edit(request, pk):
     if request.method == "POST":
         form = ScheduleForm(request.POST, instance=post)
         if form.is_valid():
-            post = form.save_object(request=request)
+            form.save_object(request=request)
             return redirect('/')
     else:
         form = ScheduleForm(instance=post)
