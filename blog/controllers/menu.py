@@ -1,40 +1,11 @@
 from common.permission import have_permission
-from common.blog_post_list import get_menu_of_current_time
 from blog.models import Menu, Post
-import datetime
 
 
-def request_has_date(post_dict):
+def delete_date(post_dict):
     try:
-        year = post_dict.get('date_year')
-        month = post_dict.get('date_month')
-        day = post_dict.get('date_day')
+        post_dict.pop('date')
     except Exception:
-        return False
-    return True
-
-
-def add_date(post_dict, menu):
-    year = post_dict['date_year']
-    month = post_dict['date_month']
-    day = post_dict['date_day']
-    time = datetime.date(
-        year=int(year),
-        month=int(month),
-        day=int(day),
-    )
-    menu.date = time
-    del post_dict['date_year']
-    del post_dict['date_month']
-    del post_dict['date_day']
-    return time
-
-
-def delete_menus_of_current_time(time, title):
-    menu = get_menu_of_current_time(title=title, time=time)
-    try:
-        menu.delete()
-    except AttributeError:
         pass
 
 
@@ -58,9 +29,7 @@ def menu_edit(request, menu):
     if user:
         obj_dict = menu.__dict__
         request_dict = request.POST
-        if request_has_date(request.POST):
-            time = add_date(request.POST, menu)
-            delete_menus_of_current_time(time, request_dict.get('title'))
+        delete_date(request_dict)
         if have_items(request_dict):
             add_dishes_to_menu(request_dict, menu)
         for item in request_dict.items():
@@ -77,7 +46,8 @@ def create_menu(request):
     user = have_permission(request)
     if user:
         request_dict = request.POST
-        menu = Menu(title=request_dict.pop())
+        menu = Menu(title=request_dict.pop('title'))
+        menu.author = user
         menu.save()
         return menu_edit(request, menu)
     return False

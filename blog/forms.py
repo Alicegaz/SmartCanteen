@@ -85,8 +85,6 @@ class MenuForm(forms.ModelForm):
         Post.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
         required=False,
     )
-    title = forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES)
-    date = forms.DateField(widget=SelectDateWidget(), initial=timezone.now)
 
     class Meta:
         model = Menu
@@ -94,8 +92,6 @@ class MenuForm(forms.ModelForm):
 
         widgets = {
             'items': forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
-            'date': forms.DateField(widget=SelectDateWidget(), initial=timezone.now),
-            'title': forms.ChoiceField(widget=forms.Select(), choices=TYPE_MENU_CHOICES),
         }
 
     def selected_ingredients_labels(self):

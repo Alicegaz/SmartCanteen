@@ -89,7 +89,7 @@ class MenuObject(models.Model):
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=60, choices=TYPE_MENU_CHOICES)
+    title = models.CharField(max_length=60)
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
 

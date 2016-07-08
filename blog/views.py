@@ -125,7 +125,7 @@ def new_menu(request):
 def menu_remove(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     menu.delete()
-    return redirect('blog.views.menu_archive')
+    return redirect('menu_archive')
 
 
 # TODO запретить удалять не админам
