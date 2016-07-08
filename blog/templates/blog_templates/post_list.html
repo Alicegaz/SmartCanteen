@@ -1,98 +1,100 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-    {% block content %}
-         <div class="row carousel-holder">
+{% block content %}
+    <div class="row carousel-holder">
 
-                    <div class="col-md-12">
-                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol>
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                 {% if schedule.image %}
-                            <a href="{% url 'post_detail' pk=schedule.pk %}"> <img src="/{{schedule.image.url}}" height="300" width="800" float="left"/> </a>
-                                {% else %}
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                {% endif %}
-                                    <div class="carousel-content">
-                                        {% if schedule %}
-                                    <p>Пн-Пт:{{ schedule.monfr1.hour }}:{{ schedule.monfr1.minute }} - {{ schedule.monfr2.hour }}:{{ schedule.monfr2.minute }}</p>
-                                    <p>Сб-Вс: {{ schedule.stsn1.hour }}:{{ schedule.stsn1.minute }} - {{ schedule.stsn2.hour }}:{{ schedule.stsn2.minute }}</p>
-                                    <p>Завтрак: {{ schedule.breakfast1.hour}}:{{ schedule.breakfast1.minute }} - {{ schedule.breakfast2.hour }}:{{ schedule.breakfast2.minute }}</p>
-                                    <p>Обед: {{ schedule.dinner1.hour }}:{{ schedule.dinner1.minute }} - {{ schedule.dinner2.hour }}:{{ schedule.dinner2.minute }}</p>
-                                    <p>Ужин: {{ schedule.supper1.hour }}:{{ schedule.supper1.minute }} - {{ schedule.supper2.hour }}:{{ schedule.supper2.minute }}</p>
-                                          {% endif %}
-                                  </div>
-                                  <div class="carousel-caption">
-                                    <h3>Режим работы</h3>
-                                  </div>
-                                </div>
-                                <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                </div>
-                                <div class="item">
-                                    <img class="slide-image" src="http://placehold.it/800x300" alt="">
-                                </div>
-                            </div>
-                            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                                <span class="glyphicon glyphicon-chevron-left"></span>
-                            </a>
-                            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                                <span class="glyphicon glyphicon-chevron-right"></span>
-                            </a>
+        <div class="col-md-12">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="item active">
+                        {% if schedule.image %}
+                            <a href="{% url 'post_detail' pk=schedule.pk %}"> <img src="/{{ schedule.image.url }}"
+                                                                                   height="300" width="800"
+                                                                                   float="left"/> </a>
+                        {% else %}
+                            <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                        {% endif %}
+                        <div class="carousel-content">
+                            {% if schedule %}
+                                <p>Пн-Пт:{{ schedule.monfr1.hour }}:{{ schedule.monfr1.minute }}
+                                    - {{ schedule.monfr2.hour }}:{{ schedule.monfr2.minute }}</p>
+                                <p>Сб-Вс: {{ schedule.stsn1.hour }}:{{ schedule.stsn1.minute }}
+                                    - {{ schedule.stsn2.hour }}:{{ schedule.stsn2.minute }}</p>
+                                <p>Завтрак: {{ schedule.breakfast1.hour }}:{{ schedule.breakfast1.minute }}
+                                    - {{ schedule.breakfast2.hour }}:{{ schedule.breakfast2.minute }}</p>
+                                <p>Обед: {{ schedule.dinner1.hour }}:{{ schedule.dinner1.minute }}
+                                    - {{ schedule.dinner2.hour }}:{{ schedule.dinner2.minute }}</p>
+                                <p>Ужин: {{ schedule.supper1.hour }}:{{ schedule.supper1.minute }}
+                                    - {{ schedule.supper2.hour }}:{{ schedule.supper2.minute }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>Режим работы</h3>
                         </div>
                     </div>
-
-                </div>
-            {% for dish in posts.items.all %}
-                <div class="post">
-                    <div id="image-{{dish.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-                        {% if dish.image %}
-                            <a href="{% url 'post_detail' pk=dish.pk %}"> <img src="/{{dish.image.url}}" height="200" width="250" float="left"/> </a>
-                        {% endif %}
-                         <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
-                         </h2>
-                <p>
-                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-
-                    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                   </p>
-                        <p>price: {{  post.price }}</p>
-                        <p>калории: {{ post.calories }}</p>
-
-                        <p>price: {{  dish.price }}</p>
-                        <p>калории: {{ dish.calories }}</p>
+                    <div class="item">
+                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                    </div>
+                    <div class="item">
+                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
                     </div>
                 </div>
-            {% endfor %}
-    {% endblock %}
+                <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    {% for dish in posts.items.all %}
+        <div class="post">
+            <div id="image-{{ dish.id }}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                {% if dish.image %}
+                    <a href="{% url 'post_detail' pk=dish.pk %}"> <img src="/{{ dish.image.url }}" height="200"
+                                                                       width="250" float="left"/> </a>
+                {% endif %}
+                <h2><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
+                </h2>
+                {% if dish.price %}
+                    <p>price: {{ dish.price }}</p>
+                {% endif %}
+                {% if dish.calories %}
+                    <p>калории: {{ dish.calories }}</p>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
 
 
-    {% block scrip %}
-         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+{% block scrip %}
+    <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-        <script type="text/javascript">
-         function confirmDelete ()
-         {
-             if (confirm("Вы уверены, что хотите удалить меню?")) {
-                 return true;
-             }
-                     else
-                     {
-                     return false;
-                 }
-         }
-       </script>
-        {%  include 'javascripts.html' %}
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (confirm("Вы уверены, что хотите удалить меню?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+    {% include 'javascripts.html' %}
 
     <script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
-            <script src="js/jquery.js"></script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
+    <script src="js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
-    {% endblock %}
+{% endblock %}
