@@ -72,6 +72,10 @@ class Post(models.Model):
             result.append(instance.ingredient)
         return result
 
+    def get_amount(self, ingredient):
+        ing_r = IngDishRelation.objects.get(dish=self, ingredient=ingredient)
+        return ing_r.amount
+
 
 class IngDishRelation(models.Model):
     dish = models.ForeignKey(Post, on_delete=models.CASCADE)
@@ -80,7 +84,7 @@ class IngDishRelation(models.Model):
 
     def subtract_from_ingredient(self):
         self.ingredient.weight -= self.amount
-        History.add_history_instance(relation=self)
+        self.ingredient.save()
 
 
 class Menu(models.Model):
@@ -94,6 +98,21 @@ class Menu(models.Model):
 
     def __unicode__(self):
         return self.choice_text
+
+    def enable_to_subtract_from_ingredient(self):
+        result = True
+        for item in self.items.all():
+            ing_dish_relations = IngDishRelation.objects.filter(dish=item)
+            for relation in ing_dish_relations:
+                one_more = (relation.ingredient.weight >= relation.amount)
+                result = result or one_more
+        return True
+
+    def subtract_from_ingredient(self):
+        for item in self.items.all():
+            ing_dish_relations = IngDishRelation.objects.filter(dish=item)
+            for relation in ing_dish_relations:
+                relation.subtract_from_ingredient()
 
 
 class History(models.Model):
