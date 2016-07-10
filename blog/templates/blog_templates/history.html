@@ -1,6 +1,6 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<html>
-    <head>
+{% block css %}
           <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
         <title>Django Girls blog</title>
           {% include 'stylesheets.html' %}
@@ -37,49 +37,9 @@ tr:hover td{
             }
             </style>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
-
-        		            </head>
-    <body>
-       {%  include 'navbar.html' %}
-       {% if user.is_authenticated %}
-    <div class="sidebar" id="socializ">
-<ul class="main-menu">
-            <li><a href="#company" class="gn-icon gn-icon-earth">Персонал</a>
-               <ul>
-                    <li><a class="gn-icon gn-icon-help">Управление</a></li>
-                   <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
-               </ul>
-    </li>
-            <li><a href="#services" class="gn-icon gn-icon-help">Информация</a>
-                <ul>
-                    <li><a class="gn-icon gn-icon-article">Акции</a></li>
-                    <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
-                    {%  if schedule  %}
-                                <li><a href="{% url 'schedule_edit' pk=schedule.pk %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-
-                        {% else %}
-                         <li><a href="{% url 'schedule_new' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-                    {% endif %}
-                </ul>
-            </li>
-            <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>
-                <ul>
-                    <li><a href="{% url 'dishes_list' %}" class="gn-icon gn-icon-search">Блюда</a></li>
-                    <li><a href="{% url 'post_ingredientlist' %}" class="gn-icon gn-icon-pictures">Продукты</a></li>
-                </ul>
-    </li>
-            <li><a href="#contacts" class="gn-icon gn-icon-help">Создать меню</a>
-                <ul>
-                    <li><a href="{% url 'menu_archive' %}" class="gn-icon gn-icon-search">Архив</a></li>
-                                    <li><a href="{% url 'new_menu' %}" class="gn-icon gn-icon-search">Создать меню</a></li>
-                                                    </ul>
-    </li>
-        </ul>
-</div>
-       {% endif %}
-
-       <div class="page-container">
+{% endblock %}
        {#  <div class="col-md-8"> #}
+{% block content %}
        <h2>Архив меню</h2>
             {% if history %}
                 <table>
@@ -98,11 +58,11 @@ tr:hover td{
                  {% endfor %}
                 </table>
         {% endif %}
-    </div>
+{% endblock %}
 
               {#  </div>  #}
 
-
+{% block scrip %}
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
         <script>
@@ -120,7 +80,17 @@ tr:hover td{
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
+     <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить блюдо?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
     {%  include 'javascripts.html' %}
-    </body>
-</html>
-
+{% endblock %}

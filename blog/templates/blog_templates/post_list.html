@@ -17,7 +17,7 @@
                                                                                    height="300" width="800"
                                                                                    float="left"/> </a>
                         {% else %}
-                            <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                            <img class="slide-image" src="/media/carousel/693868_cut-photo.ru.jpg" alt="">
                         {% endif %}
                         <div class="carousel-content">
                             {% if schedule %}
@@ -38,10 +38,10 @@
                         </div>
                     </div>
                     <div class="item">
-                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                        <img class="slide-image" src="\media\carousel\693986_cut-photo.ru.jpg" alt="">
                     </div>
                     <div class="item">
-                        <img class="slide-image" src="http://placehold.it/800x300" alt="">
+                        <img class="slide-image" src="\media\carousel\693878_cut-photo.ru.jpg" alt="">
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
@@ -54,24 +54,33 @@
         </div>
 
     </div>
+    <div class="L">
     {% for dish in posts.items.all %}
-        <div class="post">
-            <div id="image-{{ dish.id }}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+
+            <div id="image-{{ dish.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                <div class="post">
+                <div class="post-top">
                 {% if dish.image %}
                     <a href="{% url 'post_detail' pk=dish.pk %}"> <img src="/{{ dish.image.url }}" height="200"
                                                                        width="250" float="left"/> </a>
                 {% endif %}
-                <h2><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
-                </h2>
+                <p class="post-top-price"><span>{{ dish.price }} &#8381;</span></p>
+                </div>
+                <div class="post-content">
+                <h3><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
+                </h3>
                 {% if dish.price %}
                     <p>price: {{ dish.price }}</p>
                 {% endif %}
                 {% if dish.calories %}
                     <p>калории: {{ dish.calories }}</p>
-                {% endif %}
-            </div>
+            {% endif %}
+                    </div>
         </div>
+        </div>
+
     {% endfor %}
+    </div>
 {% endblock %}
 
 
@@ -89,7 +98,15 @@
         }
     </script>
     {% include 'javascripts.html' %}
-
+     <script>
+     $(function(){
+    $(window).scroll(function() {
+        var top = $(document).scrollTop();
+        if (top < 100) $(".floating").css({top: '0', position: 'relative'});
+        else $(".floating").css({top: '10px', position: 'fixed'});
+    });
+});
+     </script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
     </script>

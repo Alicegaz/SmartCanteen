@@ -1,6 +1,10 @@
 {% load staticfiles %}
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
         <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
         <title>Nazvanie</title>
@@ -21,7 +25,6 @@
        .errorlist li{
            color:red;
        }
-
             .page-container{
                 height: 100%;
             }
@@ -32,7 +35,6 @@
             }
                .navbar-default {
     max-width: 100%;
-    min-width: 810px;
 }
                .carousel-content {
   position: absolute;
@@ -41,22 +43,59 @@
   z-index: 20;
   color: white;
   text-shadow: 0 1px 2px rgba(0,0,0,.6);
+                   width: 70%;
 }
                .carousel-caption{
                    top: 10%;
                }
                .carousel-holder{
-                   max-width: 1000px;
-                   min-width: 500px;
+                   width: 100%;
                }
                .page-container{
-                   width: 800px;
+                   width: 70%;
                    margin-right: 0px;
+                   max-width: 70% !important;
+               }
+               .row.carousel-holder{
+                   margin-right:0;
                }
                .navbar-default {
     max-width: 100%;
-    min-width: 810px;
 }
+       .col-xs-12.col-sm-6.col-md-4.col-l{
+                   border-top:1px solid #eee;
+    display: -moz-inline-stack; /* для FF ниже 3  */
+    display:inline-block;
+    font-size:91%;
+    /*margin: 0 24px 20px 0;
+    **/
+    min-height:178px;
+    vertical-align:text-top;
+    border:1px solid #eee;
+    /* уголки, ля-ля-ля */
+    padding: 5px 5px 0;
+    zoom:1; /* обычный layout fix для ИЕ6 */
+    *display:inline; /* для ИЕ 6, 7 */
+               }
+       div.page-container{
+    padding: 0;
+    height: 100% !important;
+    background: #eee !important;
+    margin: 50px 0 0 30% !important;
+    height: 582px;
+       }
+       .page-container{
+           margin-top:50px !important;
+            height:100%;
+           width: 70% !important;
+                   margin-right: 0px;
+           min-width: unset !important;
+       }
+              h2{
+                   color: white !important;
+                font-size: 200% !important;
+                font-family: SansSerif !important;
+               }
        .col-xs-12.col-sm-6.col-md-4.col-l{
                    border-top:1px solid #eee;
     display: -moz-inline-stack; /* для FF ниже 3  */
@@ -70,50 +109,166 @@
 
     /* уголки, ля-ля-ля */
 
-    padding: 5px 5px 0;
+    padding: 10px 10px 0;
     zoom:1; /* обычный layout fix для ИЕ6 */
     *display:inline; /* для ИЕ 6, 7 */
+    max-width:130px;
+    min-width:230px;
                }
+
+* {
+  box-sizing: border-box;
+}
+p, h3 {margin: 0}
+.post {
+  width: auto;
+  margin: 10% auto 0;
+  position: relative;
+  background: white;
+  box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+  border-radius: 3px;
+  font-family: 'Scada', sans-serif;
+}
+.post-top {
+  min-height: 45px;
+  position: relative;
+  overflow: hidden;
+}
+.post-top a {
+  text-decoration: none;
+  display: block;
+}
+.post-top-img {
+  border-radius: 3px 3px 0 0;
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+.post-top-angle {
+  width: 180px;
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  top: 20px;
+  right: -50px;
+  transform:rotate(45deg);
+  color: #fefefe;
+  text-align: center;
+  background: #F8CF82;
+  font-size: 16px;
+  font-weight:bold;
+}
+.post-top-price {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+}
+.post-top-price span {
+display: inline-block;
+  height: 45px;
+  line-height: 45px;
+  padding: 0 20px;
+  background: #F8CF82;
+  border-radius: 3px 0 0 0;
+  color: #fefefe;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.post-top-price:after {
+  content: " ";
+  display: block;
+  height: 5px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: #F8CF82;
+}
+.post-content {
+  padding: 20px;
+  font-family: 'Scada', sans-serif;
+}
+.post-content h3 {
+  font-size: 1.5em;
+}
+.post-content p {
+  margin-top: 10px;
+  color: #6e6e6e;
+  line-height: 1.5em;
+}
+
+       .col-xs-12{
+           width:90%;
+       }
+     .navbar-collapse .collapse .in{
+         z-index:1000;
+     }
+       .nav .navbar-nav .pull-right{
+           z-index:1500;
+       }
+       /** apply to other*/
+       .navbar-toggle:hover > ul#gn-menu{
+           display: block;
+       }
+       .navbar-collapse .collapse .in ul.nav.navbar-nav .pull-right{
+           display: none;
+           position:absolute;
+           width:120px;
+           top: 37px;
+           left:0;
+           background: greenyellow;
+           border: 1px solid gold;
+           background-color: #2ecc71;
+       }
+       ul#gn-menu > li{
+           display: block;
+       }
+       ul#gn-menu > li > a{
+           display: block;
+
+       }
+
+       ul#gn-menu.nav.navbar-nav.pull-right{
+           background-color: #2ecc71;
+       }
+
+       .collapse.navbar-collapse.open{
+           display:block;
+           z-index: 2000;
+       }
+       .open > ul > li
+       {
+           margin-left: 5px;
+           margin-right:5px;
+           padding-bottom: 8px;
+       }
+        .open > ul#gn-menu > li {
+           border-bottom: 1px solid #369e62;
+            background-color: #2ecc71;
+           padding-bottom: 5px;
+           margin-left: 9px;
+       }
+        .open > ul#gn-menu > li > a {
+            background-color: #2ecc71;
+            padding-top: 5px;
+            padding-bottom: 2px;
+            margin-left: 5px;
+        }
+
         </style>
+        <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
+        <link rel='stylesheet prefetch' href='/css/mcv.css'>
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        {% block css %}{% endblock %}
     </head>
     <body>
        {%  include 'navbar.html' %}
         {% if user.is_authenticated %}
             <div class="sidebar" id="socializ">
-            <ul class="main-menu">
-                <li><a href="#company" class="gn-icon gn-icon-earth" tabindex="1">Персонал</a>
-                    <ul>
-                        <li><a class="gn-icon gn-icon-help">Управление</a></li>
-                        <li><a href="/auth/register" class="gn-icon gn-icon-cog">Добавить сотрудника</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#services" class="gn-icon gn-icon-help" tabindex="1">Информация</a>
-                    <ul>
-                        <li><a class="gn-icon gn-icon-article">Акции</a></li>
-                        <li><a class="gn-icon gn-icon-earth">Контакты</a></li>
-                        {%  if schedule  %}
-                                <li><a href="{% url 'schedule_edit' pk=schedule.pk %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-                        {% else %}
-                         <li><a href="{% url 'schedule_new' %}" class="gn-icon gn-icon-earth">Режим работы</a></li>
-                    {% endif %}
-                    </ul>
-                </li>
-
-                <li><a href="#team" class="gn-icon gn-icon-article">Склад</a>
-                    <ul>
-                        <li><a href="{% url 'dishes_list' %}" class="gn-icon gn-icon-search">Блюда</a></li>
-                        <li><a href="{% url 'post_ingredientlist' %}" class="gn-icon gn-icon-pictures">Продукты</a></li>
-                    </ul>
-                </li>
-
-                <li><a href="#contacts" class="gn-icon gn-icon-help">Создать меню</a>
-                    <ul>
-                        <li><a href="{% url 'menu_archive' %}" class="gn-icon gn-icon-search">Архив</a></li>
-                        <li><a href="{% url 'new_menu' %}" class="gn-icon gn-icon-search">Создать меню</a></li>
-                    </ul>
-                </li>
-            </ul>
+           {%  include 'just_fun_menu.html' %}
         </div>
         {% endif %}
 
