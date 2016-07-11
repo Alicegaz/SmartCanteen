@@ -5,9 +5,20 @@
     div.page-container {
         padding-top: 8%;
     }
+    .headline4{
+        position: relative;
+        width:60%;
+        color: lightseagreen;
+        font-size: xx-large;
+        font-family: Sans-Serif;
+        padding-left:30%;
+
+}
     </style>
+<link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+    <div class="headline4">Блюда</div>
     <div class="L">
     {% for post in posts %}
 
