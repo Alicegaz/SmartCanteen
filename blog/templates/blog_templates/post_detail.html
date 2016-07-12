@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block css %}
-    <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
-    <title>Django Girls blog</title>
     <style>
         #socializ {
             top: 80px;
@@ -10,7 +8,6 @@
             z-index: 1000;
         }
     </style>
-    {% include 'stylesheets.html' %}
     <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
 {% block content %}

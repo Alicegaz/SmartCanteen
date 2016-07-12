@@ -1,7 +1,9 @@
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response, redirect, render
-from authentication.models import User
-from django.template.context_processors import csrf
+from django.shortcuts import render_to_response, redirect, render, get_object_or_404
+
+from authentication.forms import NewUserForm
+from authentication.models import User, UserProfile
+from django.template.context_processors import csrf, request
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from authentication import forms
 from django.contrib.auth.decorators import user_passes_test
@@ -9,6 +11,8 @@ from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 from blog.models import Schedule, Post
+from django.db.models import Q
+from blog.controllers.dish import user_edit as user_change
 
 
 def login(request):
@@ -71,6 +75,7 @@ def register(request):
             password = form.cleaned_data.get('password')
             role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
+            print('ghghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
             if role == 'is_admin' or role == 'is_cashier':
                 if role == 'is_admin':
                     permission = Permission.objects.get(codename='can_add')
@@ -78,7 +83,27 @@ def register(request):
                     permission = Permission.objects.get(codename='can_edit_schedule')
             else:
                 return redirect('/auth/no_permision')
+            e = UserProfile()
+            e.profile = user
+            e.author = request.user
+            e.save()
             user.user_permissions.add(permission)
+
             user.save()
+
             return redirect('/')
     return render(request, 'register.html', {'form': form})
+
+def users(request):
+    perm1 = Permission.objects.get(codename='can_edit_schedule')
+    perm2 = Permission.objects.get(codename='can_add')
+    users1 = User.objects.filter(Q(user_permissions=perm1))
+    users2 = User.objects.filter(Q(user_permissions=perm2))
+    return render(request, 'users.html', {'users1': users1, 'users2':users2})
+
+
+@permission_required('blog.can_add', raise_exception=True)
+def user_remove(request, pk):
+        user = get_object_or_404(User, pk=pk)
+        user.delete()
+        return redirect('authentication.views.user')

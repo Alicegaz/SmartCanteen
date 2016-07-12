@@ -38,6 +38,11 @@ urlpatterns = [
     url(r'^schedule_new/$', views.schedule_new, name='schedule_new'),
     url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
+    #to resolve bugs
+    url(r'^auth/register/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
+    url(r'^auth/register/schedule_new$', views.schedule_new, name='schedule_new'),
+    url(r'^auth/user/schedule_new$', views.schedule_new, name='schedule_new'),
+    url(r'^auth/user/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
 ]
 
