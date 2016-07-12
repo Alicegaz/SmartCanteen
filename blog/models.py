@@ -23,7 +23,6 @@ TYPE_MENU_CHOICES = (
 class Ingredient(models.Model):
     name = models.CharField(max_length=300)
     weight = models.IntegerField(null=True)
-    price = models.IntegerField(null=True)
     date = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):

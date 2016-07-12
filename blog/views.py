@@ -27,6 +27,12 @@ def dish_details(request, pk=None):
     class IngAm:
         ingredient = None
         amount = None
+
+        def get_json_object(self):
+            dic = self.__dict__
+            dic['ingredient'] = dic['ingredient'].get_json_object()
+            return dic
+
     ing_list = []
     for ing in ingredients:
         new_one = IngAm()
