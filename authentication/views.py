@@ -12,8 +12,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 from blog.models import Schedule, Post
 from django.db.models import Q
-from blog.controllers.dish import user_edit as user_change
-
 
 def login(request):
     args = {}
