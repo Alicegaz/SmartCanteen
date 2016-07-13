@@ -116,7 +116,7 @@ def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+# @permission_required('blog.can_add', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)

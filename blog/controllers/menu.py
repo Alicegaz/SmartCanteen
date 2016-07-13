@@ -45,7 +45,7 @@ def menu_edit(request, menu):
 def create_menu(request):
     user = have_permission(request)
     if user:
-        request_dict = request.POST
+        request_dict = request.POST.copy()
         menu = Menu(title=request_dict.pop('title')[0])
         menu.author = user
         menu.save()
