@@ -35,6 +35,8 @@ urlpatterns = [
     # have no permission url
     url(r'^no_permission/$', views.no_permission, name='no_permission'),
 
+    url(r'^buy/$', views.buy_dishes, name='buy'),
+
     url(r'^schedule_new/$', views.schedule_new, name='schedule_new'),
     url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
@@ -47,7 +49,7 @@ urlpatterns = [
     #shares
     url(r'^shares/$', views.shares_list, name='shares_list'),
     url(r'^shares/form/$', views.shares_new, name='shares_new'),
-    url(r'^shares/edit/$', views.shares_edit, name='shares_edit'),
+    url(r'^shares/(?P<pk>\d+)/edit/$', views.shares_edit, name='shares_edit'),
 ]
 
 if settings.DEBUG:

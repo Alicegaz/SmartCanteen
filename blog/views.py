@@ -1,12 +1,16 @@
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
 from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
 from django.shortcuts import get_object_or_404
+from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
+from blog.models import Post, Ingredient, Menu, Schedule, History
+from django.shortcuts import get_object_or_404, HttpResponse
 from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.shares import create_shares, shares_edit as shares_change
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -29,6 +33,12 @@ def dish_details(request, pk=None):
     class IngAm:
         ingredient = None
         amount = None
+
+        def get_json_object(self):
+            dic = self.__dict__
+            dic['ingredient'] = dic['ingredient'].get_json_object()
+            return dic
+
     ing_list = []
     for ing in ingredients:
         new_one = IngAm()
@@ -112,7 +122,7 @@ def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+# @permission_required('blog.can_add', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -285,9 +295,20 @@ def shares_edit(request, pk):
     if request.method == "POST":
         share = shares_change(request, share)
         if share is not False:
-            return redirect('shares_list.html')
+            return redirect('shares')
         else:
             return redirect('no_permission')
     else:
         context['form'] = SharesForm(instance=share)
     return render(request, "blog_templates/shares_edit.html", context)
+
+def buy_dishes(request):
+    if request.method is not 'POST':
+        return redirect('no_permission')
+    else:
+        res = buy(request)
+        if res:
+            price, calories = res
+            return json_response({'price':price, 'calories': calories})
+        else:
+            return HttpResponse(status=404)

@@ -103,7 +103,8 @@
                 <h3><a href="">{{ share.title }}</a>
                 </h3>
                 <p>
-                    <a class="btn btn-default" href="{% url 'shares_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
                 </p>
                 {% if share.text %}
                     <p>{{ share.type }}</p>
@@ -123,7 +124,7 @@
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
     <script type="text/javascript">
         function confirmDelete() {
-            if (confirm("Вы уверены, что хотите удалить меню?")) {
+            if (confirm("Вы уверены, что хотите удалить акцию?")) {
                 return true;
             }
             else {
