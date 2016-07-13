@@ -4,15 +4,80 @@
         <title>Django Girls blog</title>
         <link href="{% static "stylesheets/register_men.css" %}" rel="stylesheet">
           {% include 'stylesheets.html' %}
-
         <style>
-            .sidebar{
-                width:30%;
-            }
+
             .page-container{
                 margin: 0 30px 30% 0 !important;
             }
+          .sidebar{
+            width:30% !important;
+        }
+.container {
+    margin: 0 30px 0 30% !important;
+}
+
+            @media only screen and (max-width: 767px) and (min-width: 480px) {
+                
+            }
+.col-md-offset-4 {
+    margin-left: 10%;
+}
+              .navbar-collapse .collapse .in{
+         z-index:1000;
+     }
+       .nav .navbar-nav .pull-right{
+           z-index:1500;
+       }
+       /** apply to other*/
+       .navbar-toggle:hover > ul#gn-menu{
+           display: block;
+       }
+       .navbar-collapse .collapse .in ul.nav.navbar-nav .pull-right{
+           display: none;
+           position:absolute;
+           width:120px;
+           top: 37px;
+           left:0;
+           background: greenyellow;
+           border: 1px solid gold;
+           background-color: #2ecc71;
+       }
+       ul#gn-menu > li{
+           display: block;
+       }
+       ul#gn-menu > li > a{
+           display: block;
+
+       }
+
+       ul#gn-menu.nav.navbar-nav.pull-right{
+           background-color: #2ecc71;
+       }
+
+       .collapse.navbar-collapse.open{
+           display:block;
+           z-index: 2000;
+       }
+       .open > ul > li
+       {
+           margin-left: 5px;
+           margin-right:5px;
+           padding-bottom: 8px;
+       }
+        .open > ul#gn-menu > li {
+           border-bottom: 1px solid #369e62;
+            background-color: #2ecc71;
+           padding-bottom: 5px;
+           margin-left: 9px;
+       }
+        .open > ul#gn-menu > li > a {
+            background-color: #2ecc71;
+            padding-top: 5px;
+            padding-bottom: 2px;
+            margin-left: 5px;
+        }
         </style>
+        <link href="{% static "stylesheets/just_fun_menu.css" %}" rel="stylesheet">
             </head>
     <body>
        {%  include 'navbar.html' %}
@@ -24,7 +89,6 @@
         {% endif %}
 
        <div class="content container">
-<div class="row">
   <div class="col-md-4 col-md-offset-4">
     <h1>Регистрация</h1>
 
@@ -45,7 +109,6 @@
         </div>
         </form>
     </div>
-  </div>
 </div>
     </div>
      {%  include 'javascripts.html' %}

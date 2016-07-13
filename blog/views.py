@@ -1,11 +1,12 @@
-from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
-from blog.models import Post, Ingredient, Menu, Schedule, History
+from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
+from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
 from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.dish import dish_edit as dish_change, create_dish
+from blog.controllers.shares import create_shares, shares_edit as shares_change
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -13,7 +14,8 @@ from django.contrib.auth.decorators import permission_required
 
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
-    data = {'posts': dishes}
+    shares = Shares.objects.all().filter(carousel=True)
+    data = {'posts': dishes, 'shares': shares}
     if json(request):
         return json_response(dishes)
     else:
@@ -242,7 +244,7 @@ def schedule_new(request):
             form = ScheduleForm()
         return render(request, 'blog_templates/schedule_new.html', {'form': form})
 
-
+@permission_required('blog.can_add', raise_exception=True)
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=pk)
     if request.method == "POST":
@@ -253,3 +255,39 @@ def schedule_edit(request, pk):
     else:
         form = ScheduleForm(instance=post)
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
+
+@permission_required('blog.can_add', raise_exception=True)
+def shares_list(request):
+    shares = Shares.objects.all().order_by('created_date')
+    data = {'shares': shares}
+    if json(request):
+        return json_response(shares)
+    else:
+        return render(request, 'blog_templates/shares_list.html', data)
+
+@permission_required('blog.can_add','blog.can_edit_schedule', raise_exception=True)
+def shares_new(request):
+    context = {}
+    if request.method == 'POST':
+        share = create_shares(request)
+        if share is not False:
+            return redirect('shares_list.html')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = SharesForm()
+    return render(request, 'blog_templates/shares_new.html', context)
+
+@permission_required('blog.can_add', raise_exception=True)
+def shares_edit(request, pk):
+    context = {}
+    share = get_object_or_404(Shares, pk=pk)
+    if request.method == "POST":
+        share = shares_change(request, share)
+        if share is not False:
+            return redirect('shares_list.html')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = SharesForm(instance=share)
+    return render(request, "blog_templates/shares_edit.html", context)

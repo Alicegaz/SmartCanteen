@@ -2,7 +2,7 @@
 {% load staticfiles %}
     {% block content %}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <h2>Изменить блюдо</h2>
+                      <div class="title1"><h2>Изменить блюдо</h2></div>
                         <div class="form-group">
                             {{ form.title.errors }}
                             <label for="title">Название блюда:</label>

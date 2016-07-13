@@ -44,6 +44,10 @@ urlpatterns = [
     url(r'^auth/user/schedule_new$', views.schedule_new, name='schedule_new'),
     url(r'^auth/user/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
+    #shares
+    url(r'^shares/$', views.shares_list, name='shares_list'),
+    url(r'^shares/form/$', views.shares_new, name='shares_new'),
+    url(r'^shares/edit/$', views.shares_edit, name='shares_edit'),
 ]
 
 if settings.DEBUG:

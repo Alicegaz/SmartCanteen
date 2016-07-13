@@ -2,7 +2,8 @@ from django import forms
 from django.forms import ChoiceField, TimeField
 
 from blog.widgets import SelectTimeWidget
-from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation, Schedule
+from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation, Schedule, \
+    TYPE_CHOICES_SHARES, Shares
 from blog.fields import *
 from django.utils import timezone
 from common.request import get_image_from_request
@@ -113,6 +114,7 @@ class MenuForm(forms.ModelForm):
                     instance.items.add(item)
         return instance
 
+
     def __init__(self, *args, **kwargs):
         super(MenuForm, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
@@ -152,3 +154,47 @@ class ScheduleForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ScheduleForm, self).__init__(*args, **kwargs)
+
+class SharesForm(forms.ModelForm):
+    type = forms.ChoiceField(widget=forms.Select(), choices=TYPE_CHOICES_SHARES)
+    carousel = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput())
+    # type = forms.ChiceField(widget=forms.RadioSelect, choices = TYPE_CHOICES)
+    start_date = forms.DateTimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SplitSelectDateTimeWidget)
+    end_date = forms.DateTimeField(help_text = 'UTC date and time when voting begins',
+                                   widget=SplitSelectDateTimeWidget)
+
+    class Meta:
+        model = Shares
+        fields = ('title', 'text','image', 'type', 'old_price', 'new_price', 'discount', 'start_date', 'end_date', 'carousel')
+        widgets = {
+            'body': forms.Textarea(),
+            'type': ChoiceField(choices=TYPE_CHOICES, widget=forms.Select()),
+            'carousel': forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput())
+        }
+
+    def save(self, *args, **kwargs):
+        request = kwargs['request']
+        instance = super(SharesForm, self).save(commit=False)
+        instance.author = request.user
+        instance.save()
+
+        return instance
+
+    def save_object(self, **kwargs):
+        instance = super(ScheduleForm, self).save(commit=False)
+        request = kwargs['request']
+        instance.author = request.user
+        image = get_image_from_request(request)
+        if image:
+            instance.image = image
+        instance.save()
+        return instance
+
+    def __init__(self, *args, **kwargs):
+        super(SharesForm, self).__init__(*args, **kwargs)
+        # adding css classes to widgets without define the fields:
+        #for field in self.fields:
+            #self.fields[field].widget.attrs['class'] = 'form-control'
+            #self.fields['ingredients'].widget.attrs['class'] = 'chosen'
+

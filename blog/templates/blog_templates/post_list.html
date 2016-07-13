@@ -37,6 +37,20 @@
                             <h3>Режим работы</h3>
                         </div>
                     </div>
+                    {% for share in shares %}
+                    <div class="item">
+                            <img class="slide-image" src="/media/carousel/693868_cut-photo.ru.jpg" alt="">
+
+                        <div class="carousel-content">
+                            {% if share %}
+                              {{ share.image }} {{ share.type }}
+                            {% endif %}
+                        </div>
+                        <div class="carousel-caption">
+                            <h3>{{ share.title }}</h3>
+                        </div>
+                    </div>
+                {% endfor %}
                     <div class="item">
                         <img class="slide-image" src="\media\carousel\693986_cut-photo.ru.jpg" alt="">
                     </div>

@@ -330,7 +330,7 @@ background-color: #eaf0ff;
 }
                .uniForm input, .uniForm textarea {
 border:1px solid #aaa !important;
-box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset !important;
+/**box-shadow: 0px 0px 3px #ccc, 0 10px 15px #eee inset !important;*/
 border-radius:2px !important;
                    background-color:white !important;
 }
@@ -385,8 +385,14 @@ input[type=number] {
                    padding-bottom: 40px !important;
                    margin-bottom: 40px !important;
                }
+input[type=text]#id_title{
+    width: 50% !important;
+}
 .sticky {
   position: fixed;
   top: 0px;  /* если ноль заменить на число (и в скрипте тоже), то блок будет прилипать до того, как верхний край окна браузера дойдёт до верхнего края элемента. Может быть отрицательным числом. Применим, например, при фиксированном сверху меню */
   z-index: 101;
+}
+.page-container h2{
+    margin: 10px 10px 10px 10px;
 }

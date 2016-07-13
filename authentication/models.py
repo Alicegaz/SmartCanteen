@@ -5,7 +5,7 @@ from django.db import models
 
 
 class UserProfile(models.Model):
-    profile = models.OneToOneField(User, related_name='profile')
+    profile = models.OneToOneField(User, related_name='profile', null=True)
     author = models.ForeignKey('auth.User', null=True)
 
     def __unicode__(self):  # __str__

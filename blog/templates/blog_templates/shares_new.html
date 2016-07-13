@@ -1,10 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <style>
+    .block1 > p{
+        color: #395870;
+    font-weight: bold;
+    }
+    .title1{
+        margin: 14% 40px 10px 85px;
+    }
+    </style>
+{% endblock %}
+    {% block content %}
+            <form role="form" method="post" action="/shares/form/" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                   <div class="title1">
+                <h2>Добавить акцию</h2>
+                       </div>
+                        <div class="form-group">
+                            {{ form.title.errors }}
+                            <label for="title">Заголовок:</label>
+                                {{ form.title }}
+                        </div>
 
-</body>
-</html>
+                        <div class="form-group">
+                            {{ form.type.errors }}
+                            <label for="type">Тип акции:</label>
+                            {{ form.type }}
+                        </div>
+
+                        <div class="form-group">
+                                <div class="block1">
+                                     <p>Старая цена&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Новая цена </p>
+                                    {{ form.old_price.errors }}
+                                    {{ form.old_price }} руб.
+                                    {{ form.new_price.errors }}
+                                    {{ form.new_price }}руб.
+                                    </div>
+                        </div>
+
+
+                         <div class="form-group">
+                            {{ form.discount.errors }}
+                            <label for="discount">Скидка</label>
+                            {{ form.discount }} %
+                        </div>
+
+                         <div class="form-group">
+                            <label for="start_date">Даты проведения</label>
+                             {{ form.start_date.errors }}
+                             с {{ form.start_date }}
+                             </div>
+
+                         <div class="form-group">
+                             <label for="end_date">Даты проведения</label>
+                             {{ form.end_date.errors }}
+                             по {{ form.end_date }}
+                             </div>
+
+                         <div class="form-group">
+                            {{ form.text.errors }}
+                            <label for="text">Описание</label>
+                            {{ form.text }}
+                        </div>
+
+
+                        <div class="form-group">
+                            {{ form.image.errors }}
+                            <label for="image">Изображение:</label>
+                            {{form.image}}
+                        </div>
+
+                        <div class="form-group">
+                        {{ form.corousel.errors }}
+                        <label for="carousel">Показать на главной странице сайта:</label>
+                        {{ form.carousel }}
+                         </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+            </form>
+
+        {%  endblock %}
+
+              {#  </div>  #}
+
+{% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+
+   <script type="text/javascript">
+    function attachCheckboxHandlers() {
+    // get reference to element containing toppings checkboxes
+    var el = document.getElementById('id_ingredients');
+    console.log("string", el);
+
+    // get reference to input elements in toppings container element
+    var tops = el.getElementsByTagName('input');
+
+    // assign updateTotal function to onclick property of each checkbox
+    for (var i=0, len=tops.length; i<len; i++) {
+        if ( tops[i].type === 'checkbox' ) {
+            tops[i].onclick = updateTotal;
+        }
+    }
+}
+
+// called onclick of toppings checkboxes
+function updateTotal(e) {
+    // 'this' is reference to checkbox clicked on
+    var form = this.form;
+    // get current value in total text box, using parseFloat since it is a string
+    var val = parseInt(this.value);
+
+    // if check box is checked, add its value to val, otherwise subtract it
+    if ( this.checked ) {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: block !important';
+        el2[val-1].style.cssText = 'display: block !important';
+    } else {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: none !important';
+        el2[val-1].style.cssText = 'display: none !important';
+
+    }
+
+}
+     attachCheckboxHandlers();
+    </script>
+    {% include 'javascripts.html' %}
+    {% endblock %}
