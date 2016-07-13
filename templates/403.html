@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <style>
+    .L{
+    background-color: white;
+        padding-right:10%;
+        margin-right:10%;
+    }
+    .L > h2{
+        margin-left:30%;
+    }
+     .image{
+        margin-top: 10%;
+        margin-left:20%;
+    }
+    </style>
+{% endblock %}
+    {% block content %}
+            <div class="L">
+                <h2>403 - ОЙ, вам сюда нельзя :)</h2>
+<div class="image">
+            <img src="/media/carousel/cms-403-error.jpg"
+                 height="300"
+                 float="left"/>
+</div>
+
+    </div>
+        {%  endblock %}
+
+              {#  </div>  #}
+
+{% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+
+   <script type="text/javascript">
+    function attachCheckboxHandlers() {
+    // get reference to element containing toppings checkboxes
+    var el = document.getElementById('id_ingredients');
+    console.log("string", el);
+
+    // get reference to input elements in toppings container element
+    var tops = el.getElementsByTagName('input');
+
+    // assign updateTotal function to onclick property of each checkbox
+    for (var i=0, len=tops.length; i<len; i++) {
+        if ( tops[i].type === 'checkbox' ) {
+            tops[i].onclick = updateTotal;
+        }
+    }
+}
+
+// called onclick of toppings checkboxes
+function updateTotal(e) {
+    // 'this' is reference to checkbox clicked on
+    var form = this.form;
+    // get current value in total text box, using parseFloat since it is a string
+    var val = parseInt(this.value);
+
+    // if check box is checked, add its value to val, otherwise subtract it
+    if ( this.checked ) {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: block !important';
+        el2[val-1].style.cssText = 'display: block !important';
+    } else {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: none !important';
+        el2[val-1].style.cssText = 'display: none !important';
+
+    }
+
+}
+     attachCheckboxHandlers();
+    </script>
+    {% include 'javascripts.html' %}
+    {% endblock %}

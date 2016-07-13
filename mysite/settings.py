@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'common',
      'django_extensions',
+     'betterforms'
     #'django.contrib.sites',
 
 ]
@@ -113,6 +114,8 @@ BOWER_COMPONENTS_ROOT = '/PROJECT_ROOT/components/'
 
 BOWER_PATH = '/usr/bin/bower'
 
+
+AUTH_PROFILE_MODULE = "authentication.UserProfile"
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
 CACHE_BACKEND = 'dummy:///'

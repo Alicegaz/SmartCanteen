@@ -1,6 +1,6 @@
+{% extends "base.html" %}
 {% load staticfiles %}
-<html>
-    <head>
+{% block css %}
            <style>
             .navbar, .navbar-default {
                 background-color: orange !important;
@@ -118,28 +118,17 @@
                                         </style>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
-        <title>Django Girls blog</title>
-          {% include 'stylesheets.html' %}
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
-        		            </head>
-    <body>
-       {%  include 'navbar.html' %}
-
-       <div class="content container">
-        <div class="row-fluid">
+       {% endblock %}
+       {% block content %}
        {#  <div class="col-md-8"> #}
 
              <h1>Извините, у вас нет прав на бодавление новых пользователей :(</h1>
-               </div>
-
-              {#  </div>  #}
-
-
-        </div>
+    {% endblock %}
+{% block scrip %}
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
     <script>
 			new gnMenu( document.getElementById( 'gn-menu' ) );
 		</script>
-    </body>
-</html>
+{% endblock %}

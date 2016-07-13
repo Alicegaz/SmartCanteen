@@ -1,0 +1,69 @@
+<nav>
+		<ul class="mcd-menu">
+			<li>
+				<a href="">
+					<i class="fa fa-home"></i>
+					<strong>Управление</strong>
+                    <small>персоналом</small>
+				</a>
+                <ul>
+					<li><a href="/auth/register"><i class="fa fa-globe"></i>Добавить</a></li>
+					<li>
+						<a href="/auth/user"><i class="fa fa-group"></i>Управление</a>
+			        </li>
+                   </ul>
+        </li>
+			<li>
+				<a href="" class="active">
+					<i class="fa fa-edit"></i>
+					<strong>Информация</strong>
+					<small>sweet home</small>
+				</a>
+                <ul>
+					<li><a href="#"><i class="fa fa-globe"></i>Акции</a></li>
+					<li>
+						<a href="#"><i class="fa fa-group"></i>Контакты</a>
+			        </li>
+                    {% if schedule %}
+                    <li><a href="schedule_edit" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
+                    {% else %}
+                    <li><a href="schedule_new" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
+                    {%  endif %}
+                </ul>
+        </li>
+					<li>
+				<a href="">
+					<i class="fa fa-gift"></i>
+					<strong>Склад</strong>
+					<small>товары</small>
+				</a>
+                <ul>
+					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
+					<li>
+						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-group"></i>Продукты</a>
+			        </li>
+                    </ul>
+        </li>
+			<li>
+				<a href="">
+					<i class="fa fa-globe"></i>
+					<strong>Меню</strong>
+					<small>sweet home</small>
+				</a>
+                <ul>
+					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-globe"></i>Архив</a></li>
+					<li>
+						<a href="{% url 'new_menu' %}"><i class="fa fa-group"></i>Создать меню</a>
+			</li>
+                    </ul>
+			{% comment %}<li class="float">
+				<a class="search">
+					<input type="text" value="search ...">
+					<button><i class="fa fa-search"></i></button>
+				</a>
+				<a href="" class="search-mobile">
+					<i class="fa fa-search"></i>
+				</a>
+			</li>{% endcomment %}
+            </ul>
+	</nav>
