@@ -1,8 +1,8 @@
 from common.permission import have_permission
 from common.request import get_image_from_request
-from blog.models import IngDishRelation
-from blog.models import Ingredient
-from blog.models import Post
+from common.blog_post_list import get_menu_of_current_time
+from blog.models import IngDishRelation, Ingredient, Post, BuyHistory
+
 
 
 def delete_all_ingredients(dish):
@@ -84,3 +84,55 @@ def create_dish(request):
         return dish.id
     else:
         return False
+
+
+def get_dishes_list(request):
+    id_list = request.getlist('dish_id')
+    result = [Post.objects.get(id) for id in id_list]
+    return result
+
+
+def is_in_menu(dish_list):
+    menu = get_menu_of_current_time()
+    for item in dish_list:
+        if not menu.items.exists(item):
+            return False
+    return True
+
+
+def add_to_history(dish_list):
+    for dish in dish_list:
+        history_instance = BuyHistory(
+            title=dish.title,
+            text=dish.text,
+            calories=dish.calories,
+            price=dish.price,
+            type=dish.type,
+        )
+        history_instance.save()
+
+
+def dishes_price(dish_list):
+    result = 0
+    for dish in dish_list:
+        if dish.price:
+            result += dish.price
+    return result
+
+
+def get_calories(dish_list):
+    result = 0
+    for dish in dish_list:
+        if dish.calories:
+            result += dish.calories
+    return result
+
+
+def buy(dish_list):
+    status = is_in_menu(dish_list)
+    if status:
+        add_to_history(dish_list)
+        return dishes_price(dish_list), get_calories(dish_list)
+    else:
+        return False
+

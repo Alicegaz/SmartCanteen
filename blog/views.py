@@ -1,11 +1,11 @@
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
 from blog.models import Post, Ingredient, Menu, Schedule, History
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, HttpResponse
 from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
-from blog.controllers.dish import dish_edit as dish_change, create_dish
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -259,3 +259,15 @@ def schedule_edit(request, pk):
     else:
         form = ScheduleForm(instance=post)
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
+
+
+def buy_dishes(request):
+    if request.method is not 'POST':
+        redirect('no_permission')
+    else:
+        res = buy(request)
+        if res:
+            price, calories = res
+            return json_response({'price':price, 'calories': calories})
+        else:
+            return HttpResponse(status=404)
