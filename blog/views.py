@@ -263,7 +263,7 @@ def schedule_edit(request, pk):
 
 def buy_dishes(request):
     if request.method is not 'POST':
-        redirect('no_permission')
+        return redirect('no_permission')
     else:
         res = buy(request)
         if res:
