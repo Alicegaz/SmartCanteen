@@ -64,7 +64,6 @@ class Post(models.Model):
             dic['image'] = self.image.url
         else:
             dic['image'] = ''
-        print(dic)
         dic.pop('_state')
         return dic
 
