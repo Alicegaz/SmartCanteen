@@ -44,7 +44,8 @@ urlpatterns = [
     url(r'^auth/register/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
     url(r'^auth/register/schedule_new$', views.schedule_new, name='schedule_new'),
     url(r'^auth/user/schedule_new$', views.schedule_new, name='schedule_new'),
-    url(r'^auth/user/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
+    url(r'^auth/user/shares/$', views.shares_list, name='shares_list'),
+    url(r'^auth/register/shares/$', views.shares_list, name='shares_list'),
 
     #shares
     url(r'^shares/$', views.shares_list, name='shares_list'),
