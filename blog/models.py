@@ -60,7 +60,11 @@ class Post(models.Model):
     def get_json_object(self):
         dic = self.__dict__
         dic['created_date'] = self.created_date.isocalendar()
-        dic['image'] = self.image.url
+        if self.image:
+            dic['image'] = self.image.url
+        else:
+            dic['image'] = ''
+        print(dic)
         dic.pop('_state')
         return dic
 
