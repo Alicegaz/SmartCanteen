@@ -124,8 +124,6 @@ def menu_edit(request, pk):
 
 # @permission_required('blog.can_add', raise_exception=True)
 def new_menu(request, pk=None):
-    print(request.GET)
-    print(request.POST)
     if request.method == 'POST':
         menu = create_menu(request)
         if menu is not False:
