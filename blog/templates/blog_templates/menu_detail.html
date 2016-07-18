@@ -13,32 +13,48 @@
 {% endblock %}
        {% block content %}
        {#  <div class="col-md-8"> #}
-            <div class="post">
+            <div class="smart-green">
     {# <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon-pencil"></span></a> #}
     {# <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> #}
-        <h1>{{ instance.title }} <a href="{% url 'post_edit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a></h1>
-          </h1>
-             <div class="date">
+        <h1>{{ instance.title }} <a href="{% url 'post_edit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            <span><div class="date">
                          {% if instance.date %}
                               <p>published: {{ instance.date }}</p>
                         {% endif %}
                      </div>
+            </span>
+          </h1>
+<p>
+            <ul>
             {% for item in items %}
-               {# <a href="{% url 'post_detail %}' pk=item.pk %}">{{ item.title }}</a> #}
-                <div  class="post_head"><a href="{% url 'post_detail' pk=item.pk %}">{{ item.title }}</a>
-                        <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                 <a class="btn btn-default" href="{% url 'menu_item_remove' instance.pk item.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-
-
-        {% if item.image %}
-                         <img src="/{{item.image.url }}" height="200" width="250" float="left"/>
+                <li id="menu">
+                <div class="image-{{ item.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                <div class="post">
+                <div class="post-top">
+                    {% if item.image %}
+                         <a href="{%  url 'post_detail' pk=item.pk %}"><img src="/{{item.image.url }}" height="200" width="250" float="left"/></a>
                        {% endif %}
-
-                        <p>price: {{  item.price }}</p>
-                        <p>калории: {{ item.calories }}</p>
-            {% endfor %}
+                <p class="post-top-price"><span>{{  item.price }} &#8381;</span></p>
                 </div>
-               </div>
+                <div class="post-content">
+               {# <a href="{% url 'post_detail %}' pk=item.pk %}">{{ item.title }}</a> #}
+                <h3><a href="{% url 'post_detail' pk=item.pk %}">{{ item.title }}</a></h3>
+                <p>
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                 <a class="btn btn-default" href="{% url 'menu_item_remove' instance.pk item.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                 </p>
+                    {% if item.calories %}
+                        <p>калории: {{ item.calories }}</p>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+                </li>
+            {% endfor %}
+            </ul>
+           </p>
+                </div>
 
 
               {#  </div>  #}

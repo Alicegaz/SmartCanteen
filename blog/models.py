@@ -49,7 +49,7 @@ class Ingredient(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200, verbose_name='Название блюда')
+    title = models.CharField(max_length=70, verbose_name='Название блюда')
     text = models.TextField(verbose_name='Описание')
     calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
     price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
