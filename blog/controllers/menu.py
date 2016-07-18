@@ -32,7 +32,6 @@ def menu_edit(request, menu):
         delete_date(request_dict)
         if have_items(request_dict):
             add_dishes_to_menu(request_dict, menu)
-        print(request_dict.get('title'))
         for item in request_dict.items():
             key, value = item
             if key in obj_dict:
