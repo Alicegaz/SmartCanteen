@@ -32,11 +32,12 @@ def menu_edit(request, menu):
         delete_date(request_dict)
         if have_items(request_dict):
             add_dishes_to_menu(request_dict, menu)
+        print(request_dict.get('title'))
         for item in request_dict.items():
             key, value = item
             if key in obj_dict:
                 if value:
-                    obj_dict[key] = value[0]
+                    obj_dict[key] = value
         menu.save()
         return menu
     return False
@@ -45,8 +46,7 @@ def menu_edit(request, menu):
 def create_menu(request):
     user = have_permission(request)
     if user:
-        request_dict = request.POST.copy()
-        menu = Menu(title=request_dict.pop('title')[0])
+        menu = Menu()
         menu.author = user
         menu.save()
         return menu_edit(request, menu)

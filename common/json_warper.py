@@ -2,6 +2,19 @@ from django.http import HttpResponse
 import json as json_module
 
 
+def is_mobile(request):
+    try:
+        get_dict = request.POST
+        json_str = get_dict.get('source')
+        json_str = str(json_str)
+        if json_str == 'mobile' or json_str.lower() == 'tablet':
+            return True
+        else:
+            return False
+    except Exception:
+        return False
+
+
 def json(request):
     try:
         get_dict = request.GET
