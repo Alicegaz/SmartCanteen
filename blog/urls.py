@@ -48,7 +48,7 @@ urlpatterns = [
     url(r'^auth/register/shares/$', views.shares_list, name='shares_list'),
 
     #shares
-    url(r'^shares/$', views.shares_list, name='shares_list'),
+    url(r'^shares/$', views.shares_list, name='shares'),
     url(r'^shares/form/$', views.shares_new, name='shares_new'),
     url(r'^shares/(?P<pk>\d+)/edit/$', views.shares_edit, name='shares_edit'),
 ]
