@@ -37,7 +37,7 @@ urlpatterns = [
 
     url(r'^buy/$', views.buy_dishes, name='buy'),
 
-    url(r'^schedule_new/$', views.schedule_new, name='schedule_new'),
+    url(r'^schedule/$', views.schedule_new, name='schedule_new'),
     url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
     #to resolve bugs

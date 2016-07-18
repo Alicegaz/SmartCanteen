@@ -1,7 +1,7 @@
 <nav>
 		<ul class="mcd-menu">
 			<li>
-				<a href="">
+				<a href="/auth/user">
 					<i class="fa fa-home"></i>
 					<strong>Управление</strong>
                     <small>персоналом</small>
@@ -20,14 +20,14 @@
 					<small>sweet home</small>
 				</a>
                 <ul>
-					<li><a href="shares"><i class="fa fa-globe"></i>Акции</a></li>
+					<li><a href="/shares/"><i class="fa fa-globe"></i>Акции</a></li>
 					<li>
 						<a href="#"><i class="fa fa-group"></i>Контакты</a>
 			        </li>
                     {% if schedule %}
-                    <li><a href="schedule_edit" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
+                    <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
                     {% else %}
-                    <li><a href="schedule_new" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
+                    <li><a href="/schedule/" ><i class="fa fa-globe"></i>Режим работы</a></li>
                     {%  endif %}
                 </ul>
         </li>
@@ -45,7 +45,7 @@
                     </ul>
         </li>
 			<li>
-				<a href="">
+				<a href="{% url 'menu_archive' %}">
 					<i class="fa fa-globe"></i>
 					<strong>Меню</strong>
 					<small>sweet home</small>

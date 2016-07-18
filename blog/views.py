@@ -18,8 +18,7 @@ from django.contrib.auth.decorators import permission_required
 
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
-    shares = Shares.objects.all().filter(carousel=True)
-    data = {'posts': dishes, 'shares': shares}
+    data = {'posts': dishes}
     if json(request):
         return json_response(dishes)
     else:
@@ -93,7 +92,8 @@ def dish_remove(request, pk):
 
 def menu_out(request):
     menu = get_menu_of_current_time()
-    data = {'posts': menu}
+    shares = Shares.objects.all().filter(carousel=True)
+    data = {'posts': menu, 'shares': shares}
     if json(request):
         return json_response(menu)
     else:
@@ -281,7 +281,7 @@ def shares_new(request):
     if request.method == 'POST':
         share = create_shares(request)
         if share is not False:
-            return redirect('shares_list.html')
+            return redirect('shares_list')
         else:
             return redirect('no_permission')
     else:
