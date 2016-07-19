@@ -32,20 +32,26 @@
 
 }
 .carousel-content img{
-    max-width: 40%;
+    max-width: 100%;
     height: auto;
-    margin-left:5%;
-    margin-top: 4%;
-    bottom: 2%;
-    position:relative;
 }
 
 ul {
     list-style: none;
     padding-left: 0;
 }
-
-
+     li#menu {
+        width: 200px;
+        min-height: 250px;
+        border: 1px solid #eee;
+        display: -moz-inline-stack;
+        display: inline-block;
+        vertical-align: top;
+        margin: 5px;
+        zoom: 1;
+        *display: inline;
+        _height: 250px;
+    }
     .text1{
         width:40%;
         left: 50%;
@@ -53,6 +59,14 @@ ul {
         top:20%;
     }
 
+    .imag{
+    max-width: 30%;
+    height: auto;
+    margin-left:4%;
+    margin-top: 2%;
+    bottom: 20%;
+    position:fixed;
+}
     </style>
 {% endblock %}
 {% block content %}
@@ -91,7 +105,9 @@ ul {
                             </div>
                             {% endif %}
                         </div>
+                        <div class="carousel-caption">
 
+                        </div>
                     </div>
                     {% for share in shares %}
                     <div class="item">
@@ -100,6 +116,7 @@ ul {
                         <div class="carousel-content">
 
                             {% if share %}
+                                <div class="imag">
                               {% if share.image %}
                    <img src="/{{ share.image.url }}"/>
                               {% endif %}
@@ -110,6 +127,7 @@ ul {
                                 {{ share.type }}
                                  {{ share.text }}
                                 </p>
+                                </div>
                                 </div>
                             {% endif %}
                         </div>
@@ -148,9 +166,6 @@ ul {
                 <div class="post-content">
                 <h3><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
                 </h3>
-                {% if dish.price %}
-                    <p>price: {{ dish.price }}</p>
-                {% endif %}
                 {% if dish.calories %}
                     <p>калории: {{ dish.calories }}</p>
             {% endif %}

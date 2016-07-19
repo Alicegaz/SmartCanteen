@@ -319,7 +319,8 @@ display: inline-block;
     height: 30px;
     line-height:15px;
     width: 100%;
-    padding: 0px 0px 0px 10px;
+    /*padding: 0px 0px 0px 10px;*/
+    padding: unset !important;
     margin-top: 2px;
     border: 1px solid #E5E5E5;
     background: #FBFBFB;
@@ -379,6 +380,12 @@ display: inline-block;
        .uniForm input[type=image], select {
     width: 80px !important;
 }
+       @-moz-document url-prefix(http://) {
+           input[type="text"]::-moz-focus-inner, input[type="email"]::-moz-focus-inner, textarea::-moz-focus-inner, input[type="number"]::-moz-focus-inner, select::-moz-focus-inner {
+               padding: 0;
+               border: 0;
+           }
+       }
        .smart-green .container1{
     color: #555;
     line-height:15px;
@@ -400,14 +407,14 @@ ul{
 }
    li#menu {
         width: 200px;
-        min-height: 250px;
+        min-height: 150px;
         display: -moz-inline-stack;
         display: inline-block;
         vertical-align: top;
         margin: 5px;
         zoom: 1;
         *display: inline;
-        _height: 250px;
+        _height: 150px;
     }
        .button-sum{
            margin-top: 20px !important;
@@ -415,6 +422,9 @@ ul{
        .uniForm input[type=image], select#id_type {
     width: 100px !important;
 }
+       .container1{
+           height:200px;
+       }
        .mcd-menu{
            width:91%;
            margin-top: 2%;
@@ -426,8 +436,11 @@ ul{
     }
          .post-content{
              word-wrap: break-word;
-             height:250px;
+             height:150px;
 
+         }
+         .input[type="text"], select{
+             padding: unset !important;
          }
        .
         </style>

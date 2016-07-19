@@ -7,9 +7,9 @@
                     <small>персоналом</small>
 				</a>
                 <ul>
-					<li><a href="/auth/register"><i class="fa fa-globe"></i>Добавить</a></li>
+					<li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-globe"></i>Добавить</a></li>
 					<li>
-						<a href="/auth/user"><i class="fa fa-group"></i>Управление</a>
+						<a href="{% url 'authentication.views.users' %}"><i class="fa fa-group"></i>Управление</a>
 			        </li>
                    </ul>
         </li>
@@ -27,7 +27,7 @@
                     {% if schedule %}
                     <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
                     {% else %}
-                    <li><a href="/schedule/" ><i class="fa fa-globe"></i>Режим работы</a></li>
+                    <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-globe"></i>Режим работы</a></li>
                     {%  endif %}
                 </ul>
         </li>
