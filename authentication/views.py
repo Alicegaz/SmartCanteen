@@ -31,9 +31,9 @@ def login(request):
             if user is not None:
                 if isinstance(user, AnonymousUser):
                     role = '2'
-                elif user.has_perm('can_add'):
+                elif user.has_perm('blog.can_add'):
                     role = '0'
-                elif user.has_perm('can_edit_schedule'):
+                elif user.has_perm('blog.can_edit_schedule'):
                     role = '0'
                 else:
                     role = '1'
