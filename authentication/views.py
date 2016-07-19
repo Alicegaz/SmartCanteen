@@ -95,6 +95,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+@permission_required('blog.can_add', raise_exception=True)
 def users(request):
     perm1 = Permission.objects.get(codename='can_edit_schedule')
     perm2 = Permission.objects.get(codename='can_add')
