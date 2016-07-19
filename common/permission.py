@@ -2,7 +2,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import authenticate
 
 
-def have_permission(request, role=None):
+def have_permission(request, permmission=None):
     user = request.user
     if isinstance(user, AnonymousUser):
         try:
@@ -11,8 +11,8 @@ def have_permission(request, role=None):
         except Exception:
             return False
         user = authenticate(username=username, password=password)
-    if role is not None:
-        if user.user_permissions.contain(role):
+    if permmission is not None:
+        if user.has_perm(permmission):
             return user
     else:
         return user
