@@ -22,6 +22,8 @@ def create_shares(request):
         try:
             if image:
                 share.image = image
+            else:
+                share.image = "carousel/no-image.png"
         except AttributeError:
             pass
         share.save()

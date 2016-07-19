@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% block css %}
+    <style>
+    div.page-container{
+        padding-top: 20px;
+    }
+    </style>
+{% endblock %}
     {% block content %}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
                       <h1>"Режим работы"

@@ -40,6 +40,8 @@
   position: absolute;
   top: 40%;
   left: 30%;
+                   top: 14% !important;
+        left: 10% !important;
   z-index: 20;
   color: white;
   text-shadow: 0 1px 2px rgba(0,0,0,.6);
@@ -257,7 +259,7 @@ display: inline-block;
             margin-left: 5px;
         }
         .sidebar{
-            width:30% !important;
+            width:27% !important;
         }
 
        div.page-container {
@@ -266,7 +268,7 @@ display: inline-block;
     padding: 0;
     height: unset !important;
     background: #eee !important;
-    margin: 0 10% 0 30% !important;
+    margin: 0 10% 0 27% !important;
 }
        .title1{
         margin: 14% 40px 10px 85px;
@@ -278,7 +280,7 @@ display: inline-block;
     top:7%;
     max-width: 90%;
     background: #F8F8F8;
-    padding: 30px 30px 20px 30px;
+    padding: 0 30px 20px 30px;
     font: 12px Arial, Helvetica, sans-serif;
     color: #666;
     border-radius: 5px;
@@ -314,7 +316,7 @@ display: inline-block;
     margin-top: 10px;
     color: #5E5E5E;
 }
-.smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea, .smart-green input[type="number"], .smart-green select {
+.smart-green input[type="text"], .smart-green input[type="email"], .smart-green input[type="password"], .smart-green textarea, .smart-green input[type="number"], .smart-green select {
     color: #555;
     height: 30px;
     line-height:15px;
@@ -426,9 +428,10 @@ ul{
            height:200px;
        }
        .mcd-menu{
-           width:91%;
+           width:81%;
            margin-top: 2%;
            margin-left: 2.4%;
+           height:100%;
        }
          .col-xs-12.col-sm-6.col-md-4.col-l{
         border-top: unset !important;
@@ -439,10 +442,14 @@ ul{
              height:150px;
 
          }
+         .smart-green ul{
+             padding-left:0;
+             padding-left:0;
+         }
          .input[type="text"], select{
              padding: unset !important;
          }
-       .
+
         </style>
         <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
         <link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image" />
@@ -453,11 +460,9 @@ ul{
     </head>
     <body>
        {%  include 'navbar.html' %}
-        {% if user.is_authenticated %}
             <div class="sidebar" id="socializ">
            {%  include 'just_fun_menu.html' %}
         </div>
-        {% endif %}
 
         <div class="page-container">
             {% block content %}{% endblock %}

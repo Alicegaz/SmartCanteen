@@ -9,6 +9,9 @@ from django.utils import timezone
 from common.request import get_image_from_request
 from common.blog_post_list import get_menu_of_current_time
 from django.forms.extras.widgets import SelectDateWidget
+from django import forms
+from django.contrib.admin import widgets
+
 
 class ElectionTimesForm(forms.Form):
   # times
@@ -197,4 +200,3 @@ class SharesForm(forms.ModelForm):
         #for field in self.fields:
             #self.fields[field].widget.attrs['class'] = 'form-control'
             #self.fields['ingredients'].widget.attrs['class'] = 'chosen'
-

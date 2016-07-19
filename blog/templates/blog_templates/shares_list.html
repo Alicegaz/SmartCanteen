@@ -30,7 +30,7 @@
     line-height: 1;
 }
     div.page-container {
-    margin-top: 5.3% !important;
+    margin-top: 3% !important;
 }
     .kontora-content a:link, .kontora-content a:visited {
     color: #ff5722;
@@ -62,6 +62,10 @@
 
     }
 
+    div.row.carousel-holder .col-md-12{
+        padding-left: 30px;
+    }
+
     </style>
 
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
@@ -74,7 +78,7 @@
     <span>Архив всех акций сети</span>
     </h1>
     <div class="row carousel-holder">
-
+{% if user.is_authenticated %}
         <div class="col-md-12">
 <div class="one_empty kontora-empty-box empty-showcase clearfix">
 <div class="n-p sc-new">
@@ -91,11 +95,47 @@
 </div>
         </div>
         </div>
+    {% elif not shares_active %}
+    <div class="image">
+            <img src="/media/carousel/cms-403-error.jpg"
+                 height="300"
+                 float="left"/>
+</div>
+  {% endif %}
 
     </div>
     <div class="L">
     <ul>
+    {% if user.is_authenticated %}
     {% for share in shares %}
+        <li id="menu">
+            <div id="image-{{ share.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                <div class="post">
+                <div class="post-top">
+                {% if share.image %}
+                    <img src="/{{ share.image.url }}" height="200"
+                         width="250" float="left"/> </a>
+                {% endif %}
+                <p class="post-top-price"><span>{{ share.discount }} % </span></p>
+                </div>
+                <div class="post-content">
+                <h3><a href="">{{ share.title }}</a>
+                </h3>
+                <p>
+                    <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                </p>
+                {% if share.text %}
+                    <p>{{ share.type }}</p>
+                    <p>{{ share.start_date }}-{{ share.end_date }}</p>
+                {% endif %}
+                    </div>
+        </div>
+        </div>
+        </li>
+    {% endfor %}
+        {% elif shares_active %}
+        {% for share in shares_active %}
         <li id="menu">
             <div id="image-{{ share.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
                 <div class="post">
@@ -123,6 +163,7 @@
         </div>
         </li>
     {% endfor %}
+    {% endif %}
     </ul>
     </div>
     </div>

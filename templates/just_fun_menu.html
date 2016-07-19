@@ -1,5 +1,6 @@
 <nav>
 		<ul class="mcd-menu">
+        {% if user.is_authenticated %}
 			<li>
 				<a href="/auth/user">
 					<i class="fa fa-home"></i>
@@ -13,6 +14,7 @@
 			        </li>
                    </ul>
         </li>
+        {% endif %}
 			<li>
 				<a href="" class="active">
 					<i class="fa fa-edit"></i>
@@ -20,15 +22,24 @@
 					<small>sweet home</small>
 				</a>
                 <ul>
-					<li><a href={% url 'shares' %}><i class="fa fa-globe"></i>Акции</a></li>
+                    <li><a href={% url 'shares' %}><i class="fa fa-globe"></i>Акции</a></li>
 					<li>
 						<a href="#"><i class="fa fa-group"></i>Контакты</a>
 			        </li>
                     {% if schedule %}
+                    {% if user.is_authenticated %}
+
+
+                    {% else %}
                     <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
+                    {% endif %}
                     {% else %}
                     <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-globe"></i>Режим работы</a></li>
+
                     {%  endif %}
+
+
+
                 </ul>
         </li>
 					<li>
@@ -39,9 +50,11 @@
 				</a>
                 <ul>
 					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
+                    {% if user.is_authenticated %}
 					<li>
 						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-group"></i>Продукты</a>
 			        </li>
+                    {% endif %}
                     </ul>
         </li>
 			<li>
@@ -52,9 +65,11 @@
 				</a>
                 <ul>
 					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-globe"></i>Архив</a></li>
+                    {% if user.is_authenticated %}
 					<li>
 						<a href="{% url 'new_menu' %}"><i class="fa fa-group"></i>Создать меню</a>
 			</li>
+                    {% endif %}
                     </ul>
 			{% comment %}<li class="float">
 				<a class="search">

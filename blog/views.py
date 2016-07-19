@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
 from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
 from django.shortcuts import get_object_or_404
@@ -14,7 +16,9 @@ from blog.controllers.dish import dish_edit as dish_change, create_dish, buy
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
-
+import datetime
+import pytz
+utc=pytz.UTC
 
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
@@ -271,6 +275,16 @@ def schedule_edit(request, pk):
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
+    shares_active={}
+    try:
+        #filter active shares
+        for share in Shares.objects.all():
+           if share.end_date__range == [timezone.now(), utc.localize(datetime.datetime(share.end_date))]:
+               shares_active+=share
+
+        data = {'shares': shares, 'shares': shares_active}
+    except Exception:
+        pass
     if json(request):
         return json_response(shares)
     else:

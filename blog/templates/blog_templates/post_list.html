@@ -3,11 +3,7 @@
 {% block css %}
     <style>
 
-    .carousel-content{
-        top: 14% !important;
-        left: 10% !important;
-                position: fixed;
-    }
+
     .carousel-caption1{
         margin-left: 40%;
     }
@@ -55,17 +51,22 @@ ul {
     .text1{
         width:40%;
         left: 50%;
-        position: fixed;
-        top:20%;
+        margin-left: 50%;
+        margin-bottom:20%;
+        margin-top: -43%;
+
+    }
+    .item{
+        position:relative;
     }
 
     .imag{
     max-width: 30%;
     height: auto;
-    margin-left:4%;
-    margin-top: 2%;
+    margin-left:6%;
+    margin-top: auto;
     bottom: 20%;
-    position:fixed;
+    margin-bottom: 20%;
 }
     </style>
 {% endblock %}
@@ -114,12 +115,12 @@ ul {
                             <img class="slide-image" src="/media/carousel/693868_cut-photo.ru.jpg" alt="">
 
                         <div class="carousel-content">
-
                             {% if share %}
                                 <div class="imag">
                               {% if share.image %}
                    <img src="/{{ share.image.url }}"/>
                               {% endif %}
+                                </div>
                                 <div class="text1">
                                  <h3>{{ share.title }}</h3>
                                 <p class="date">{{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }}  {{ share.start_date.hour }}:{{ share.start_date.minute }} - {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}  {{ share.end_date.hour }}:{{ share.end_date.minute }}</p>
@@ -127,7 +128,6 @@ ul {
                                 {{ share.type }}
                                  {{ share.text }}
                                 </p>
-                                </div>
                                 </div>
                             {% endif %}
                         </div>

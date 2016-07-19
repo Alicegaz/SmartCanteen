@@ -3,11 +3,9 @@
     {% block css %}
            <style>
 
-#socializ{
-                top:80px;
-                position: fixed;
-                z-index: 1000;
-            }
+div.page-container{
+    padding-top: 20px;
+}
                                         </style>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
@@ -16,7 +14,7 @@
             <div class="smart-green">
     {# <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon-pencil"></span></a> #}
     {# <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> #}
-        <h1>{{ instance.title }} <a href="{% url 'post_edit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        <h1>{{ instance.title }} <a href="{% url 'menu_edit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
             <span><div class="date">
                          {% if instance.date %}
                               <p>published: {{ instance.date }}</p>

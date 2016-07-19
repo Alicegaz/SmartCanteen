@@ -12,7 +12,6 @@
     .uniForm input[type=image], select#id_type {
     width: 100px !important;
 }
-
     </style>
 {% endblock %}
     {% block content %}
@@ -133,10 +132,8 @@
     // get reference to element containing toppings checkboxes
     var el = document.getElementById('id_ingredients');
     console.log("string", el);
-
     // get reference to input elements in toppings container element
     var tops = el.getElementsByTagName('input');
-
     // assign updateTotal function to onclick property of each checkbox
     for (var i=0, len=tops.length; i<len; i++) {
         if ( tops[i].type === 'checkbox' ) {
@@ -144,14 +141,12 @@
         }
     }
 }
-
 // called onclick of toppings checkboxes
 function updateTotal(e) {
     // 'this' is reference to checkbox clicked on
     var form = this.form;
     // get current value in total text box, using parseFloat since it is a string
     var val = parseInt(this.value);
-
     // if check box is checked, add its value to val, otherwise subtract it
     if ( this.checked ) {
         var el1 = document.getElementById('quant');
@@ -165,9 +160,7 @@ function updateTotal(e) {
         var el3 = el1.getElementsByTagName('p');
         el3[val-1].style.cssText = 'display: none !important';
         el2[val-1].style.cssText = 'display: none !important';
-
     }
-
 }
      attachCheckboxHandlers();
     </script>
