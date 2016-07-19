@@ -1,7 +1,7 @@
 <nav>
 		<ul class="mcd-menu">
 			<li>
-				<a href="">
+				<a href="/auth/register" class="active">
 					<i class="fa fa-user"></i>
 					<strong>Управление</strong>
                     <small>персоналом</small>
@@ -14,7 +14,7 @@
                    </ul>
         </li>
 			<li>
-				<a href="" class="active">
+				<a href="shares">
 					<i class="fa fa-info-circle"></i>
 					<strong>Информация</strong>
 					<small>о столовой</small>
@@ -32,7 +32,7 @@
                 </ul>
         </li>
 					<li>
-				<a href="">
+				<a href="{% url 'dishes_list' %}">
 					<i class="fa fa-list-ol"></i>
 					<strong>Склад</strong>
 					<small>товаров</small>
@@ -45,7 +45,7 @@
                     </ul>
         </li>
 			<li>
-				<a href="">
+				<a href="{% url 'menu_archive' %}">
 					<i class="fa fa-file-text-o"></i>
 					<strong>Меню</strong>
 					<small>на сегодня</small>
