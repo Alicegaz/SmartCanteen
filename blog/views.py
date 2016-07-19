@@ -99,13 +99,13 @@ def menu_out(request):
         return render(request, 'blog_templates/post_list.html', data)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def history_out(request):
     history = History.objects.all().order_by('-menu__date')
     return render(request, 'blog_templates/history.html', {'history': history})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def menu_detail(request, pk=None):
     menu = get_object_or_404(Menu, pk=pk)
     items = menu.items.all()
@@ -121,7 +121,7 @@ def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-# @permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_shedule', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -161,13 +161,12 @@ def menu_item_remove(request, **kwargs):
     return redirect('blog.views.menu_archive')
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
 
 
-@permission_required('blog.can_add', raise_exception=True)
 def ingredient_detail(request, pk=None):
     instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {
@@ -242,7 +241,7 @@ def mymodel(request, pk=None):
 #     else:
 #         return HttpResponse("У вас нет прав администратора")
 
-
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_new(request):
         if request.method == 'POST':
             form = ScheduleForm(request.POST, request.FILES)
@@ -255,7 +254,7 @@ def schedule_new(request):
         return render(request, 'blog_templates/schedule_new.html', {'form': form})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=pk)
     if request.method == "POST":
@@ -268,7 +267,6 @@ def schedule_edit(request, pk):
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
 
 
-@permission_required('blog.can_add', raise_exception=True)
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
@@ -292,7 +290,7 @@ def shares_new(request):
     return render(request, 'blog_templates/shares_new.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def shares_edit(request, pk):
     context = {}
     share = get_object_or_404(Shares, pk=pk)

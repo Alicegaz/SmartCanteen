@@ -37,7 +37,9 @@ tr:hover td{
 {% endblock %}
        {#  <div class="col-md-8"> #}
 {% block content %}
-       <h2>Архив меню</h2>
+    <div class="smart-green">
+       <h1>Архив меню
+       <span>Измените желаемое, для создание нового. Оно автоматически появиться на главной</span></h1>
             {% if history %}
                 <table>
                 <tr>
@@ -55,6 +57,7 @@ tr:hover td{
                  {% endfor %}
                 </table>
         {% endif %}
+    </div>
 {% endblock %}
 
               {#  </div>  #}

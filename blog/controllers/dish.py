@@ -75,6 +75,8 @@ def create_dish(request):
         try:
             if image:
                 dish.image = image
+            else:
+                dish.image = "carousel/no-image.png"
         except AttributeError:
             pass
         dish.save()

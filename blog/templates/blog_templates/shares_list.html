@@ -61,6 +61,7 @@
         font-size: 15px;
 
     }
+
     </style>
 
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
@@ -68,6 +69,10 @@
 <link href="http://lider-mobile.blizko.ru/sales" rel="canonical">
 {% endblock %}
 {% block content %}
+     <div class="smart-green">
+    <h1>Акции
+    <span>Архив всех акций сети</span>
+    </h1>
     <div class="row carousel-holder">
 
         <div class="col-md-12">
@@ -89,7 +94,9 @@
 
     </div>
     <div class="L">
+    <ul>
     {% for share in shares %}
+        <li id="menu">
             <div id="image-{{ share.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
                 <div class="post">
                 <div class="post-top">
@@ -114,7 +121,10 @@
                     </div>
         </div>
         </div>
+        </li>
     {% endfor %}
+    </ul>
+    </div>
     </div>
 {% endblock %}
 
