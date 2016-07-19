@@ -39,7 +39,7 @@ def login(request):
                     role = '1'
             else:
                 role = role = '2'
-                return json_response({'role': role})
+            return json_response({'role': role})
 
     else:
         return render_to_response('login.html', args)
