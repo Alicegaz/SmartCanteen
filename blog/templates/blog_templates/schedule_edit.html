@@ -1,50 +1,74 @@
 {% extends "base.html" %}
 {% load staticfiles %}
     {% block content %}
-            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <div class="title1"><h2>Изменить блюдо</h2></div>
-                        <div class="form-group">
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
+                      <h1>"Режим работы"
+                      <span>Пожалуйста заполните все поля формы</span>
+                      </h1>
+                <p>
+                <label>
+                            <div class="form-group" id="quant">
+                            <label for="monrf1">Пн-Пт:</label>
+                                    <div class="block1">
+                                        {{ from.monfr1.errors }}
+                                    {{ form.monfr1 }} -
+                                        {{ form.monfr2.errors }}
+                                    {{ form.monfr2 }}
+                                    </div>
+                        </div>
+                    </label>
 
-                            <label for="title">Пн-Пт:</label>
-                            {{ form.monfr1.errors }}
-                                {{ form.monfr1 }} -
-                            {{ form.monfr2.errors }}
-                            {{ from.monfr2}}
+                        <div class="form-group" id="quant">
+                            <label for="monrf1">Сб-Вс:</label>
+                                    <div class="block1">
+                                        {{ from.stsn1.errors }}
+                                    {{ form.stsn1 }} -
+                                        {{ form.stsn2.errors }}
+                                    {{ form.stsn2 }}
+                                    </div>
                         </div>
 
-                        <div class="form-group" id="in">
-                            {{ form.sbsn1.errors }}
-                            <label for="text">Сб-Вс</label>
-                            {{ form.sbsn1 }}
+                       <div class="form-group" id="quant">
+                            <label for="monrf1">Завтрак:</label>
+                                    <div class="block1">
+                                        {{ from.breakfast1.errors }}
+                                    {{ form.breakfast1 }} -
+                                        {{ form.breakfast2.errors }}
+                                    {{ form.breakfast2 }}
+                                    </div>
                         </div>
 
-                        <div class="form-group">
-                            {{ form.breakfast1.errors }}
-                            <label for="text">Завтрак:</label>
-                            {{  form.breakfast1 }}
+                       <div class="form-group" id="quant">
+                            <label for="monrf1">Обед:</label>
+                                    <div class="block1">
+                                        {{ from.dinner1.errors }}
+                                    {{ form.dinner1 }} -
+                                        {{ form.dinner2.errors }}
+                                    {{ form.dinner2 }}
+                                    </div>
                         </div>
 
-                        <div class="form-group">
-                            {{ form.dinner1.errors }}
-                            <label for="price">Обед:</label>
-                            {{ form.dinner1 }}
-                        </div>
-                        <div class="form-group">
-                            {{ form.supper1.errors }}
-                            <label for="price">Ужин:</label>
-                            {{ form.supper1 }}
+                        <div class="form-group" id="quant">
+                            <label for="monrf1">Ужин:</label>
+                                    <div class="block1">
+                                        {{ from.supper1.errors }}
+                                    {{ form.supper1 }} -
+                                        {{ form.supper2.errors }}
+                                    {{ form.supper2 }}
+                                    </div>
                         </div>
 
-                        <div class="form-group">
+                        <label>
                             {{ form.image.errors }}
                             <label for="image">Изображение:</label>
                             {{form.image}}
+                        </label>
+                        <label class="button-sum">
+                        <span>&nbsp;</span>
+                            <button type="submit" class="button">Save</button>
+                        </label>
                         </div>
-
-
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
+            </p>
             </form>
     </div>
         {%  endblock %}

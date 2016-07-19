@@ -1,37 +1,47 @@
 {% extends "base.html" %}
 {% load staticfiles %}
     {% block content %}
-            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
-                      <div class="title1"><h2>Добавить новое блюдо</h2></div>
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
+                      <h1>Создать новое блюдо
+                          <span>Пожалуста заполните все поля формы</span>
+                      </h1>
+            <p>
+            <label>
                         <div class="form-group">
                             {{ form.title.errors }}
                             <label for="title">Название блюда:</label>
                                 {{ form.title }}
                         </div>
-
+            </label>
+<label>
                         <div class="form-group" id="in">
                             {{ form.text.errors }}
                             <label for="text">Text</label>
                             {{ form.text }}
                         </div>
-
+</label>
+<label>
                         <div class="form-group">
                             {{ form.calories.errors }}
                             <label for="text">Калории:</label>
                             {{  form.calories }}
                         </div>
-
+</label>
+<label>
                         <div class="form-group">
                             {{ form.price.errors }}
                             <label for="price">Цена:</label>
                             {{ form.price }}
                         </div>
-
+</label>
+    <label>
                         <div class="form-group">
                             {{ form.image.errors }}
                             <label for="image">Изображение:</label>
                             {{form.image}}
                         </div>
+</label>
+            <label>
                         <div class="form-group">
                         <label for="ingredients">Ингредиенты:</label></div>
                         {{ form.ingredients.errors }}
@@ -40,7 +50,8 @@
                                 {{ form.ingredients }}
                             </div>
                         </div>
-
+            </label>
+                       <label>
                         <div class="form-group" id="quant">
                             <label for="quantity">Ингредиенты</label>
                                 {% for p in posts %}
@@ -50,16 +61,20 @@
                                     </div>
                                 {% endfor %}
                         </div>
-
+                       </label>
+            <label>
                         <div class="form-group">
                             {{ form.type.errors }}
                             <label for="type">Тип: </label>
                             {{ form.type }}
                         </div>
-
+                </label>
+                         <label>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="button">Save</button>
                         </div>
+                             </label>
+            </p>
             </form>
     </div>
         {%  endblock %}
@@ -103,6 +118,7 @@
 function updateTotal(e) {
     // 'this' is reference to checkbox clicked on
     var form = this.form;
+   document.getElementById('in').innerHTML = 'kod5';
     // get current value in total text box, using parseFloat since it is a string
     var val = parseInt(this.value);
 

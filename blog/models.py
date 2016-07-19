@@ -49,7 +49,7 @@ class Ingredient(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200, verbose_name='Название блюда')
+    title = models.CharField(max_length=70, verbose_name='Название блюда')
     text = models.TextField(verbose_name='Описание')
     calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
     price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
@@ -122,6 +122,12 @@ class Menu(models.Model):
             for relation in ing_dish_relations:
                 relation.subtract_from_ingredient()
 
+    def get_json_object(self):
+        result = []
+        for item in self.items.all():
+            result.append(item.get_json_object())
+        return result
+
 
 class History(models.Model):
     menu = models.ForeignKey(Menu)
@@ -153,38 +159,6 @@ class BuyHistory(models.Model):
     type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
     date = models.DateField(default=timezone.now)
 
-class Shares(models.Model):
-    author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=200, verbose_name='Название блюда')
-    type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES_SHARES)
-    text = models.TextField(verbose_name='Описание')
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
-    old_price = models.BigIntegerField(null=True, blank=True, verbose_name='старая цена')
-    new_price = models.BigIntegerField(null=True, blank=True, verbose_name='новая цена')
-    discount = IntegerField(null=True, blank=True, default=1,
-                            validators=[
-                                MaxValueValidator(100),
-                                MinValueValidator(1)
-                            ], verbose_name='скидка')
-    created_date = models.DateTimeField(default=timezone.now)
-    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
-    carousel = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.title
-
-    def __unicode__(self):
-        return self.choice_text
-
-    def get_json_object(self):
-        dic = self.__dict__
-        dic['created_date'] = self.created_date.isocalendar()
-        dic['image'] = self.image.url
-        dic.pop('_state')
-        return dic
-
-
 
 class Shares(models.Model):
     author = models.ForeignKey('auth.User')
@@ -216,3 +190,9 @@ class Shares(models.Model):
         dic['image'] = self.image.url
         dic.pop('_state')
         return dic
+
+
+class Offers(models.Model):
+    date = models.DateField(default=timezone.now)
+    items = models.ManyToManyField(Post)
+    menu = models.ForeignKey(Menu)

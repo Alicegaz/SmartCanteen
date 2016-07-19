@@ -36,7 +36,7 @@ def menu_edit(request, menu):
             key, value = item
             if key in obj_dict:
                 if value:
-                    obj_dict[key] = value[0]
+                    obj_dict[key] = value
         menu.save()
         return menu
     return False
@@ -45,8 +45,7 @@ def menu_edit(request, menu):
 def create_menu(request):
     user = have_permission(request)
     if user:
-        request_dict = request.POST.copy()
-        menu = Menu(title=request_dict.pop('title')[0])
+        menu = Menu()
         menu.author = user
         menu.save()
         return menu_edit(request, menu)
