@@ -1,6 +1,5 @@
-from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
-from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
-from django.shortcuts import get_object_or_404
+from blog.forms import SharesForm
+from blog.models import Shares, Offers
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
 from blog.models import Post, Ingredient, Menu, Schedule, History
 from django.shortcuts import get_object_or_404, HttpResponse
@@ -8,9 +7,8 @@ from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
-from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.shares import create_shares, shares_edit as shares_change
-from blog.controllers.dish import dish_edit as dish_change, create_dish, buy
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -95,6 +93,7 @@ def menu_out(request):
     shares = Shares.objects.all().filter(carousel=True)
     data = {'posts': menu, 'shares': shares}
     if json(request):
+        data.pop('shares')
         return json_response(menu)
     else:
         return render(request, 'blog_templates/post_list.html', data)
@@ -318,3 +317,14 @@ def buy_dishes(request):
             return json_response({'price':price, 'calories': calories})
         else:
             return HttpResponse(status=404)
+
+
+def send_offer(request):
+    dish_list = request.POST.getlist('dishes')
+    if is_in_menu(dish_list):
+        offer = Offers(menu=get_menu_of_current_time())
+        for dish in dish_list:
+            offer.items.add(Post.objects.get(id=dish))
+        return HttpResponse('OK', status=200)
+    else:
+        return HttpResponse('There is no such dishes in menu', status=400)
