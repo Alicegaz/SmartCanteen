@@ -1,35 +1,46 @@
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, redirect, render, get_object_or_404
-
-from authentication.forms import NewUserForm
 from authentication.models import User, UserProfile
-from django.template.context_processors import csrf, request
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from authentication import forms
-from django.contrib.auth.decorators import user_passes_test
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, AnonymousUser
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import permission_required
 from blog.models import Schedule, Post
 from django.db.models import Q
+from common.json_warper import is_mobile,json_response
+
 
 def login(request):
     args = {}
-    args.update(csrf(request))
     if request.POST:
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
         user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                auth_login(request, user)
-                return redirect('/')
+        if not is_mobile(request):
+            if user is not None:
+                if user.is_active:
+                    auth_login(request, user)
+                    return redirect('/')
+                else:
+                    args['login_error'] = "Пользователь не активен"
+                    return render_to_response('login.html', args)
             else:
-                args['login_error'] = "Пользователь не активен"
+                args['login_error'] = "Пользователь не найден"
                 return render_to_response('login.html', args)
         else:
-            args['login_error'] = "Пользователь не найден"
-            return render_to_response('login.html', args)
+            if user is not None:
+                if isinstance(user, AnonymousUser):
+                    role = '2'
+                elif user.has_perm('blog.can_add'):
+                    role = '0'
+                elif user.has_perm('blog.can_edit_schedule'):
+                    role = '0'
+                else:
+                    role = '1'
+            else:
+                role = role = '2'
+            return json_response({'role': role})
+
     else:
         return render_to_response('login.html', args)
 
@@ -37,12 +48,6 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect("/")
-
-
-def create_permission(codename, name):
-    content_type = ContentType.objects.get_for_model(User)
-    permission = Permission.objects.create(codename='can_add', name='can add a user', content_type=content_type)
-    return permission
 
 
 def no_permission(request):
@@ -73,7 +78,6 @@ def register(request):
             password = form.cleaned_data.get('password')
             role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
-            print('ghghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
             if role == 'is_admin' or role == 'is_cashier':
                 if role == 'is_admin':
                     permission = Permission.objects.get(codename='can_add')
@@ -86,18 +90,17 @@ def register(request):
             e.author = request.user
             e.save()
             user.user_permissions.add(permission)
-
             user.save()
-
             return redirect('/')
     return render(request, 'register.html', {'form': form})
+
 
 def users(request):
     perm1 = Permission.objects.get(codename='can_edit_schedule')
     perm2 = Permission.objects.get(codename='can_add')
     users1 = User.objects.filter(Q(user_permissions=perm1))
     users2 = User.objects.filter(Q(user_permissions=perm2))
-    return render(request, 'users.html', {'users1': users1, 'users2':users2})
+    return render(request, 'users.html', {'users1': users1, 'users2': users2})
 
 
 @permission_required('blog.can_add', raise_exception=True)

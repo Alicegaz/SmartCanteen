@@ -1,59 +1,78 @@
 <nav>
 		<ul class="mcd-menu">
 			<li>
+<<<<<<< HEAD
 				<a href="/auth/register" class="active">
 					<i class="fa fa-user"></i>
+=======
+				<a href="/auth/user">
+					<i class="fa fa-home"></i>
+>>>>>>> 31e05a17867564a1fa7ff7c7343187021e5388b8
 					<strong>Управление</strong>
                     <small>персоналом</small>
 				</a>
                 <ul>
-					<li><a href="/auth/register"><i class="fa fa-plus-circle"></i>Добавить сотрудника</a></li>
+					<li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-globe"></i>Добавить</a></li>
 					<li>
-						<a href="/auth/user"><i class="fa fa-group"></i>Управление</a>
+						<a href="{% url 'authentication.views.users' %}"><i class="fa fa-group"></i>Управление</a>
 			        </li>
                    </ul>
         </li>
 			<li>
+<<<<<<< HEAD
 				<a href="shares">
 					<i class="fa fa-info-circle"></i>
+=======
+				<a href="" class="active">
+					<i class="fa fa-edit"></i>
+>>>>>>> 31e05a17867564a1fa7ff7c7343187021e5388b8
 					<strong>Информация</strong>
-					<small>о столовой</small>
+					<small>sweet home</small>
 				</a>
                 <ul>
-					<li><a href="shares"><i class="fa fa-gift"></i>Акции</a></li>
+					<li><a href={% url 'shares' %}><i class="fa fa-globe"></i>Акции</a></li>
 					<li>
-						<a href="#"><i class="fa fa-phone-square"></i>Контакты</a>
+						<a href="#"><i class="fa fa-group"></i>Контакты</a>
 			        </li>
                     {% if schedule %}
-                    <li><a href="schedule_edit" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
                     {% else %}
-                    <li><a href="schedule_new" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-globe"></i>Режим работы</a></li>
                     {%  endif %}
                 </ul>
         </li>
 					<li>
+<<<<<<< HEAD
 				<a href="{% url 'dishes_list' %}">
 					<i class="fa fa-list-ol"></i>
+=======
+				<a href="">
+					<i class="fa fa-gift"></i>
+>>>>>>> 31e05a17867564a1fa7ff7c7343187021e5388b8
 					<strong>Склад</strong>
-					<small>товаров</small>
+					<small>товары</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-cutlery"></i>Блюда</a></li>
+					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
 					<li>
-						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-lemon-o"></i>Продукты</a>
+						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-group"></i>Продукты</a>
 			        </li>
                     </ul>
         </li>
 			<li>
 				<a href="{% url 'menu_archive' %}">
+<<<<<<< HEAD
 					<i class="fa fa-file-text-o"></i>
+=======
+					<i class="fa fa-globe"></i>
+>>>>>>> 31e05a17867564a1fa7ff7c7343187021e5388b8
 					<strong>Меню</strong>
-					<small>на сегодня</small>
+					<small>sweet home</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open"></i>Архив</a></li>
+					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-globe"></i>Архив</a></li>
 					<li>
-						<a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
+						<a href="{% url 'new_menu' %}"><i class="fa fa-group"></i>Создать меню</a>
 			</li>
                     </ul>
 			{% comment %}<li class="float">

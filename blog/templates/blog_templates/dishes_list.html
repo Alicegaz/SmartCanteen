@@ -14,14 +14,51 @@
         padding-left:30%;
 
 }
+    .content{
+        margin-left:0;
+    margin-right:auto;
+    top:7%;
+    max-width: 90%;
+    background: #F8F8F8;
+    padding: 30px 30px 20px 30px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    }
+ li#menu {
+        width: 200px;
+        min-height: 150px;
+        border: 1px solid #f8f8f8 !important;
+        display: -moz-inline-stack;
+        display: inline-block;
+        vertical-align: top;
+        margin: 5px;
+        zoom: 1;
+        *display: inline;
+        _height: 150px;
+    }
+    .smart-green{
+        margin-top:-11.8%;
+    }
+    .col-xs-12.col-sm-6.col-md-4.col-l{
+        border-top: unset !important;
+        border: unset !important;
+    }
     </style>
 <link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-    <div class="headline4">Блюда</div>
-    <div class="L">
-    {% for post in posts %}
 
+    <div class="smart-green">
+    <h1>Список блюд
+    <span>список доступных блюд</span>
+    </h1>
+    <p>
+    <ul>
+    {% for post in posts %}
+             <li id="menu">
             <div id="image-{{ post.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
                 <div class="post">
                 <div class="post-top">
@@ -39,17 +76,17 @@
 
                     <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                    </p>
-                {% if post.price %}
-                    <p>price: {{ post.price }}</p>
-                {% endif %}
                 {% if post.calories %}
                     <p>калории: {{ post.calories }}</p>
             {% endif %}
                     </div>
         </div>
         </div>
+        </li>
 
     {% endfor %}
+    </ul>
+    </p>
     </div>
     <div class="menu"><a href="{% url 'post_new' %}">
            <span class="glyphicon glyphicon-plus-sign"></span></a></div>
