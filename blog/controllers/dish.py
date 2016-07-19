@@ -1,7 +1,7 @@
 from common.permission import have_permission
 from common.request import get_image_from_request
 from common.blog_post_list import get_menu_of_current_time
-from blog.models import IngDishRelation, Ingredient, Post, BuyHistory
+from blog.models import IngDishRelation, Ingredient, Post, Offers
 
 
 
@@ -101,16 +101,9 @@ def is_in_menu(dish_list):
     return True
 
 
-def add_to_history(dish_list):
-    for dish in dish_list:
-        history_instance = BuyHistory(
-            title=dish.title,
-            text=dish.text,
-            calories=dish.calories,
-            price=dish.price,
-            type=dish.type,
-        )
-        history_instance.save()
+def add_to_history(offer):
+    offer.status = True
+    offer.save()
 
 
 def dishes_price(dish_list):
@@ -129,11 +122,42 @@ def get_calories(dish_list):
     return result
 
 
-def buy(dish_list):
-    status = is_in_menu(dish_list)
-    if status:
-        add_to_history(dish_list)
-        return dishes_price(dish_list), get_calories(dish_list)
+def contain_offer(request):
+    try:
+        request.POST.get('offer')
+    except:
+        return False
+    return True
+
+
+def contain_dishes(request):
+    try:
+        request.POST.getlist('dish')
+    except:
+        return False
+    return True
+
+
+def buy_dish_list(dish_list):
+    if is_in_menu(dish_list):
+        offer = Offers(menu=get_menu_of_current_time())
+        for dish in dish_list:
+            offer.items.add(Post.objects.get(id=dish))
+        offer.save()
+        return True
     else:
         return False
 
+
+def buy(request):
+    if contain_offer(request):
+        offer = request.POST.get('offer')
+        offer = Offers.objects.get(id=offer)
+        add_to_history(offer)
+        return dishes_price(offer.items.all()), get_calories(offer.items.all())
+    elif contain_dishes(request):
+        dish_list = request.POST.getlist('dish')
+        buy_dish_list(dish_list)
+        return dishes_price(dish_list), get_calories(dish_list)
+    else:
+        return False

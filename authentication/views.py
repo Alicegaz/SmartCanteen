@@ -28,14 +28,19 @@ def login(request):
                 args['login_error'] = "Пользователь не найден"
                 return render_to_response('login.html', args)
         else:
-            if user.is_active:
+            if user is not None:
                 if isinstance(user, AnonymousUser):
-                    role = 'Клиент, неавторизированный'
-                elif user.permissions.contain('can_add') or user.is_superuser:
-                    role = 'Администратор'
-                elif user.permissions.contain('can_edit_schedule'):
-                    role = 'Кассир'
-                return json_response(role)
+                    role = '2'
+                elif user.has_perm('blog.can_add'):
+                    role = '0'
+                elif user.has_perm('blog.can_edit_schedule'):
+                    role = '0'
+                else:
+                    role = '1'
+            else:
+                role = role = '2'
+            return json_response({'role': role})
+
     else:
         return render_to_response('login.html', args)
 
@@ -90,6 +95,7 @@ def register(request):
     return render(request, 'register.html', {'form': form})
 
 
+@permission_required('blog.can_add', raise_exception=True)
 def users(request):
     perm1 = Permission.objects.get(codename='can_edit_schedule')
     perm2 = Permission.objects.get(codename='can_add')

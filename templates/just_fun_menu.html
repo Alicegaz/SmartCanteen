@@ -19,55 +19,50 @@
 				<a href="" class="active">
 					<i class="fa fa-edit"></i>
 					<strong>Информация</strong>
-					<small>sweet home</small>
+					<small>о столовой</small>
 				</a>
                 <ul>
-                    <li><a href={% url 'shares' %}><i class="fa fa-globe"></i>Акции</a></li>
+                    <li><a href={% url 'shares' %}><i class="fa fa-gift"></i>Акции</a></li>
 					<li>
-						<a href="#"><i class="fa fa-group"></i>Контакты</a>
+						<a href="#"><i class="fa fa-phone-square"></i>Контакты</a>
 			        </li>
-                    {% if schedule %}
+
                     {% if user.is_authenticated %}
-
-
+                        {% if schedule %}
+                    <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
                     {% else %}
-                    <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-globe"></i>Режим работы</a></li>
-                    {% endif %}
-                    {% else %}
-                    <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-globe"></i>Режим работы</a></li>
-
+                    <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                         {% endif %}
                     {%  endif %}
-
-
-
                 </ul>
         </li>
 					<li>
 				<a href="">
-					<i class="fa fa-gift"></i>
+					<i class="fa list-ol"></i>
 					<strong>Склад</strong>
-					<small>товары</small>
+					<small>товаров</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
+
                     {% if user.is_authenticated %}
+										<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
 					<li>
-						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-group"></i>Продукты</a>
+						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-lemon-o"></i>Продукты</a>
 			        </li>
                     {% endif %}
                     </ul>
         </li>
 			<li>
 				<a href="{% url 'menu_archive' %}">
-					<i class="fa fa-globe"></i>
+					<i class="fa fa-file-text-o"></i>
 					<strong>Меню</strong>
-					<small>sweet home</small>
+					<small>на сегодня</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-globe"></i>Архив</a></li>
+					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open></i>Архив</a></li>
                     {% if user.is_authenticated %}
 					<li>
-						<a href="{% url 'new_menu' %}"><i class="fa fa-group"></i>Создать меню</a>
+						<a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
 			</li>
                     {% endif %}
                     </ul>

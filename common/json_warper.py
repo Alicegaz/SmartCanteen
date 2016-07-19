@@ -46,15 +46,15 @@ def generate_json(data):
             name, data = item
             result[name] = generate_json(data)
         return result
+    elif isinstance(data, str):
+        return str(data)
+    elif hasattr(data, 'get_json_object'):
+        return data.get_json_object()
     elif hasattr(data, '__iter__'):
         result = []
         for item in data:
             result.append(generate_json(item))
         return result
-    elif hasattr(data, 'get_json_object'):
-        return data.get_json_object()
-    elif isinstance(data, str):
-        return str(data)
     else:
         raise TypeError
 

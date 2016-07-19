@@ -122,6 +122,12 @@ class Menu(models.Model):
             for relation in ing_dish_relations:
                 relation.subtract_from_ingredient()
 
+    def get_json_object(self):
+        result = []
+        for item in self.items.all():
+            result.append(item.get_json_object())
+        return result
+
 
 class History(models.Model):
     menu = models.ForeignKey(Menu)
@@ -144,14 +150,6 @@ class Schedule(models.Model):
     def __str__(self):
         return self.stsn1
 
-
-class BuyHistory(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Название блюда')
-    text = models.TextField(verbose_name='Описание')
-    calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
-    type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
-    date = models.DateField(default=timezone.now)
 
 class Shares(models.Model):
     author = models.ForeignKey('auth.User')
