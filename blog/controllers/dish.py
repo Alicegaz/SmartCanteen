@@ -11,6 +11,7 @@ def delete_all_ingredients(dish):
 
 
 def add_ing_dish_relations(request, dish):
+    print(IngDishRelation.objects.filter(dish=dish))
     quantity_list = request.getlist('quantity')
     ingredients = request.getlist('ingredients')
     for (item, quantity) in zip(ingredients, quantity_list):
@@ -75,8 +76,6 @@ def create_dish(request):
         try:
             if image:
                 dish.image = image
-            else:
-                dish.image = "carousel/no-image.png"
         except AttributeError:
             pass
         dish.save()

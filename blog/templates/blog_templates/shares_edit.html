@@ -1,113 +1,76 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{% block css %}
-    <style>
-    .block1 > p{
-        color: #395870;
-    font-weight: bold;
-    }
-    .title1{
-        margin: 14% 40px 10px 85px;
-    }
-    .uniForm input[type=image], select#id_type {
-    width: 100px !important;
-}
-
-    </style>
-{% endblock %}
     {% block content %}
-            <form role="form" method="post" action="/shares/form/" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
-                <h1>Редактировать акцию
-                <span>
-                    Пожалуйста, заполните все поля формы
-                </span>
-                </h1>
-                <p>
-                        <label>
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <div class="title1"><h2>Добавить акцию</h2></div>
                         <div class="form-group">
                             {{ form.title.errors }}
                             <label for="title">Заголовок:</label>
                                 {{ form.title }}
                         </div>
-                        </label>
 
-                        <label>
-                        <div class="form-group" id="type">
+                        <div class="form-group">
                             {{ form.type.errors }}
                             <label for="type">Тип акции:</label>
                             {{ form.type }}
                         </div>
-                        </label>
-
-                        <label>
+                        <div class="block1">
                         <div class="form-group">
-                                <div class="block1">
-                                     <p>Старая цена&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Новая цена </p>
-                                    {{ form.old_price.errors }}
-                                    {{ form.old_price }} руб.
-                                    {{ form.new_price.errors }}
-                                    {{ form.new_price }}руб.
-                                    </div>
+                            {{ form.old_price.errors }}
+                            <label for="old_price">Старая цена</label>
+                            {{ form.old_price }} руб.
                         </div>
-                        </label>
-
-                         <label>
+                         <div class="form-group">
+                            {{ form.new_price.errors }}
+                            <label for="new_price">Новая цена</label>
+                            {{ form.new_price }} руб.
+                        </div>
+                        </div>
                          <div class="form-group">
                             {{ form.discount.errors }}
                             <label for="discount">Скидка</label>
-                            {{ form.discount }} %
+                            {{ form.discount }} руб.
                         </div>
-                        </label>
 
-                         <label>
                          <div class="form-group">
                             <label for="start_date">Даты проведения</label>
+                             <div class="block1">
                              {{ form.start_date.errors }}
-                             <label for="start_date">с:</label>
-                              {{ form.start_date }}
-                             </div>
-                         </label>
-
-                         <label>
-                         <div class="form-group">
-                             <label for="end_date">по:</label>
+                             с {{ form.start_date }} руб.
                              {{ form.end_date.errors }}
-                              {{ form.end_date }}
-                             </div>
-                         </label>
+                             по {{ form.end_date }} руб.
+                        </div>
 
-                         <label>
                          <div class="form-group">
                             {{ form.text.errors }}
                             <label for="text">Описание</label>
+                            {{ form.text }} руб.
+                        </div>
+
+                        <div class="form-group" id="in">
+                            {{ form.text.errors }}
+                            <label for="text">Text</label>
                             {{ form.text }}
                         </div>
-                        </label>
 
-                        <label>
+
                         <div class="form-group">
                             {{ form.image.errors }}
                             <label for="image">Изображение:</label>
                             {{form.image}}
                         </div>
-                        </label>
 
-                        <label>
-                         <div class="form-group">
+                        <div class="form-group">
                         {{ form.corousel.errors }}
-                        <label for="carousel">Показать на главной странице сайта:</label>
+                        <label for="carousel">Показать на главной странице сайта:</label></div>
                         {{ form.carousel }}
                          </div>
-                            </label>
 
-                <label>
                         <div class="form-group">
-                            <button type="submit" class="button">Save</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
-                    </label>
-                    </p>
             </form>
-
+    </div>
         {%  endblock %}
 
               {#  </div>  #}

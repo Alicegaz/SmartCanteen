@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 {% load staticfiles %}
     {% block content %}
-            <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
-                      <h1>"Режим работы"
-                      <span>Пожалуйста заполните все поля формы</span>
-                      </h1>
-                <p>
-                <label>
-                            <div class="form-group" id="quant">
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="uniForm">{%  csrf_token %}
+                      <div class="title1"><h2>Создать расписание</h2></div>
+
+                 <div class="form-group" id="quant">
                             <label for="monrf1">Пн-Пт:</label>
                                     <div class="block1">
                                         {{ from.monfr1.errors }}
@@ -16,7 +13,6 @@
                                     {{ form.monfr2 }}
                                     </div>
                         </div>
-                    </label>
 
                         <div class="form-group" id="quant">
                             <label for="monrf1">Сб-Вс:</label>
@@ -58,17 +54,16 @@
                                     </div>
                         </div>
 
-                        <label>
+                        <div class="form-group">
                             {{ form.image.errors }}
                             <label for="image">Изображение:</label>
                             {{form.image}}
-                        </label>
-                        <label class="button-sum">
-                        <span>&nbsp;</span>
-                            <button type="submit" class="button">Save</button>
-                        </label>
                         </div>
-            </p>
+
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
             </form>
     </div>
         {%  endblock %}

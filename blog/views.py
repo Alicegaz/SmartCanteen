@@ -1,5 +1,6 @@
-from blog.forms import SharesForm
-from blog.models import Shares, Offers
+from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
+from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
+from django.shortcuts import get_object_or_404
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
 from blog.models import Post, Ingredient, Menu, Schedule, History
 from django.shortcuts import get_object_or_404, HttpResponse
@@ -7,8 +8,9 @@ from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
+from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.shares import create_shares, shares_edit as shares_change
-from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy
 from blog.controllers.menu import  create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -16,7 +18,8 @@ from django.contrib.auth.decorators import permission_required
 
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
-    data = {'posts': dishes}
+    shares = Shares.objects.all().filter(carousel=True)
+    data = {'posts': dishes, 'shares': shares}
     if json(request):
         return json_response(dishes)
     else:
@@ -90,22 +93,20 @@ def dish_remove(request, pk):
 
 def menu_out(request):
     menu = get_menu_of_current_time()
-    shares = Shares.objects.all().filter(carousel=True)
-    data = {'posts': menu, 'shares': shares}
+    data = {'posts': menu}
     if json(request):
-        data.pop('shares')
         return json_response(menu)
     else:
         return render(request, 'blog_templates/post_list.html', data)
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', raise_exception=True)
 def history_out(request):
-    history = History.objects.all().order_by('-menu__date')
+    history = History.objects.all()
     return render(request, 'blog_templates/history.html', {'history': history})
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', raise_exception=True)
 def menu_detail(request, pk=None):
     menu = get_object_or_404(Menu, pk=pk)
     items = menu.items.all()
@@ -121,7 +122,7 @@ def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-@permission_required('blog.can_add', 'blog.can_edit_shedule', raise_exception=True)
+# @permission_required('blog.can_add', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -161,12 +162,13 @@ def menu_item_remove(request, **kwargs):
     return redirect('blog.views.menu_archive')
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
 
 
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_detail(request, pk=None):
     instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {
@@ -241,7 +243,6 @@ def mymodel(request, pk=None):
 #     else:
 #         return HttpResponse("У вас нет прав администратора")
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_new(request):
         if request.method == 'POST':
             form = ScheduleForm(request.POST, request.FILES)
@@ -253,8 +254,7 @@ def schedule_new(request):
             form = ScheduleForm()
         return render(request, 'blog_templates/schedule_new.html', {'form': form})
 
-
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', raise_exception=True)
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=pk)
     if request.method == "POST":
@@ -266,7 +266,7 @@ def schedule_edit(request, pk):
         form = ScheduleForm(instance=post)
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
 
-
+@permission_required('blog.can_add', raise_exception=True)
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
@@ -275,22 +275,20 @@ def shares_list(request):
     else:
         return render(request, 'blog_templates/shares_list.html', data)
 
-
 @permission_required('blog.can_add','blog.can_edit_schedule', raise_exception=True)
 def shares_new(request):
     context = {}
     if request.method == 'POST':
         share = create_shares(request)
         if share is not False:
-            return redirect('shares_list')
+            return redirect('shares_list.html')
         else:
             return redirect('no_permission')
     else:
         context['form'] = SharesForm()
     return render(request, 'blog_templates/shares_new.html', context)
 
-
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', raise_exception=True)
 def shares_edit(request, pk):
     context = {}
     share = get_object_or_404(Shares, pk=pk)
@@ -304,7 +302,6 @@ def shares_edit(request, pk):
         context['form'] = SharesForm(instance=share)
     return render(request, "blog_templates/shares_edit.html", context)
 
-
 def buy_dishes(request):
     if request.method is not 'POST':
         return redirect('no_permission')
@@ -315,14 +312,3 @@ def buy_dishes(request):
             return json_response({'price':price, 'calories': calories})
         else:
             return HttpResponse(status=404)
-
-
-def send_offer(request):
-    dish_list = request.POST.getlist('dishes')
-    if is_in_menu(dish_list):
-        offer = Offers(menu=get_menu_of_current_time())
-        for dish in dish_list:
-            offer.items.add(Post.objects.get(id=dish))
-        return HttpResponse('OK', status=200)
-    else:
-        return HttpResponse('There is no such dishes in menu', status=400)

@@ -14,10 +14,6 @@
 {% endblock %}
        {#  <div class="col-md-8"> #}
 {% block content %}
-    <div class="smart-green">
-    <h1>Детали ингредиента
-    <span></span>
-    </h1>
                 <div id="image-{{instance.id}}" class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 
                     {{ instance.name }}<a class="btn btn-default" href="{% url 'post_ingredientedit' pk=instance.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
@@ -26,7 +22,7 @@
                         {# <p>price: {{  ingredients.price }}</p> #}
                         <p>вес: {{ instance.weight }}</p>
                 </div>
-</div>
+
 
               {#  </div>  #}
 

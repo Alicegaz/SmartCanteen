@@ -11,6 +11,7 @@ def have_permission(request, role=None):
         except Exception:
             return False
         user = authenticate(username=username, password=password)
+        print(user)
     if role is not None:
         if user.user_permissions.contain(role):
             return user
