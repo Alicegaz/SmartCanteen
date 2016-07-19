@@ -25,9 +25,9 @@
 						<a href="#"><i class="fa fa-phone-square"></i>Контакты</a>
 			        </li>
                     {% if schedule %}
-                    <li><a href="schedule_edit" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    <li><a href="/auth/register/schedule_edit" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
                     {% else %}
-                    <li><a href="schedule_new" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    <li><a href="/auth/register/schedule_new" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
                     {%  endif %}
                 </ul>
         </li>
