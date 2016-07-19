@@ -16,7 +16,6 @@ from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
 
 
-@permission_required('blog.can_add', raise_exception=True)
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
     shares = Shares.objects.all().filter(carousel=True)
@@ -27,7 +26,6 @@ def dishes_list(request):
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
-@permission_required('blog.can_add', raise_exception=True)
 def dish_details(request, pk=None):
     dish = get_object_or_404(Post, pk=pk)
     ingredients = dish.get_ingredients()
