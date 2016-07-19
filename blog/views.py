@@ -1,5 +1,5 @@
 from blog.forms import SharesForm
-from blog.models import Shares, Offers
+from blog.models import Shares
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
 from blog.models import Post, Ingredient, Menu, Schedule, History
 from django.shortcuts import get_object_or_404, HttpResponse
@@ -8,13 +8,13 @@ from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.shares import create_shares, shares_edit as shares_change
-from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu
-from blog.controllers.menu import  create_menu, add_to_history
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
+from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
+from common.decorators import user_have_permission
 
-
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
     data = {'posts': dishes}
@@ -308,23 +308,18 @@ def shares_edit(request, pk):
 
 
 def buy_dishes(request):
-    if request.method is not 'POST':
-        return redirect('no_permission')
+    status = buy(request)
+    if status:
+        price, calories = status
+        return json_response({'price': price, 'calories': calories})
     else:
-        res = buy(request)
-        if res:
-            price, calories = res
-            return json_response({'price':price, 'calories': calories})
-        else:
-            return HttpResponse(status=404)
+        return HttpResponse("Wrong request", status=400)
 
 
 def send_offer(request):
     dish_list = request.POST.getlist('dishes')
-    if is_in_menu(dish_list):
-        offer = Offers(menu=get_menu_of_current_time())
-        for dish in dish_list:
-            offer.items.add(Post.objects.get(id=dish))
-        return HttpResponse('OK', status=200)
+    status = buy_dish_list(dish_list)
+    if status:
+        return HttpResponse("OK", status=200)
     else:
-        return HttpResponse('There is no such dishes in menu', status=400)
+        return HttpResponse("There is no such dishes in menu", status=400)

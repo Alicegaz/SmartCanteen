@@ -151,15 +151,6 @@ class Schedule(models.Model):
         return self.stsn1
 
 
-class BuyHistory(models.Model):
-    title = models.CharField(max_length=200, verbose_name='Название блюда')
-    text = models.TextField(verbose_name='Описание')
-    calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
-    type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
-    date = models.DateField(default=timezone.now)
-
-
 class Shares(models.Model):
     author = models.ForeignKey('auth.User')
     title = models.CharField(max_length=200, verbose_name='Название блюда')
@@ -196,3 +187,4 @@ class Offers(models.Model):
     date = models.DateField(default=timezone.now)
     items = models.ManyToManyField(Post)
     menu = models.ForeignKey(Menu)
+    status = models.BooleanField(default=False)
