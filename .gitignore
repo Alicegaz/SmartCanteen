@@ -8,3 +8,4 @@ venv/
 migrations
 images
 node_modules
+mysite/settings.py

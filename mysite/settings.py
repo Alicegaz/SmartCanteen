@@ -11,7 +11,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print(  )
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -44,9 +44,9 @@ INSTALLED_APPS = [
     'djangobower',
     'crispy_forms',
     'common',
-     'django_extensions',
-     'betterforms'
-    #'django.contrib.sites',
+    'django_extensions',
+    'betterforms'
+    # 'django.contrib.sites',
 
 ]
 
@@ -89,9 +89,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-#STATICFILE_DIRS = (
- #   os.path.join(BASE_DIR, 'static'),
-#)
+# STATICFILE_DIRS = (
+#   os.path.join(BASE_DIR, 'static'),
+# )
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -103,17 +103,27 @@ STATICFILES_FINDERS = (
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'smartfoods',
+        'USER': 'postgres',
+        'PASSWORD': '123qwe',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
 BOWER_COMPONENTS_ROOT = '/PROJECT_ROOT/components/'
 
 BOWER_PATH = '/usr/bin/bower'
-
 
 AUTH_PROFILE_MODULE = "authentication.UserProfile"
 # Password validation
@@ -141,7 +151,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = 'media/'
 
-#STATIC_ROOT = '/home/SmartFoods/mysite/blog_templates/static/'
+# STATIC_ROOT = '/home/SmartFoods/mysite/blog_templates/static/'
 STATIC_URL = '/staticfiles/'
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
@@ -158,9 +168,9 @@ TIME_ZONE = 'Europe/Moscow'
 #     )
 # }
 
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO", 'https')
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO", 'https')
 
-#LOGIN_URL = r"/auth/login/"
+# LOGIN_URL = r"/auth/login/"
 
 USE_I18N = True
 
@@ -173,7 +183,7 @@ COMPRESS_ROOT = 'staticfiles'
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
 )
-#AUTH_USER_MODEL = 'authentication.User'
+# AUTH_USER_MODEL = 'authentication.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

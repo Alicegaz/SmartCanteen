@@ -1,8 +1,3 @@
-from django.utils import timezone
-
-from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm, SharesForm
-from blog.models import Post, Ingredient, Menu, Schedule, History, Shares
-from django.shortcuts import get_object_or_404
 from blog.forms import SharesForm
 from blog.models import Shares
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
@@ -179,6 +174,7 @@ def ingredient_list(request):
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
 
 
+@user_have_permission('blog.can_add')
 def ingredient_detail(request, pk=None):
     instance1 = get_object_or_404(Ingredient, pk=pk)
     context = {

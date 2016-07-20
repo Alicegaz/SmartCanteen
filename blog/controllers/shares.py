@@ -6,7 +6,6 @@ from common.request import get_image_from_request
 from blog.models import Shares
 
 
-
 # TODO need roles
 def create_shares(request):
     user = have_permission(request)
