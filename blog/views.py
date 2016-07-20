@@ -13,6 +13,10 @@ from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
 from common.decorators import user_have_permission
+import datetime
+import pytz
+from django.db.models import F
+utc=pytz.UTC
 
 
 @user_have_permission('blog.can_add')
@@ -274,6 +278,15 @@ def schedule_edit(request, pk):
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
+    shares_active={}
+    try:
+        #filter active shares
+        shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date')))])
+
+
+        data = {'shares': shares, 'shares': shares_active}
+    except Exception:
+        pass
     if json(request):
         return json_response(shares)
     else:

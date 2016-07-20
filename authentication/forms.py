@@ -76,8 +76,8 @@ class NewUserForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(forms.Form, self).__init__(*args, **kwargs)
         # adding css classes to widgets without define the fields:
-        for field in self.fields:
-            self.fields[field].widget.attrs['class'] = 'form-control'
+        #for field in self.fields:
+           # self.fields[field].widget.attrs['class'] = 'form-control'
             # class PostIngredient(models.Model):
             # post = models.ForeighKey(Post)
             # ingredient = models.ForeignKey(Ingredient)

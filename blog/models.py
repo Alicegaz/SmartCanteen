@@ -156,8 +156,8 @@ class Shares(models.Model):
     title = models.CharField(max_length=200, verbose_name='Название блюда')
     type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES_SHARES)
     text = models.TextField(verbose_name='Описание')
-    start_date = models.DateTimeField(default=timezone.now)
-    end_date = models.DateTimeField(default=timezone.now)
+    start_date = models.DateTimeField(default=timezone.now, blank=True)
+    end_date = models.DateTimeField(default=timezone.now, blank=True)
     old_price = models.BigIntegerField(null=True, blank=True, verbose_name='старая цена')
     new_price = models.BigIntegerField(null=True, blank=True, verbose_name='новая цена')
     discount = IntegerField(null=True, blank=True, default=1,

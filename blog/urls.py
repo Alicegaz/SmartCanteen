@@ -51,6 +51,8 @@ urlpatterns = [
     url(r'^shares/$', views.shares_list, name='shares'),
     url(r'^shares/form/$', views.shares_new, name='shares_new'),
     url(r'^shares/(?P<pk>\d+)/edit/$', views.shares_edit, name='shares_edit'),
+
+    url(r'^admin/jsi18n/', 'django.views.i18n.javascript_catalog'),
 ]
 
 if settings.DEBUG:

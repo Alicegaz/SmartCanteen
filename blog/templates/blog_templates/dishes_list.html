@@ -46,6 +46,9 @@
         border-top: unset !important;
         border: unset !important;
     }
+	.glyphicon.glyphicon-plus-sign {
+		color: #77DD77 !important;
+	}
     </style>
 <link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
@@ -76,9 +79,6 @@
 
                     <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                    </p>
-                {% if post.calories %}
-                    <p>калории: {{ post.calories }}</p>
-            {% endif %}
                     </div>
         </div>
         </div>

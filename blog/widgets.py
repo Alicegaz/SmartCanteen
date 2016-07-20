@@ -78,7 +78,6 @@ class SelectTimeWidget(Widget):
     A Widget that splits time input into <select> elements.
     Allows form to show as 24hr: <hour>:<minute>:<second>, (default)
     or as 12hr: <hour>:<minute>:<second> <am|pm>
-
     Also allows user-defined increments for minutes/seconds
     """
     hour_field = '%s_hour'
@@ -231,7 +230,6 @@ class SplitSelectDateTimeWidget(MultiWidget):
         """
         Given a list of rendered widgets (as strings), it inserts an HTML
         linebreak between them.
-
         Returns a Unicode string representing the HTML for the whole lot.
         """
         rendered_widgets.insert(-1, '<br/>')

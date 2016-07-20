@@ -1,3 +1,6 @@
+from django.utils import timezone
+
+from blog.controllers.dish import contain_ingredients, delete_all_ingredients, add_ing_dish_relations
 from common.permission import have_permission
 from common.request import get_image_from_request
 from blog.models import Shares
@@ -11,6 +14,8 @@ def create_shares(request):
         share = Shares.objects.create(author=user)
         share_dict = share.__dict__
         request_dict = request.POST
+        end_date = request.POST.get('end_date')
+        start_date = request.POST.get('start_date')
         image = get_image_from_request(request)
         if 'image' in request.POST:
             del request.POST['image']
@@ -22,6 +27,17 @@ def create_shares(request):
         try:
             if image:
                 share.image = image
+            else:
+                share.image = "carousel/no-image.png"
+        except AttributeError:
+            pass
+        try:
+            if end_date and start_date:
+                share.end_date = end_date
+                share.start_date = start_date
+            else:
+                share.end_date = timezone.now()
+                share.start_date = timezone.now()
         except AttributeError:
             pass
         share.save()

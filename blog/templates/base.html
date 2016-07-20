@@ -40,6 +40,8 @@
   position: absolute;
   top: 40%;
   left: 30%;
+                   top: 14% !important;
+        left: 10% !important;
   z-index: 20;
   color: white;
   text-shadow: 0 1px 2px rgba(0,0,0,.6);
@@ -52,7 +54,7 @@
                    width: 100%;
                }
                .page-container{
-                   width: 75%;
+                   width: 70%;
                    margin-right: 0px;
                    max-width: 70% !important;
                }
@@ -60,7 +62,6 @@
                    margin-right:0;
                }
                .navbar-default {
-			   background: #ffa500 !important;
     max-width: 100%;
 }
        .col-xs-12.col-sm-6.col-md-4.col-l{
@@ -107,16 +108,13 @@
     min-height:178px;
     vertical-align:text-top;
     border:1px solid #eee;
-
     /* уголки, ля-ля-ля */
-
     padding: 10px 10px 0;
     zoom:1; /* обычный layout fix для ИЕ6 */
     *display:inline; /* для ИЕ 6, 7 */
     max-width:130px;
     min-width:230px;
                }
-
 * {
   box-sizing: border-box;
 }
@@ -199,7 +197,6 @@ display: inline-block;
   color: #6e6e6e;
   line-height: 1.5em;
 }
-
        .col-xs-12{
            width:90%;
        }
@@ -219,22 +216,19 @@ display: inline-block;
            width:120px;
            top: 37px;
            left:0;
-           background: #ffa500;
+           background: greenyellow;
            border: 1px solid gold;
-           background-color: #ffa500;
+           background-color: #2ecc71;
        }
        ul#gn-menu > li{
            display: block;
        }
        ul#gn-menu > li > a{
            display: block;
-
        }
-
        ul#gn-menu.nav.navbar-nav.pull-right{
-           background-color: #ffa500;
+           background-color: #2ecc71;
        }
-
        .collapse.navbar-collapse.open{
            display:block;
            z-index: 2000;
@@ -247,27 +241,26 @@ display: inline-block;
        }
         .open > ul#gn-menu > li {
            border-bottom: 1px solid #369e62;
-            background-color: #ffa500;
+            background-color: #2ecc71;
            padding-bottom: 5px;
            margin-left: 9px;
        }
         .open > ul#gn-menu > li > a {
-            background-color: #ffa500;
+            background-color: #2ecc71;
             padding-top: 5px;
             padding-bottom: 2px;
             margin-left: 5px;
         }
         .sidebar{
-            width:30% !important;
+            width:27% !important;
         }
-
        div.page-container {
     max-width: unset !important;
     min-width: unset !important;
     padding: 0;
     height: unset !important;
     background: #eee !important;
-    margin: 0 10% 0 30% !important;
+    margin: 0 10% 0 27% !important;
 }
        .title1{
         margin: 14% 40px 10px 85px;
@@ -279,12 +272,13 @@ display: inline-block;
     top:7%;
     max-width: 90%;
     background: #F8F8F8;
-    padding: 30px 30px 20px 30px;
+    padding: 0 30px 20px 30px;
     font: 12px Arial, Helvetica, sans-serif;
     color: #666;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
+    height: 100%;
 }
 .smart-green h1 {
     font: 24px "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -298,14 +292,12 @@ display: inline-block;
     -webkit-border-radius: 5px 5px 0px 0px;
     -moz-border-radius: 5px 5px 0px 0px;
     border-bottom:1px solid #89AF4C;
-
 }
 .smart-green h1>span {
     display: block;
     font-size: 11px;
     color: #FFF;
 }
-
 .smart-green label {
     display: block;
     margin: 0px 0px 5px;
@@ -315,7 +307,7 @@ display: inline-block;
     margin-top: 10px;
     color: #5E5E5E;
 }
-.smart-green input[type="text"], .smart-green input[type="email"], .smart-green textarea, .smart-green input[type="number"], .smart-green select {
+.smart-green input[type="text"], .smart-green input[type="email"], .smart-green input[type="password"], .smart-green textarea, .smart-green input[type="number"], .smart-green select {
     color: #555;
     height: 30px;
     line-height:15px;
@@ -427,9 +419,10 @@ ul{
            height:200px;
        }
        .mcd-menu{
-           width:91%;
+           width:81%;
            margin-top: 2%;
            margin-left: 2.4%;
+           height:100%;
        }
          .col-xs-12.col-sm-6.col-md-4.col-l{
         border-top: unset !important;
@@ -438,27 +431,28 @@ ul{
          .post-content{
              word-wrap: break-word;
              height:150px;
-
+         }
+         .smart-green ul{
+             padding-left:0;
+             padding-left:0;
          }
          .input[type="text"], select{
              padding: unset !important;
          }
-       .
         </style>
         <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'>
         <link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image" />
         <link rel='stylesheet prefetch' href='/css/mcv.css'>
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image" />
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         {% block css %}{% endblock %}
     </head>
     <body>
        {%  include 'navbar.html' %}
-        {% if user.is_authenticated %}
             <div class="sidebar" id="socializ">
            {%  include 'just_fun_menu.html' %}
         </div>
-        {% endif %}
 
         <div class="page-container">
             {% block content %}{% endblock %}

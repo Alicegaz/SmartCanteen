@@ -2,11 +2,6 @@
 {% load staticfiles %}
 {% block css %}
         <style>
-            #socializ{
-                top:80px;
-                position: fixed;
-                z-index: 1000;
-            }
         .block1 {
 float: left;
 display: block;
@@ -17,7 +12,9 @@ margin-right: 2%;
             margin-bottom: 20px;
                 margin-top:3%;
 }
-
+div.page-container{
+    padding-top: 20px;
+}
 .block2 {
 float: left;
 display: block;
@@ -30,7 +27,6 @@ margin-top:3%;
   font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
   font-size: 14px !important;
   background: white !important;
-
   border-collapse: collapse !important;
   text-align: left !important;
              width:100%
@@ -51,8 +47,10 @@ tr:hover td{
   color: #6699ff !important;
   background: #e8edff;
 }
+        .smart-green{
+                       background: white;
+                   }
         </style>
-        <title>Django Girls blog</title>
 
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 
@@ -60,6 +58,10 @@ tr:hover td{
 {% endblock %}
        {#  <div class="col-md-8"> #}
 {% block content %}
+    <div class="smart-green">
+    <h1>Управление пользователями
+    <span></span>
+    </h1>
 <div class="block1">
 <table>
        <tr>
@@ -96,10 +98,12 @@ tr:hover td{
             {% endfor %}
        </table>
 </div>
+
               {#  </div>  #}
 
        <div class="menu"><a href="{% url 'register.html' %}">
            <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+    </div>
  {% endblock %}
 {% block scrip %}
          <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
