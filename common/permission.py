@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 
 
 def have_permission(request, permmission=None):
+    print(request.POST)
+    print(request.GET)
     user = request.user
     if isinstance(user, AnonymousUser):
         try:

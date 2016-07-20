@@ -40,19 +40,10 @@ urlpatterns = [
     url(r'^schedule/$', views.schedule_new, name='schedule_new'),
     url(r'^schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
 
-    #to resolve bugs
-    url(r'^auth/register/schedule/(?P<pk>\d+)/edit/$', views.schedule_edit, name='schedule_edit'),
-    url(r'^auth/register/schedule_new$', views.schedule_new, name='schedule_new'),
-    url(r'^auth/user/schedule_new$', views.schedule_new, name='schedule_new'),
-    url(r'^auth/user/shares/$', views.shares_list, name='shares_list'),
-    url(r'^auth/register/shares/$', views.shares_list, name='shares_list'),
-
     #shares
     url(r'^shares/$', views.shares_list, name='shares'),
     url(r'^shares/form/$', views.shares_new, name='shares_new'),
     url(r'^shares/(?P<pk>\d+)/edit/$', views.shares_edit, name='shares_edit'),
-
-    url(r'^admin/jsi18n/', 'django.views.i18n.javascript_catalog'),
 ]
 
 if settings.DEBUG:

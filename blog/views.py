@@ -11,7 +11,6 @@ from blog.controllers.shares import create_shares, shares_edit as shares_change
 from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
-from django.contrib.auth.decorators import permission_required
 from common.decorators import user_have_permission
 import datetime
 import pytz
@@ -92,7 +91,7 @@ def new_dish(request):
 def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    return redirect('blog.views.dishes_list')
+    return redirect('dishes_list')
 
 
 def menu_out(request):
@@ -299,7 +298,7 @@ def shares_new(request):
     if request.method == 'POST':
         share = create_shares(request)
         if share is not False:
-            return redirect('shares_list')
+            return redirect('shares')
         else:
             return redirect('no_permission')
     else:

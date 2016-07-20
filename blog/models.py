@@ -49,13 +49,14 @@ class Ingredient(models.Model):
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=70, verbose_name='Название блюда')
-    text = models.TextField(verbose_name='Описание')
-    calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории')
-    price = models.BigIntegerField(null=True, error_messages={'required': 'Determine the price'}, verbose_name='цена')
+    title = models.CharField(max_length=70, verbose_name='Название блюда',default='')
+    text = models.TextField(verbose_name='Описание', default='')
+    calories = models.BigIntegerField(null=True, blank=True, verbose_name='калории', default=0)
+    price = models.BigIntegerField(null=True, default=0, error_messages={'required': 'Determine the price'},
+                                   verbose_name='цена')
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
-    type = models.CharField(max_length=50, verbose_name='Тип ', choices=TYPE_CHOICES)
+    type = models.CharField(max_length=50, verbose_name='Тип ', default='First', choices=TYPE_CHOICES)
 
     def __str__(self):
         return self.title
@@ -97,7 +98,7 @@ class IngDishRelation(models.Model):
 
 class Menu(models.Model):
     author = models.ForeignKey('auth.User')
-    title = models.CharField(max_length=60)
+    title = models.CharField(max_length=60, default='')
     date = models.DateTimeField(default=timezone.now)
     items = models.ManyToManyField(Post)
 
