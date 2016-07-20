@@ -22,6 +22,7 @@ from django.contrib.auth.decorators import permission_required
 from common.decorators import user_have_permission
 import datetime
 import pytz
+from django.db.models import F
 utc=pytz.UTC
 
 def dishes_list(request):
@@ -284,9 +285,8 @@ def shares_list(request):
     shares_active={}
     try:
         #filter active shares
-        for share in Shares.objects.all():
-           if share.end_date__range == [timezone.now(), utc.localize(datetime.datetime(share.end_date))]:
-               shares_active+=share
+        shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date')))])
+
 
         data = {'shares': shares, 'shares': shares_active}
     except Exception:

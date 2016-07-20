@@ -3,12 +3,12 @@
         {% if user.is_authenticated %}
 			<li>
 				<a href="/auth/user">
-					<i class="fa fa-home"></i>
+					<i class="fa fa-user"></i>
 					<strong>Управление</strong>
                     <small>персоналом</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-globe"></i>Добавить</a></li>
+					<li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-circle"></i>Добавить сотрудника</a></li>
 					<li>
 						<a href="{% url 'authentication.views.users' %}"><i class="fa fa-group"></i>Управление</a>
 			        </li>
@@ -17,7 +17,7 @@
         {% endif %}
 			<li>
 				<a href="" class="active">
-					<i class="fa fa-edit"></i>
+					<i class="fa fa-info-circle"></i>
 					<strong>Информация</strong>
 					<small>о столовой</small>
 				</a>
@@ -26,26 +26,31 @@
 					<li>
 						<a href="#"><i class="fa fa-phone-square"></i>Контакты</a>
 			        </li>
-
+                    {% if schedule %}
                     {% if user.is_authenticated %}
-                        {% if schedule %}
+
+
+                    {% else %}
                     <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    {% endif %}
                     {% else %}
                     <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-clock-o"></i>Режим работы</a></li>
-                         {% endif %}
+
                     {%  endif %}
+
+
+
                 </ul>
         </li>
 					<li>
 				<a href="">
-					<i class="fa list-ol"></i>
+					<i class="fa fa-list-ol"></i>
 					<strong>Склад</strong>
 					<small>товаров</small>
 				</a>
                 <ul>
-
+					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-cutlery"></i>Блюда</a></li>
                     {% if user.is_authenticated %}
-										<li><a href="{% url 'dishes_list' %}"><i class="fa fa-globe"></i>Блюда</a></li>
 					<li>
 						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-lemon-o"></i>Продукты</a>
 			        </li>
@@ -59,7 +64,7 @@
 					<small>на сегодня</small>
 				</a>
                 <ul>
-					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open></i>Архив</a></li>
+					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open"></i>Архив</a></li>
                     {% if user.is_authenticated %}
 					<li>
 						<a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>

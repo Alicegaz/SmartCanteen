@@ -79,9 +79,6 @@
 
                     <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                    </p>
-                {% if post.calories %}
-                    <p>калории: {{ post.calories }}</p>
-            {% endif %}
                     </div>
         </div>
         </div>

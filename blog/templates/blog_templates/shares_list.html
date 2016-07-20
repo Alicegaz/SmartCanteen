@@ -65,7 +65,9 @@
     div.row.carousel-holder .col-md-12{
         padding-left: 30px;
     }
-
+    .smart-green{
+        height:unset !important;
+    }
     </style>
 
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
@@ -119,15 +121,11 @@
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
                 <div class="post-content">
-                <h3><a href="">{{ share.title }}</a>
-                </h3>
-                <p>
-                    <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <h3><a href="">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                </p>
+                </h3>
                 {% if share.text %}
-                    <p>{{ share.type }}</p>
-                    <p>{{ share.start_date }}-{{ share.end_date }}</p>
+                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
                 {% endif %}
                     </div>
         </div>
@@ -147,16 +145,11 @@
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
                 <div class="post-content">
-                <h3><a href="">{{ share.title }}</a>
-                </h3>
-                <p>
-                    <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <h3><a href="">{{ share.title }}</a> <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                </p>
-                {% if share.text %}
-                    <p>{{ share.type }}</p>
-                    <p>{{ share.text }}</p>
-                    <p>{{ share.start_date }}-{{ share.end_date }}</p>
+                </h3>
+                {% if share.type %}
+                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
                 {% endif %}
                     </div>
         </div>

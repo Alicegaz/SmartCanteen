@@ -163,9 +163,9 @@ class SharesForm(forms.ModelForm):
     carousel = forms.BooleanField(required=False, initial=True, widget=forms.CheckboxInput())
     # type = forms.ChiceField(widget=forms.RadioSelect, choices = TYPE_CHOICES)
     start_date = forms.DateTimeField(help_text = 'UTC date and time when voting begins',
-                                   widget=SplitSelectDateTimeWidget)
+                                   widget=SplitSelectDateTimeWidget, required=True)
     end_date = forms.DateTimeField(help_text = 'UTC date and time when voting begins',
-                                   widget=SplitSelectDateTimeWidget)
+                                   widget=SplitSelectDateTimeWidget, required=True)
 
     class Meta:
         model = Shares
