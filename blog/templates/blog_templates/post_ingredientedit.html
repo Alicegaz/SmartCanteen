@@ -18,10 +18,12 @@
             <p>
                 <label>
                     <label for="title">Название :</label>
+                    {{ form.name.errors }}
                     {{ form.name }}
                 </label>
                 <label>
                     <label for="weight">Вес :</label>
+                    {{ form.weight.errors }}
                     {{ form.weight }}
                 </label>
                 <label>

@@ -49,6 +49,11 @@
 	.glyphicon.glyphicon-plus-sign {
 		color: #77DD77 !important;
 	}
+    .del{
+        min-height: 45px;
+  position: relative;
+  overflow: hidden;
+    }
     </style>
 <link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
@@ -58,7 +63,8 @@
     <h1>Список блюд
     <span>список доступных блюд</span>
     </h1>
-    <p>
+    <p class="child">
+    <table>
     <ul>
     {% for post in posts %}
              <li id="menu">
@@ -68,24 +74,29 @@
                 {% if post.image %}
                     <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{ post.image.url }}" height="200"
                                                                        width="250" float="left"/> </a>
+                    <a href="{% url 'post_detail' pk=post.pk %}">              {% else %}
+                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/></a>
                 {% endif %}
                 <p class="post-top-price"><span>{{ post.price }} &#8381;</span></p>
                 </div>
                 <div class="post-content">
                 <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
                 </h3>
+                    </div>
+        <div clas="del">
 				<p>
                     <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                     <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
                    </p>
-                    </div>
+                        </div>
         </div>
         </div>
         </li>
 
     {% endfor %}
     </ul>
+    </table>
     </p>
     </div>
     <div class="menu"><a href="{% url 'post_new' %}">

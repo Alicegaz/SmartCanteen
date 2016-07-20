@@ -18,7 +18,7 @@ from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
-
+from datetime import date
 from common.decorators import user_have_permission
 import datetime
 import pytz
@@ -279,16 +279,21 @@ def schedule_edit(request, pk):
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
 
 
+
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
-    shares_active={}
     try:
         #filter active shares
-        shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date')))])
+        #shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date.year')))])
+        #shares_active = Shares.objects.all().raw('SELECT * FROM blog_shares WHERE timezone.now()<=end_date AND timezone.now()>=start_date')
+        shares_active=[]
+        for sh in Shares.objects.all():
+            if sh.is_past_due():
+                shares_active.append(sh)
 
 
-        data = {'shares': shares, 'shares': shares_active}
+        data = {'shares': shares, 'shares_active': shares_active}
     except Exception:
         pass
     if json(request):
@@ -303,7 +308,7 @@ def shares_new(request):
     if request.method == 'POST':
         share = create_shares(request)
         if share is not False:
-            return redirect('shares_list')
+            return redirect('shares')
         else:
             return redirect('no_permission')
     else:

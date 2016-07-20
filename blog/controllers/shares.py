@@ -27,8 +27,6 @@ def create_shares(request):
         try:
             if image:
                 share.image = image
-            else:
-                share.image = "carousel/no-image.png"
         except AttributeError:
             pass
         try:
@@ -68,9 +66,6 @@ def shares_edit(request, share):
             pass
         share.author = user
         share.save()
-        if contain_ingredients(request.POST):
-            delete_all_ingredients(share)
-            add_ing_dish_relations(request.POST, share)
         return share.id
     else:
         return False

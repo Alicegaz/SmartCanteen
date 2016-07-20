@@ -65,8 +65,21 @@
     div.row.carousel-holder .col-md-12{
         padding-left: 30px;
     }
+
     .smart-green{
         height:unset !important;
+    }
+    .del{
+        height:30px;
+        padding-top: 13px;
+        padding-bottom:13px;
+        text-align: center;
+    }
+    .del2{
+        height:30px;
+        padding-top: 12px;
+        padding-bottom: 13px;
+        text-align: center;
     }
     </style>
 
@@ -116,18 +129,31 @@
                 <div class="post-top">
                 {% if share.image %}
                     <img src="/{{ share.image.url }}" height="200"
-                         width="250" float="left"/> </a>
+                         width="250" float="left"/>
+                    {% else %}
+                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/>
                 {% endif %}
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
+
                 <div class="post-content">
+                {% if shares.title %}
                 <h3><a href="">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                 </h3>
-                {% if share.text %}
-                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
-                {% endif %}
+                    {% else %}
+                    <h3>Нет названия</h3>
+                    {% endif %}
                     </div>
+
+
+                <div class="del">
+                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
+                </div>
+
+                <div class="del2">
+                    <p>{{ share.type }}</p>
+                </div>
         </div>
         </div>
         </li>
@@ -140,18 +166,31 @@
                 <div class="post-top">
                 {% if share.image %}
                     <img src="/{{ share.image.url }}" height="200"
-                         width="250" float="left"/> </a>
+                         width="250" float="left"/>
+                {% else %}
+                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/>
                 {% endif %}
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
+
                 <div class="post-content">
-                <h3><a href="">{{ share.title }}</a> <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                {% if shares.title %}
+                <h3><a href="">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                 </h3>
-                {% if share.type %}
-                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
-                {% endif %}
+                    {% else %}
+                    <h3>Нет названия</h3>
+                    {% endif %}
                     </div>
+
+
+                <div class="del">
+                    <p>с {{ share.start_date.day }}-{{ share.start_date.month }}-{{ share.start_date.year }} по {{ share.end_date.day }}-{{ share.end_date.month }}-{{ share.end_date.year }}</p>
+                </div>
+
+                <div class="del2">
+                    <p>{{ share.type }}</p>
+                </div>
         </div>
         </div>
         </li>

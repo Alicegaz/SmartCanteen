@@ -65,6 +65,13 @@ ul {
     .carousel-content{
         height:80%;
     }
+    .post-content{
+        height:120px;
+    }
+    .del{
+        height:20px;
+        text-align:center;
+    }
     </style>
 {% endblock %}
 {% block content %}
@@ -157,16 +164,21 @@ ul {
                 {% if dish.image %}
                     <a href="{% url 'post_detail' pk=dish.pk %}"> <img src="/{{ dish.image.url }}" height="200"
                                                                        width="250" float="left"/> </a>
+                                  {% else %}
+                    <a href="{% url 'post_detail' pk=dish.pk %}"><img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/></a>
                 {% endif %}
                 <p class="post-top-price"><span>{{ dish.price }} &#8381;</span></p>
                 </div>
                 <div class="post-content">
                 <h3><a href="{% url 'post_detail' pk=dish.pk %}">{{ dish.title }}</a>
                 </h3>
+                </div>
+                <div class="del">
                 {% if dish.calories %}
                     <p>калории: {{ dish.calories }}</p>
             {% endif %}
-                    </div>
+                </div>
+
         </div>
         </div>
         </li>

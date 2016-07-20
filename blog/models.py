@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -182,6 +184,10 @@ class Shares(models.Model):
         dic.pop('_state')
         return dic
 
+    def is_past_due(self):
+        if date.today() <= self.end_date.date():
+            return True
+        return False
 
 class Offers(models.Model):
     date = models.DateField(default=timezone.now)
