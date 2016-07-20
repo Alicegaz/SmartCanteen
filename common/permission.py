@@ -11,7 +11,7 @@ def have_permission(request, permmission=None):
         except Exception:
             return False
         user = authenticate(username=username, password=password)
-    if permmission is not None:
+    if permmission is not None and user is not None:
         if user.has_perm(permmission):
             return user
     else:
