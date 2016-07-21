@@ -44,6 +44,10 @@ urlpatterns = [
     url(r'^shares/$', views.shares_list, name='shares'),
     url(r'^shares/form/$', views.shares_new, name='shares_new'),
     url(r'^shares/(?P<pk>\d+)/edit/$', views.shares_edit, name='shares_edit'),
+    url(r'^shares/(?P<pk>\d+)/$', views.shares_detail, name='shares_detail'),
+
+    url(r'^contacts/$', views.contacts, name='contacts'),
+    url(r'^contacts/new/$', views.new_contact, name='new_contact'),
 ]
 
 if settings.DEBUG:

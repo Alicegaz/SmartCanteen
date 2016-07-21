@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from blog.widgets import *
 from blog.fields import *
 from django.db.models import IntegerField, Model
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator
 
 TYPE_CHOICES = (
     ('First', 'Первое'),
@@ -195,3 +195,34 @@ class Offers(models.Model):
     items = models.ManyToManyField(Post)
     menu = models.ForeignKey(Menu)
     status = models.BooleanField(default=False)
+
+class Contacts(models.Model):
+    author = models.ForeignKey('auth.User')
+    office_name = models.CharField(max_length=75, verbose_name='Название блюда')
+    country = models.CharField(max_length=50, verbose_name='Страна')
+    region = models.CharField(max_length=50, verbose_name='Регион')
+    city = models.CharField(max_length=50, verbose_name='Город')
+    street = models.CharField(max_length=50, verbose_name='Город')
+    building = models.IntegerField(null=True, default=0)
+    comment = models.TextField(verbose_name='Комментарий к адресу')
+    created_date = models.DateTimeField(default=timezone.now)
+    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
+
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    phone_number = models.CharField(validators=[phone_regex], blank=True, max_length=15)  # validators should be a list
+    email = models.EmailField(max_length=70, blank=True, null=True, unique=True)
+
+    def __str__(self):
+        return self.office_name
+
+    def __unicode__(self):
+        return self.choice_text
+
+    def get_json_object(self):
+        dic = self.__dict__
+        dic['created_date'] = self.created_date.isocalendar()
+        dic['image'] = self.image.url
+        dic.pop('_state')
+        return dic
+

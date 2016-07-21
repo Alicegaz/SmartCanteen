@@ -1,9 +1,10 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ChoiceField, TimeField
 
 from blog.widgets import SelectTimeWidget
 from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation, Schedule, \
-    TYPE_CHOICES_SHARES, Shares
+    TYPE_CHOICES_SHARES, Shares, Contacts
 from blog.fields import *
 from django.utils import timezone
 from common.request import get_image_from_request
@@ -11,7 +12,6 @@ from common.blog_post_list import get_menu_of_current_time
 from django.forms.extras.widgets import SelectDateWidget
 from django import forms
 from django.contrib.admin import widgets
-
 
 class ElectionTimesForm(forms.Form):
   # times
@@ -200,3 +200,24 @@ class SharesForm(forms.ModelForm):
         #for field in self.fields:
             #self.fields[field].widget.attrs['class'] = 'form-control'
             #self.fields['ingredients'].widget.attrs['class'] = 'chosen'
+
+
+class ContactsForm(forms.ModelForm):
+    phone_number = forms.RegexField(regex=r'^\+?1?\d{9,15}$',
+                                    error_message=(
+                                    "Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
+    email = models.EmailField(max_length=70, blank=True, null=True, unique=True)
+
+    class Meta:
+        model = Contacts
+        fields = (
+            'office_name', 'country', 'region', 'city', 'street', 'building', 'comment', 'created_date', 'phone_number', 'image', 'email',
+        )
+        widgets = {
+            'body': forms.Textarea(),
+        }
+
+    def save(self, *args, **kwargs):
+        if self.email is not None and self.email.strip() == "":
+            self.email = None
+        models.Model.save(self, *args, **kwargs)

@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <style>
+    div.page-container{
+        padding-top: 20px;
+    }
+     .smart-green input[type=text], .smart-green input[type=password], select{
+          width:90% !important;
+      }
+    </style>
+{% endblock %}
+    {% block content %}
+            <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
+                      <h1>Создать новое блюдо
+                          <span>Пожалуста заполните все поля формы</span>
+                      </h1>
+            <p>
+            <label>
+                        <div class="form-group">
+                            {{ form.office_name.errors }}
+                            <label for="title">Название блюда:</label>
+                                {{ form.office_name }}
+                        </div>
+            </label>
+<label>
+                        <div class="form-group" id="in">
+                            {{ form.country.errors }}
+                            <label for="text">Text</label>
+                            {{ form.country }}
+                        </div>
+</label>
+<label>
+                        <div class="form-group">
+                            {{ form.region.errors }}
+                            <label for="text">Калории:</label>
+                            {{  form.region }}
+                        </div>
+</label>
+<label>
+                        <div class="form-group">
+                            {{ form.city.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.city }}
+                        </div>
+</label>
+    <label>
+                        <div class="form-group">
+                            {{ form.street.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.street }}
+                        </div>
+</label>
+
+                <label>
+                        <div class="form-group">
+                            {{ form.building.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.building }}
+                        </div>
+</label>
+                <label>
+                        <div class="form-group">
+                            {{ form.comment.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.comment }}
+                        </div>
+</label>
+                <label>
+                        <div class="form-group">
+                            {{ form.email.errors }}
+                            <label for="price">Цена:</label>
+                            {{ form.email }}
+                        </div>
+</label>
+            <label>
+                        <div class="form-group">
+                            {{ form.phone.errors }}
+                            <label for="type">Тип: </label>
+                            {{ form.phone }}
+                        </div>
+                </label>
+
+                 <div class="form-group">
+                            {{ form.image.errors }}
+                            <label for="image">Изображение:</label>
+                            {{form.image}}
+                        </div>
+
+                         <label>
+                        <div class="form-group">
+                            <button type="submit" class="button">Save</button>
+                        </div>
+                             </label>
+            </p>
+            </form>
+    </div>
+        {%  endblock %}
+
+              {#  </div>  #}
+
+{% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+
+   <script type="text/javascript">
+    function attachCheckboxHandlers() {
+    // get reference to element containing toppings checkboxes
+    var el = document.getElementById('id_ingredients');
+    console.log("string", el);
+
+    // get reference to input elements in toppings container element
+    var tops = el.getElementsByTagName('input');
+
+    // assign updateTotal function to onclick property of each checkbox
+    for (var i=0, len=tops.length; i<len; i++) {
+        if ( tops[i].type === 'checkbox' ) {
+            tops[i].onclick = updateTotal;
+        }
+    }
+}
+
+// called onclick of toppings checkboxes
+function updateTotal(e) {
+    // 'this' is reference to checkbox clicked on
+    var form = this.form;
+   document.getElementById('in').innerHTML = 'kod5';
+    // get current value in total text box, using parseFloat since it is a string
+    var val = parseInt(this.value);
+
+    // if check box is checked, add its value to val, otherwise subtract it
+    if ( this.checked ) {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: block !important';
+        el2[val-1].style.cssText = 'display: block !important';
+    } else {
+        var el1 = document.getElementById('quant');
+        var el2 = el1.getElementsByTagName('input');
+        var el3 = el1.getElementsByTagName('p');
+        el3[val-1].style.cssText = 'display: none !important';
+        el2[val-1].style.cssText = 'display: none !important';
+
+    }
+
+}
+     attachCheckboxHandlers();
+    </script>
+    {% include 'javascripts.html' %}
+    {% endblock %}
