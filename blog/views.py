@@ -322,6 +322,8 @@ def shares_edit(request, pk):
 
 
 def buy_dishes(request):
+    print(request.POST)
+    print(request.GET)
     status = buy(request)
     if status:
         price, calories = status

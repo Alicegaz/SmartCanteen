@@ -186,6 +186,18 @@ class Shares(models.Model):
 
 class Offers(models.Model):
     date = models.DateField(default=timezone.now)
-    items = models.ManyToManyField(Post)
     menu = models.ForeignKey(Menu)
     status = models.BooleanField(default=False)
+
+    def get_dish_list(self):
+        result = []
+        dish_amount_list = DishAmount.objects.filter(offer=self)
+        for dish_amount in dish_amount_list:
+            result.append(dish_amount)
+        return result
+
+
+class DishAmount(models.Model):
+    dish = models.ForeignKey(Post)
+    amount = models.IntegerField(default=1)
+    offer = models.ForeignKey(Offers)
