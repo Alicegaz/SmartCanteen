@@ -373,3 +373,18 @@ def new_contact(request):
     else:
         context['form'] = ContactsForm()
     return render(request, 'blog_templates/contacts_form.html', context)
+
+@permission_required('blog.can_add', raise_exception=True)
+def contact_edit(request, pk):
+    context = {}
+    dish = get_object_or_404(Contacts, pk=pk)
+    if request.method == "POST":
+        dish = dish_change(request, dish)
+        if dish is not False:
+            return redirect('contacs')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = ContactsForm(instance=dish)
+        context['posts'] = Contacts.objects.all()
+    return render(request, "blog_templates/contact_edit.html", context)

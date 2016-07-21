@@ -296,6 +296,81 @@ a, a:link {
     .showcase-card .pbf-bottom- p {
     padding-bottom: 20px;
 }
+    .showcase-card .pbf-bottom- .pic- {
+    display: table;
+    height: 280px;
+    width: 280px;
+    border-radius: 4px;
+    border: 1px solid #ffca00;
+    position: relative;
+    background: #fff;
+    z-index: 1;
+}
+    .showcase-card .pbf-bottom- .pic- .pic-wrap- {
+    display: table-cell;
+    height: 280px;
+    width: 280px;
+    vertical-align: middle;
+}
+    .type-2_default .kc-col-2-3 .yd-box, .type-2_default .kc-col-2 .yd-box, .type-2_default .kc-col-3 .yd-box, .type-2_default .kc-col-2-3 .kontora-box, .type-2_default .kc-col-2 .kontora-box {
+    border: 1px solid #ccc;
+    background: #fff;
+}
+.type-2-skin .kc-col-2 .yd-box, .type-2-skin .kc-col-2-3 .yd-box, .type-2-skin .kc-col-2 .kontora-box, .type-2-skin .kc-col-2-3 .kontora-box {
+    border: 1px solid #c7c7c7;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+.type-2-skin .kc-col-2-3 .kontora-box {
+    margin: 0 0 15px;
+}
+.type-2_default .kontora-menu-box, .type-2_default .owner-menu, .type-2_default .kontora-box {
+    border: 1px solid #cdcdcd!important;
+}
+    .showcase-card.company-showcase {
+    margin: 12px -10px;
+    border-width: 1px 0;
+    border-radius: 0;
+}
+.showcase-card {
+    background: -webkit-linear-gradient(top,white 0,#f3f3f3 100%);
+    background: linear-gradient(to bottom,white 0,#f3f3f3 100%);
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    border-radius: 4px 4px 0 0;
+}
+    .showcase-card .pbf-bottom- .right-.border- {
+    border-bottom: 1px solid #ccc;
+}
+.showcase-card .pbf-bottom- .right- {
+    padding-bottom: 10px;
+}
+.showcase-card .pbf-bottom- .right- {
+    width: 445px;
+    float: right;
+    margin-top: 10px;
+}
+
+.showcase-card .sc-time-:before {
+    content: '';
+    width: 52px;
+    height: 53px;
+    position: absolute;
+    background: url(http://stblizko.ru/assets/company_structure/showcase_sprite-34dc8a6262e854e4aceb6d19224698db.png) 0 0;
+    top: 0;
+    left: 0;
+}
+
+    .showcase-card.company-showcase {
+    margin: 12px -10px;
+    border-width: 1px 0;
+    border-radius: 0;
+    width: 80%;
+}
+    .showcase-card .pbf-top- {
+    padding: 15px;
+    border-bottom: 1px solid #f8f8f8;
+}
     </style>
 
     <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
@@ -308,7 +383,7 @@ a, a:link {
         <h1> Акция<span>детали</span>
         </h1>
 
-
+<div class="kontora-box">
 <div class="company-showcase showcase-card">
 <div class="pbf-top- clearfix">
 <div class="sc-head">
@@ -393,6 +468,7 @@ a, a:link {
 
 </div>
 </div>
+</div>
 <div class="showcase-full-info company">
 <div class="sfi-content clearfix">
 <div class="so-description"><p>
@@ -415,6 +491,9 @@ c {{ instance.start_date.day }}-{{ instance.start_date.month }}-{{ instance.star
 
 
     </div>
+    </div>
+    </div>
+
 {% endblock %}
 
 {#  </div>  #}

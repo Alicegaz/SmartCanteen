@@ -83,7 +83,7 @@
     }
     .cb {
     clear: both;
-        padding-top: 20px;
+        padding-top: 40px;
 }
 .cb {
     clear: both;
@@ -201,6 +201,34 @@ list-style: none;
 .pl0 {
     padding-left: 0!important;
 }
+    .type-2-skin .kontora-box .contacts li {
+    font-size: 12px;
+}
+.contacts li {
+    padding: 2px 0 2px 20px;
+    position: relative;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+    .cb.clearfix.js-toggle p, h3 {
+    margin: 0;
+    padding-left: 14px;
+}
+    .kc-col-2 .number- {
+    font-weight: bold;
+}
+ li.phone-
+.type-2-skin .kontora-box .contacts li {
+    font-size: 12px;
+}
+    html, body, .page-container{
+             height: 100% !important;
+         }
+    .smart-green{
+        height: auto !important;
+    }
     </style>
 
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
@@ -217,12 +245,12 @@ list-style: none;
         <div class="col-md-12">
 <div class="one_empty kontora-empty-box empty-showcase clearfix">
 <div class="n-p sc-new">
-<a class="n-p-link" href="{% url 'shares_new' %}" title="Добавить адрес">
-Акция
+<a class="n-p-link" href="{% url 'new_contact' %}" title="Добавить адрес">
+Адрес
 </a>
 </div>
 <div class="n-h-p">
-<a class="gray-link" href="{% url 'shares_new' %}">Добавьте адрес</a>
+<a class="gray-link" href="{% url 'new_contact' %}">Добавьте адрес</a>
 <p class="descr mt15 fs12 gray">
 	Расскажите о ваших адресах
 
@@ -238,11 +266,16 @@ list-style: none;
 
     </div>
     <div class="L">
+        {% for contact in contacts %}
 <div class="cb clearfix js-toggle" data-effect="fade">
 <div>
 <h3>
-Головной офис
-<a class="control-link edit- js-ga-contacts-edit-office" href="http://lider-mobile.blizko.ru/contacts/5219546/edit" title="Редактировать офис">
+    {% if office.name %}
+{{ contact.office_name }}
+    {% else %}
+    У офиса нет названия
+    {% endif %}
+<a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contact_edit' pk=contact.pk %}" title="Редактировать офис">
 Редактировать
 </a>
 </h3>
@@ -251,20 +284,24 @@ list-style: none;
 </li>
 <li class="address">
 г Альметьевск, ул. Бигаш, д. 125
-ТД &quot;Лидер&quot;
+    г.{{contact.city  }}, ул.{{ contact.street }} , д.{{ contact.building }} &nbsp;
+Сеть &quot;Трапеза&quot;
 <br>
 </li>
 <li class="phone-">
-<span class="number-">+7 (953) 405-45-34</span>
+<span class="number-">{{ contact.phone_number }}</span>
 
 </li>
 
 <li class="link-site">
-<a href="http://lidermobile.torgg.com/" class="js-ga-company-site-link" rel="" target="_blank" title="http://lidermobile.torgg.com">http://lidermobile.torgg.com</a>
+<a href="" class="js-ga-company-site-link" rel="" target="_blank" title="{{ contact.email }}">{{ contact.email }}</a>
 </li>
 </ul>
 
     </div>
+            <br>
+<hr align="center" width="100%" color="grey" />
+{% endfor %}
     </div>
 {% endblock %}
 

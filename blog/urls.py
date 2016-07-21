@@ -48,6 +48,7 @@ urlpatterns = [
 
     url(r'^contacts/$', views.contacts, name='contacts'),
     url(r'^contacts/new/$', views.new_contact, name='new_contact'),
+    url(r'^contacts/(?P<pk>\d+)/edit/$', views.contact_edit, name='contact_edit'),
 ]
 
 if settings.DEBUG:
