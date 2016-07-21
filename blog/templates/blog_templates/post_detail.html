@@ -18,6 +18,8 @@
         </h1>
         {% if instance.image %}
             <img src="/{{ instance.image.url }}" height="200" width="250" float="left"/>
+            {% else %}
+            <a href="{% url 'post_detail' pk=instance.pk %}"><img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/></a>
         {% endif %}
 
         <p>price: {{ instance.price }}</p>

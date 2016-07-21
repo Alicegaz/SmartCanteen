@@ -31,7 +31,9 @@ div.page-container{
                 <div class="post-top">
                     {% if item.image %}
                          <a href="{%  url 'post_detail' pk=item.pk %}"><img src="/{{item.image.url }}" height="200" width="250" float="left"/></a>
-                       {% endif %}
+                         {% else %}
+                    <a href="{%  url 'post_detail' pk=item.pk %}"></a>
+                    {% endif %}
                 <p class="post-top-price"><span>{{  item.price }} &#8381;</span></p>
                 </div>
                 <div class="post-content">

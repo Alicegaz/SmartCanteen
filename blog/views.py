@@ -7,18 +7,19 @@ from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
+from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.shares import create_shares, shares_edit as shares_change
 from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
+from django.contrib.auth.decorators import permission_required
+from datetime import date
 from common.decorators import user_have_permission
 import datetime
 import pytz
 from django.db.models import F
 utc=pytz.UTC
 
-
-@user_have_permission('blog.can_add')
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date')
     data = {'posts': dishes}
@@ -28,7 +29,6 @@ def dishes_list(request):
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
-@user_have_permission('blog.can_add')
 def dish_details(request, pk=None):
     dish = get_object_or_404(Post, pk=pk)
     ingredients = dish.get_ingredients()
@@ -57,7 +57,7 @@ def dish_details(request, pk=None):
     return render(request, 'blog_templates/post_detail.html', context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def dish_edit(request, pk):
     context = {}
     dish = get_object_or_404(Post, pk=pk)
@@ -73,7 +73,7 @@ def dish_edit(request, pk):
     return render(request, "blog_templates/post_edit.html", context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def new_dish(request):
     context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
@@ -87,11 +87,11 @@ def new_dish(request):
     return render(request, 'blog_templates/post_new.html', context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.delete()
-    return redirect('dishes_list')
+    return redirect('blog.views.dishes_list')
 
 
 def menu_out(request):
@@ -99,19 +99,20 @@ def menu_out(request):
     shares = Shares.objects.all().filter(carousel=True)
     data = {'posts': menu, 'shares': shares}
     if json(request):
+        #must be merge bug
         data.pop('shares')
         return json_response(menu)
     else:
         return render(request, 'blog_templates/post_list.html', data)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def history_out(request):
     history = History.objects.all().order_by('-menu__date')
     return render(request, 'blog_templates/history.html', {'history': history})
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def menu_detail(request, pk=None):
     menu = get_object_or_404(Menu, pk=pk)
     items = menu.items.all()
@@ -122,12 +123,12 @@ def menu_detail(request, pk=None):
     return render(request, 'blog_templates/menu_detail.html', context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def menu_edit(request, pk):
     return new_menu(request, pk)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_shedule', raise_exception=True)
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -148,14 +149,14 @@ def new_menu(request, pk=None):
     return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def menu_remove(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     menu.delete()
     return redirect('menu_archive')
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def menu_item_remove(request, **kwargs):
     pk = kwargs.get('pk', '')
     post = Menu.objects.get(pk=pk)
@@ -167,7 +168,7 @@ def menu_item_remove(request, **kwargs):
     return redirect('blog.views.menu_archive')
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
@@ -184,7 +185,7 @@ def ingredient_detail(request, pk=None):
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_edit(request, pk):
     ingredient = get_object_or_404(Ingredient, pk=pk)
     if request.method == "POST":
@@ -198,7 +199,7 @@ def ingredient_edit(request, pk):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def new_ingredient(request):
     if request.method == 'POST':
         ingredient = create_ingredient(request)
@@ -211,7 +212,7 @@ def new_ingredient(request):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', raise_exception=True)
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
@@ -248,7 +249,7 @@ def mymodel(request, pk=None):
 #     else:
 #         return HttpResponse("У вас нет прав администратора")
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_new(request):
         if request.method == 'POST':
             form = ScheduleForm(request.POST, request.FILES)
@@ -261,7 +262,7 @@ def schedule_new(request):
         return render(request, 'blog_templates/schedule_new.html', {'form': form})
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=pk)
     if request.method == "POST":
@@ -274,16 +275,21 @@ def schedule_edit(request, pk):
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
 
 
+
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
-    shares_active={}
     try:
         #filter active shares
-        shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date')))])
+        #shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date.year')))])
+        #shares_active = Shares.objects.all().raw('SELECT * FROM blog_shares WHERE timezone.now()<=end_date AND timezone.now()>=start_date')
+        shares_active=[]
+        for sh in Shares.objects.all():
+            if sh.is_past_due():
+                shares_active.append(sh)
 
 
-        data = {'shares': shares, 'shares': shares_active}
+        data = {'shares': shares, 'shares_active': shares_active}
     except Exception:
         pass
     if json(request):
@@ -292,7 +298,7 @@ def shares_list(request):
         return render(request, 'blog_templates/shares_list.html', data)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add','blog.can_edit_schedule', raise_exception=True)
 def shares_new(request):
     context = {}
     if request.method == 'POST':
@@ -306,7 +312,7 @@ def shares_new(request):
     return render(request, 'blog_templates/shares_new.html', context)
 
 
-@user_have_permission('blog.can_add')
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def shares_edit(request, pk):
     context = {}
     share = get_object_or_404(Shares, pk=pk)

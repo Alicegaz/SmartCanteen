@@ -2,111 +2,105 @@
 {% load staticfiles %}
 {% block css %}
     <style>
-        div.page-container {
-            padding-top: 8%;
-        }
+    div.page-container {
+        padding-top: 8%;
+    }
+    .headline4{
+        position: relative;
+        width:60%;
+        color: lightseagreen;
+        font-size: xx-large;
+        font-family: Sans-Serif;
+        padding-left:30%;
 
-        .headline4 {
-            position: relative;
-            width: 60%;
-            color: lightseagreen;
-            font-size: xx-large;
-            font-family: Sans-Serif;
-            padding-left: 30%;
-
-        }
-
-        .content {
-            margin-left: 0;
-            margin-right: auto;
-            top: 7%;
-            max-width: 90%;
-            background: #F8F8F8;
-            padding: 30px 30px 20px 30px;
-            font: 12px Arial, Helvetica, sans-serif;
-            color: #666;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-        }
-
-        li#menu {
-            width: 200px;
-            min-height: 150px;
-            border: 1px solid #f8f8f8 !important;
-            display: -moz-inline-stack;
-            display: inline-block;
-            vertical-align: top;
-            margin: 5px;
-            zoom: 1;
-            *display: inline;
-            _height: 150px;
-        }
-
-        .smart-green {
-            margin-top: -11.8%;
-        }
-
-        .col-xs-12.col-sm-6.col-md-4.col-l {
-            border-top: unset !important;
-            border: unset !important;
-        }
-
-        .glyphicon.glyphicon-plus-sign {
-            color: #77DD77 !important;
-        }
+}
+    .content{
+        margin-left:0;
+    margin-right:auto;
+    top:7%;
+    max-width: 90%;
+    background: #F8F8F8;
+    padding: 30px 30px 20px 30px;
+    font: 12px Arial, Helvetica, sans-serif;
+    color: #666;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    }
+ li#menu {
+        width: 200px;
+        min-height: 150px;
+        border: 1px solid #f8f8f8 !important;
+        display: -moz-inline-stack;
+        display: inline-block;
+        vertical-align: top;
+        margin: 5px;
+        zoom: 1;
+        *display: inline;
+        _height: 150px;
+    }
+    .smart-green{
+        margin-top:-11.8%;
+    }
+    .col-xs-12.col-sm-6.col-md-4.col-l{
+        border-top: unset !important;
+        border: unset !important;
+    }
+	.glyphicon.glyphicon-plus-sign {
+		color: #77DD77 !important;
+	}
+    .del{
+        min-height: 45px;
+  position: relative;
+  overflow: hidden;
+    }
     </style>
-    <link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
+<link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
     <div class="smart-green">
-        <h1>Список блюд
-            <span>список доступных блюд</span>
-        </h1>
-        <p>
-            <ul>
-                {% for post in posts %}
-                    <li id="menu">
-                        <div id="image-{{ post.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
-                            <div class="post">
-                                <div class="post-top">
-                                    {% if post.image %}
-                                        <a href="{% url 'post_detail' pk=post.pk %}">
-                                            {% if post.image %}
-                                                <img src="/{{ post.image.url }}"
-                                                     height="200"
-                                                     width="250" float="left"/>
-                                            {% else %}
-                                                <img src="/media/carousel/no-image.png HTTP/1.1"
-                                                     height="200"
-                                                     width="250" float="left"/>
-                                            {% endif %}
-                                        </a>
-                                    {% endif %}
-                    <p class="post-top-price"><span>{{ post.price }} &#8381;</span></p>
+    <h1>Список блюд
+    <span>список доступных блюд</span>
+    </h1>
+    <p class="child">
+    <table>
+    <ul>
+    {% for post in posts %}
+             <li id="menu">
+            <div id="image-{{ post.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                <div class="post">
+                <div class="post-top">
+                {% if post.image %}
+                    <a href="{% url 'post_detail' pk=post.pk %}"> <img src="/{{ post.image.url }}" height="200"
+                                                                       width="250" float="left"/> </a>
+                    <a href="{% url 'post_detail' pk=post.pk %}">              {% else %}
+                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/></a>
+                {% endif %}
+                <p class="post-top-price"><span>{{ post.price }} &#8381;</span></p>
+                </div>
+                <div class="post-content">
+                <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
+                </h3>
                     </div>
-                    <div class="post-content">
-                        <h3><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a>
-                        </h3>
-                        <p>
-                            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span
-                                    class="glyphicon glyphicon-pencil"></span></a>
+        <div clas="del">
+				<p>
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"
-                               onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                        </p>
-                    </div>
-                    </div>
-                    </div>
-                    </li>
+                    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+                   </p>
+                        </div>
+        </div>
+        </div>
+        </li>
 
-                {% endfor %}
+    {% endfor %}
     </ul>
+    </table>
     </p>
     </div>
     <div class="menu"><a href="{% url 'post_new' %}">
-        <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
 {% endblock %}
 
 
@@ -124,15 +118,15 @@
         }
     </script>
     {% include 'javascripts.html' %}
-    <script>
-        $(function () {
-            $(window).scroll(function () {
-                var top = $(document).scrollTop();
-                if (top < 100) $(".floating").css({top: '0', position: 'relative'});
-                else $(".floating").css({top: '10px', position: 'fixed'});
-            });
-        });
-    </script>
+     <script>
+     $(function(){
+    $(window).scroll(function() {
+        var top = $(document).scrollTop();
+        if (top < 100) $(".floating").css({top: '0', position: 'relative'});
+        else $(".floating").css({top: '10px', position: 'fixed'});
+    });
+});
+     </script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
     </script>
