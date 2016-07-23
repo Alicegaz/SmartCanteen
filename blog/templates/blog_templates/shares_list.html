@@ -90,7 +90,7 @@
     <span>Архив всех акций сети</span>
     </h1>
     <div class="row carousel-holder">
-{% if user.is_authenticated %}
+{% if user.profile.perm and user.is_authenticated %}
         <div class="col-md-12">
 <div class="one_empty kontora-empty-box empty-showcase clearfix">
 <div class="n-p sc-new">
@@ -118,7 +118,7 @@
     </div>
     <div class="L">
     <ul>
-    {% if user.is_authenticated %}
+    {% if user.profile.perm and user.is_authenticated %}
     {% for share in shares %}
         <li id="menu">
             <div id="image-{{ share.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">

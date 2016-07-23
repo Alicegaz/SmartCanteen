@@ -239,7 +239,7 @@
     <span></span>
     </h1>
     <div class="row carousel-holder">
-{% if user.is_authenticated %}
+{% if user.profile.perm and user.is_authenticated %}
         <div class="col-md-12">
 <div class="one_empty kontora-empty-box empty-showcase clearfix">
 <div class="n-p sc-new">

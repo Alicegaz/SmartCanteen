@@ -9,6 +9,21 @@ from blog.models import Schedule, Post
 from django.db.models import Q
 from common.json_warper import is_mobile,json_response
 from common.permission import have_permission
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render_to_response, redirect, render, get_object_or_404
+
+from authentication.models import User, UserProfile
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from authentication import forms
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import permission_required
+from blog.models import Schedule, Post
+from django.db.models import Q
+
+
+
+
 
 def login(request):
     args = {}
@@ -90,14 +105,17 @@ def register(request):
                     if role == 'is_admin' or role == 'is_cashier':
                         if role == 'is_admin':
                             permission = Permission.objects.get(codename='can_add')
+                            perm = True
                         elif role == 'is_cashier':
                             permission = Permission.objects.get(codename='can_edit_schedule')
+                            perm = True
                     else:
                         user.delete()
                         return redirect('no_permission')
                     e = UserProfile()
                     e.profile = user
                     e.author = request.user
+                    e.perm = perm
                     e.save()
                     user.user_permissions.add(permission)
                     user.save()
