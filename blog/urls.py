@@ -47,7 +47,7 @@ urlpatterns = [
 
     # offers
     url(r'^offer/$', views.get_offers, name='offers_list'),
-    url(r'^offer/(?P<pk>\d+)', views.offer_detail, name='offer_detail')
+    url(r'^offer/(?P<pk>\d+)', views.offer_detail, name='offer_detail'),
     url(r'^shares/(?P<pk>\d+)/$', views.shares_detail, name='shares_detail'),
 
     url(r'^contacts/$', views.contacts, name='contacts'),

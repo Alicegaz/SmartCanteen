@@ -338,6 +338,7 @@ def send_offer(request):
         return HttpResponse("There is no such dishes in menu", status=400)
 
 
+@permission_required('blog.can_add', raise_exception=True)
 def get_offers(request):
     offers = Offers.objects.all()
 
@@ -356,6 +357,8 @@ def get_offers(request):
         result.append(obj)
     return render(request, "blog_templates/offers.html", {'offers': result})
 
+
+@permission_required('blog.can_add', raise_exception=True)
 def offer_detail(request, pk=None):
     offer = Offers.objects.get(id=pk)
     dish_list = offer.get_dish_list()
@@ -381,6 +384,7 @@ def shares_detail(request, pk=None):
         return json_response(context)
     return render(request, 'blog_templates/shares_detail.html', context)
 
+
 def contacts(request):
     contacts = Contacts.objects.all()
     return render(request, 'blog_templates/contacts.html', {'contacts': contacts})
@@ -398,6 +402,7 @@ def new_contact(request):
     else:
         context['form'] = ContactsForm()
     return render(request, 'blog_templates/contacts_form.html', context)
+
 
 @permission_required('blog.can_add', raise_exception=True)
 def contact_edit(request, pk):
