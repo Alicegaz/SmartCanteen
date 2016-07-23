@@ -24,7 +24,7 @@
                 <ul>
                     <li><a href={% url 'shares' %}><i class="fa fa-gift"></i>Акции</a></li>
 					<li>
-						<a href="#"><i class="fa fa-phone-square"></i>Контакты</a>
+						<a href="{% url 'contacts' %}"><i class="fa fa-phone-square"></i>Контакты</a>
 			        </li>
                     {% if schedule %}
                     {% if user.is_authenticated %}

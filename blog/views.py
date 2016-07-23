@@ -1,5 +1,5 @@
-from blog.forms import SharesForm
-from blog.models import Shares
+from blog.forms import SharesForm, ContactsForm
+from blog.models import Shares, Contacts
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
 from blog.models import Post, Ingredient, Menu, Schedule, History, Offers
 from django.shortcuts import get_object_or_404, HttpResponse
@@ -9,6 +9,8 @@ from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.shares import create_shares, shares_edit as shares_change
 from blog.controllers.dish import dish_edit as dish_change, create_dish, buy,  buy_dish_list
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
+from blog.controllers.contacts import contact_edit as contact_shange, create_contact
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
@@ -366,3 +368,48 @@ def offer_detail(request, pk=None):
         'price': price,
     }
     return render(request,"blog_templates/offer_detail.html", context)
+
+
+def shares_detail(request, pk=None):
+    share = get_object_or_404(Shares, pk=pk)
+    active=share.is_past_due()
+    context = {
+        "instance": share,
+        "active": active,
+    }
+    if json(request):
+        return json_response(context)
+    return render(request, 'blog_templates/shares_detail.html', context)
+
+def contacts(request):
+    contacts = Contacts.objects.all()
+    return render(request, 'blog_templates/contacts.html', {'contacts': contacts})
+
+
+@permission_required('blog.can_add', raise_exception=True)
+def new_contact(request):
+    context = {'posts': Contacts.objects.all()}
+    if request.method == 'POST':
+        contact = create_contact(request)
+        if contact is not False:
+            return redirect('contacts')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = ContactsForm()
+    return render(request, 'blog_templates/contacts_form.html', context)
+
+@permission_required('blog.can_add', raise_exception=True)
+def contact_edit(request, pk):
+    context = {}
+    dish = get_object_or_404(Contacts, pk=pk)
+    if request.method == "POST":
+        dish = dish_change(request, dish)
+        if dish is not False:
+            return redirect('contacs')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = ContactsForm(instance=dish)
+        context['posts'] = Contacts.objects.all()
+    return render(request, "blog_templates/contact_edit.html", context)

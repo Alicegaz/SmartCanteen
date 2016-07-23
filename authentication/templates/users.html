@@ -1,142 +1,130 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block css %}
-    <style>
+        <style>
         .block1 {
-            float: left;
-            display: block;
-            width: 400px;
-            border: 1px solid blue;
-            margin: 2px;
-            margin-right: 2%;
+float: left;
+display: block;
+width: 400px;
+border: 1px solid blue;
+margin: 2px;
+margin-right: 2%;
             margin-bottom: 20px;
-            margin-top: 3%;
-        }
+                margin-top:3%;
+}
+div.page-container{
+    padding-top: 20px;
+}
+.block2 {
+float: left;
+display: block;
+width: 400px;
+border: 1px solid blue;
+margin-right: 3%;
+margin-top:3%;
+}
+         table {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
+  font-size: 14px !important;
+  background: white !important;
+  border-collapse: collapse !important;
+  text-align: left !important;
+             width:100%
+}
+th {
+  font-weight: normal !important;
+  color: #039 !important;
+  border-bottom: 2px solid #6678b1 !important;
+  padding: 10px 8px !important;
+}
+td {
+  color: #669 !important;
+  padding: 9px 8px !important;
+  transition: .3s linear !important;
+    border-top:1px solid #e8edff;
+}
+tr:hover td{
+  color: #6699ff !important;
+  background: #e8edff;
+}
+        .smart-green{
+                       background: #f8f8f8;
+                   }
+        html, body, .page-container, .smart-green{
+             height: 100% !important;
+         }
+        </style>
 
-        div.page-container {
-            padding-top: 20px;
-        }
-
-        .block2 {
-            float: left;
-            display: block;
-            width: 400px;
-            border: 1px solid blue;
-            margin-right: 3%;
-            margin-top: 3%;
-        }
-
-        table {
-            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
-            font-size: 14px !important;
-            background: white !important;
-            border-collapse: collapse !important;
-            text-align: left !important;
-            width: 100%
-        }
-
-        th {
-            font-weight: normal !important;
-            color: #039 !important;
-            border-bottom: 2px solid #6678b1 !important;
-            padding: 10px 8px !important;
-        }
-
-        td {
-            color: #669 !important;
-            padding: 9px 8px !important;
-            transition: .3s linear !important;
-            border-top: 1px solid #e8edff;
-        }
-
-        tr:hover td {
-            color: #6699ff !important;
-            background: #e8edff;
-        }
-
-        .smart-green {
-            background: white;
-        }
-    </style>
-
-    <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 
 
 {% endblock %}
-{#  <div class="col-md-8"> #}
+       {#  <div class="col-md-8"> #}
 {% block content %}
     <div class="smart-green">
-        <h1>Управление пользователями
-            <span></span>
-        </h1>
-        <div class="block1">
-            <table>
-                <tr>
-                    <th>Кассир</th>
-                    <th>Дата</th>
-                    <th>Создатель</th>
-                    <th>Удалить</th>
-                </tr>
-                {% for user in users1 %}
-                    {# <div class="col-md-8">  #}
-                    <tr>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.date_joined.day }}:{{ user.date_joined.month }}:{{ user.date_joined.year }}</td>
-                        <td>{{ user.profile.author }}</td>
-                        <td><a class="btn btn-default" href="{% url 'user_remove' pk=user.pk %}"
-                               onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                        </td>
-                    </tr>
-                    {# <p>price: {{  ingredients.price }}</p> #}
+    <h1>Управление пользователями
+    <span></span>
+    </h1>
+<div class="block1">
+<table>
+       <tr>
+           <th>Кассир</th><th>Дата</th><th>Создатель</th><th>Удалить</th>
+       </tr>
+           {% for user in users1 %}
+                {# <div class="col-md-8">  #}
+               <tr>
+               <td>{{ user.username }}</td>
+                <td>{{ user.date_joined.day }}:{{ user.date_joined.month }}:{{ user.date_joined.year }}</td>
+                   <td>{{ user.profile.author }}</td>
+                   <td><a class="btn btn-default" href="{% url 'user_remove' pk=user.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a></td>
+               </tr>
+                        {# <p>price: {{  ingredients.price }}</p> #}
 
-                {% endfor %}
-            </table>
-        </div>
-        <div class="block2">
-            <table>
-                <tr>
-                    <th>Администратор</th>
-                    <th>Дата</th>
-                    <th>Создатель</th>
-                    <th>Удалить</th>
-                </tr>
-                {% for user in users2 %}
-                    {# <div class="col-md-8">  #}
-                    <tr>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.date_joined.day }}:{{ user.date_joined.month }}:{{ user.date_joined.year }}</td>
-                        <td>{{ user.profile.author }}</td>
-                        <td><a class="btn btn-default" href="{% url 'user_remove' pk=user.pk %}"
-                               onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
-                        </td>
-                    </tr>
-                    {# <p>price: {{  ingredients.price }}</p> #}
+            {% endfor %}
+       </table>
+</div>
+<div class="block2">
+<table>
+       <tr>
+           <th>Администратор</th><th>Дата</th><th>Создатель</th><th>Удалить</th>
+       </tr>
+           {% for user in users2 %}
+                {# <div class="col-md-8">  #}
+               <tr>
+               <td>{{ user.username }}</td>
+                <td>{{ user.date_joined.day }}:{{ user.date_joined.month }}:{{ user.date_joined.year }}</td>
+                <td>{{ user.profile.author }}</td>
+                <td><a class="btn btn-default" href="{% url 'user_remove' pk=user.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a></td>
+               </tr>
+                        {# <p>price: {{  ingredients.price }}</p> #}
 
-                {% endfor %}
-            </table>
-        </div>
+            {% endfor %}
+       </table>
+</div>
 
-        {#  </div>  #}
+              {#  </div>  #}
 
-        <div class="menu"><a href="{% url 'register.html' %}">
-            <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+       <div class="menu"><a href="{% url 'register.html' %}">
+           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
     </div>
-{% endblock %}
+ {% endblock %}
 {% block scrip %}
-    <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить меню?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
     <script>
-        function confirmDelete() {
-            if (confirm("Вы уверены, что хотите удалить меню?")) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    </script>
-    <script>
-        new gnMenu(document.getElementById('gn-menu'));
-    </script>
-    {% include 'javascripts.html' %}
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+    {%  include 'javascripts.html' %}
 {% endblock %}

@@ -30,7 +30,7 @@
     line-height: 1;
 }
     div.page-container {
-    margin-top: 3% !important;
+    margin-top: 40px !important;
 }
     .kontora-content a:link, .kontora-content a:visited {
     color: #ff5722;
@@ -128,21 +128,23 @@
                 <div class="post">
                 <div class="post-top">
                 {% if share.image %}
-                    <img src="/{{ share.image.url }}" height="200"
-                         width="250" float="left"/>
+                    <a href="{% url 'shares_detail' pk=share.pk %}"><img href="{% url 'shares_detail' pk=share.pk %}" src="/{{ share.image.url }}" height="200"
+                         width="250" float="left"/></a>
                     {% else %}
-                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/>
+                   <a href="{% url 'shares_detail' pk=share.pk %}"><img alt="" src="/media/carousel/466_original.jpg" height="200" width="250" float="left"/></a>
                 {% endif %}
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
 
                 <div class="post-content">
                 {% if shares.title %}
-                <h3><a href="">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                <h3><a href="{% url 'shares_detail' pk=share.pk %}">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                 </h3>
                     {% else %}
-                    <h3>Нет названия</h3>
+                    <h3><a href="{% url 'shares_detail' pk=share.pk %}">Нет названия</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                    </h3>
                     {% endif %}
                     </div>
 
@@ -165,21 +167,20 @@
                 <div class="post">
                 <div class="post-top">
                 {% if share.image %}
-                    <img src="/{{ share.image.url }}" height="200"
-                         width="250" float="left"/>
+                    <a href="{% url 'shares_detail' pk=share.pk %}"><img src="/{{ share.image.url }}" href="{% url 'shares_detail' pk=share.pk %}" height="200"
+                         width="250" float="left"/></a>
                 {% else %}
-                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/>
+                   <a href="{% url 'shares_detail' pk=share.pk %}"><img alt="" src="/media/carousel/466_original.jpg" height="200" width="250" float="left"/></a>
                 {% endif %}
                 <p class="post-top-price"><span>{{ share.discount }} % </span></p>
                 </div>
 
                 <div class="post-content">
                 {% if shares.title %}
-                <h3><a href="">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-
+                <h3><a href="{% url 'shares_detail' pk=share.pk %}">{{ share.title }}</a>
                 </h3>
                     {% else %}
-                    <h3>Нет названия</h3>
+                    <h3><a href="{% url 'shares_detail' pk=share.pk %}">Нет названия</a></h3>
                     {% endif %}
                     </div>
 

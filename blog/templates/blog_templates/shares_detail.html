@@ -1,0 +1,517 @@
+
+
+
+
+
+
+
+
+
+
+
+    {% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <style>
+        div.page-container{
+            padding-top: 20px;
+        }
+    .showcase-card.company-showcase {
+    margin: 12px -10px;
+    border-width: 1px 0;
+    border-radius: 0;
+}
+.showcase-card {
+    background: -webkit-linear-gradient(top,white 0,#f3f3f3 100%);
+    background: linear-gradient(to bottom,white 0,#f3f3f3 100%);
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    border-radius: 4px 4px 0 0;
+}
+body.type-2-skin.type-2_default {
+    background: #fff;
+    color: #333;
+}
+body.type-2-skin {
+    background: #fbf6f0;
+    font-family: verdana;
+}
+    .kontora-content {
+    margin: 0 0 25px;
+    line-height: 130%;
+    font-size: 12px;
+}
+
+.showcase-card .pbf-top- {
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+    .sc-head {
+    font: 24px Verdana;
+    color: #c33!important;
+    font-weight: bold;
+    text-transform: uppercase;
+    word-wrap: break-word;
+}
+
+.kontora-content a:link, .kontora-content a:visited {
+    color: #008bd4;
+}
+
+.control-link.edit- {
+    padding-left: 18px;
+}
+
+a:visited {
+    color: #606;
+}
+a:link {
+    color: #1f57a8;
+}
+.control-link {
+    position: relative;
+    margin: 0 0 3px 5px;
+}
+.edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
+    display: inline-block;
+    vertical-align: middle;
+    font: normal 12px/14px Arial,sans-serif;
+    color: #00b5db!important;
+    text-decoration: none;
+    text-transform: none;
+    cursor: pointer;
+}
+
+a:-webkit-any-link {
+    color: -webkit-link;
+    cursor: auto;
+}
+div.sc-head
+.sc-head {
+    font: 24px Verdana;
+    color: #c33!important;
+    font-weight: bold;
+    text-transform: uppercase;
+    word-wrap: break-word;
+}
+
+.kontora-content a:link, .kontora-content a:visited {
+    color: #008bd4;
+}
+
+.control-link.copy- {
+    padding-left: 18px;
+}
+a, a:link, a:visited {
+    outline: 0;
+}
+a:visited {
+    color: #606;
+}
+a:link {
+    color: #1f57a8;
+}
+.control-link {
+    position: relative;
+    margin: 0 0 3px 5px;
+}
+.edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
+    display: inline-block;
+    vertical-align: middle;
+    font: normal 12px/14px Arial,sans-serif;
+    color: #00b5db!important;
+    text-decoration: none;
+    text-transform: none;
+    cursor: pointer;
+}
+.showcase-card .pbf-bottom- {
+    padding: 10px 10px 25px;
+    border-top: 1px solid #fff;
+    position: relative;
+}
+
+.pbf-bottom-.sk {
+    overflow: inherit;
+}
+.showcase-card .pbf-bottom- .left- {
+    width: 295px;
+    float: left;
+    position: relative;
+}
+    .showcase-card .pbf-bottom- .left- .p-ico-wrap {
+    background: url(http://stblizko.ru/assets/showcases_types_sprite-63d234af1aa91430d9e50d156c10f591.png) -37px 0 no-repeat;
+    position: absolute;
+    top: -6px;
+    left: 6px;
+    height: 62px;
+    width: 96px;
+    z-index: 10;
+}
+    .showcase-card .pbf-bottom- .left- .p-ico-wrap .text- {
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    margin: 13px 10px 13px 15px;
+    color: #fff;
+}
+    .showcase-card .pbf-bottom- .right-.border- {
+    border-bottom: 1px solid #ccc;
+}
+.showcase-card .pbf-bottom- .right- {
+    padding-bottom: 10px;
+}
+.showcase-card .pbf-bottom- .right- {
+    width: 445px;
+    float: right;
+    margin-top: 10px;
+}
+
+.showcase-card .pbf-bottom- .r-deadline-block {
+    width: 285px;
+    float: left;
+}
+    .showcase-card .sc-time- {
+    position: relative;
+    padding-left: 70px;
+}
+    .showcase-card .pbf-bottom- p {
+    margin: 0 0 8px!important;
+    font-size: 14px;
+}
+.kontora-content p {
+    margin: 0 0 15px;
+}
+p {
+    margin: 0 0 15px;
+}
+
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+
+.showcase-card .sc-time- span {
+    font-size: 18px;
+}
+.showcase-card .pbf-bottom- .right- {
+    padding-bottom: 10px;
+}
+.showcase-card .pbf-bottom- .right- {
+    width: 445px;
+    float: right;
+    margin-top: 10px;
+}
+
+div {
+    display: block;
+}
+
+.showcase-card .showcase-ribbon-wrapper.card {
+    position: absolute;
+    width: 489px;
+    padding-left: 20px;
+    height: 40px;
+    bottom: 30px;
+    right: 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-color: #fc6a0f;
+    background: -webkit-linear-gradient(#ff8714,#fa4d0b);
+    background: linear-gradient(#ff8714,#fa4d0b);
+}
+
+.showcase-card .showcase-ribbon-wrapper.card .right-block {
+    float: right;
+    min-width: 229px;
+    max-width: 469px;
+    color: #fff;
+    line-height: 18px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.showcase-card .showcase-ribbon-wrapper.card .left-block, .showcase-card .showcase-ribbon-wrapper.card .right-block {
+    height: 40px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+}
+
+.showcase-full-info.company {
+    border: 0;
+    padding: 0;
+}
+.showcase-full-info {
+    padding: 0 10px 10px;
+    border: 1px solid #ccc;
+    border-top-width: 0;
+    position: relative;
+}
+.showcase-full-info .so-description {
+    line-height: 1.5;
+    font-size: 13px;
+    overflow: hidden;
+}
+
+.showcase-full-info .showcase-offer-period {
+    font-weight: bold;
+}
+    .sc-time-{position:relative;padding-left:70px}.showcase-card .sc-time-:before{content:'';width:52px;height:53px;position:absolute;background:url(http://stblizko.ru/assets/company_structure/showcase_sprite-34dc8a6262e854e4aceb6d19224698db.png) 0 0;top:0;left:0}
+    html, body, .page-container{
+             height: 100%;
+         }
+    .smart-green{
+        height:auto;
+    }
+    .showcase-card .pbf-bottom- .right-.border- {
+    border-bottom: 1px solid #ccc;
+}
+.showcase-card .pbf-bottom- .right- {
+    padding-bottom: 10px;
+}
+.showcase-card .pbf-bottom- .right- {
+    width: 445px;
+    float: right;
+    margin-top: 10px;
+}
+    .smart-green{
+        max-width: 100%;
+    }
+
+.kontora-content a:link, .kontora-content a:visited {
+    color: #008bd4;
+}
+.control-link.edit- {
+    padding-left: 18px;
+}
+a, a:link {
+    outline: 0;
+}
+    .showcase-full-info .showcase-offer-period {
+    font-weight: bold;
+}
+    .showcase-card .pbf-bottom- p {
+    padding-bottom: 20px;
+}
+    .showcase-card .pbf-bottom- .pic- {
+    display: table;
+    height: 280px;
+    width: 280px;
+    border-radius: 4px;
+    border: 1px solid #ffca00;
+    position: relative;
+    background: #fff;
+    z-index: 1;
+}
+    .showcase-card .pbf-bottom- .pic- .pic-wrap- {
+    display: table-cell;
+    height: 280px;
+    width: 280px;
+    vertical-align: middle;
+}
+    .type-2_default .kc-col-2-3 .yd-box, .type-2_default .kc-col-2 .yd-box, .type-2_default .kc-col-3 .yd-box, .type-2_default .kc-col-2-3 .kontora-box, .type-2_default .kc-col-2 .kontora-box {
+    border: 1px solid #ccc;
+    background: #fff;
+}
+.type-2-skin .kc-col-2 .yd-box, .type-2-skin .kc-col-2-3 .yd-box, .type-2-skin .kc-col-2 .kontora-box, .type-2-skin .kc-col-2-3 .kontora-box {
+    border: 1px solid #c7c7c7;
+    padding: 10px;
+    border-radius: 8px 8px 0 0;
+}
+.type-2-skin .kc-col-2-3 .kontora-box {
+    margin: 0 0 15px;
+}
+.type-2_default .kontora-menu-box, .type-2_default .owner-menu, .type-2_default .kontora-box {
+    border: 1px solid #cdcdcd!important;
+}
+    .showcase-card.company-showcase {
+    margin: 12px -10px;
+    border-width: 1px 0;
+    border-radius: 0;
+}
+.showcase-card {
+    background: -webkit-linear-gradient(top,white 0,#f3f3f3 100%);
+    background: linear-gradient(to bottom,white 0,#f3f3f3 100%);
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    border-radius: 4px 4px 0 0;
+}
+    .showcase-card .pbf-bottom- .right-.border- {
+    border-bottom: 1px solid #ccc;
+}
+.showcase-card .pbf-bottom- .right- {
+    padding-bottom: 10px;
+}
+.showcase-card .pbf-bottom- .right- {
+    width: 445px;
+    float: right;
+    margin-top: 10px;
+}
+
+.showcase-card .sc-time-:before {
+    content: '';
+    width: 52px;
+    height: 53px;
+    position: absolute;
+    background: url(http://stblizko.ru/assets/company_structure/showcase_sprite-34dc8a6262e854e4aceb6d19224698db.png) 0 0;
+    top: 0;
+    left: 0;
+}
+
+    .showcase-card.company-showcase {
+    margin: 12px -10px;
+    border-width: 1px 0;
+    border-radius: 0;
+    width: 80%;
+}
+    .showcase-card .pbf-top- {
+    padding: 15px;
+    border-bottom: 1px solid #f8f8f8;
+}
+    </style>
+
+    <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+{% endblock %}
+{% block content %}
+{#  <div class="col-md-8"> #}
+    <div class="smart-green">
+        {# <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon-pencil"></span></a> #}
+        {# <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> #}
+        <h1> Акция<span>детали</span>
+        </h1>
+
+<div class="kontora-box">
+<div class="company-showcase showcase-card">
+<div class="pbf-top- clearfix">
+<div class="sc-head">
+    {% if instance.title %}
+{{ instance.title }}
+    {% else %}
+    Нет названия
+    {% endif %}
+<a class="control-link edit-" data-copy-offer-href="http://lider-mobile.blizko.ru/sale/new?copy=409889" data-new-offer-href="http://lider-mobile.blizko.ru/sale/new" href="{% url 'shares_detail' pk=instance.pk %}" title="Редактировать акцию">
+Редактировать
+</a>
+
+</div>
+</div>
+<div class="pbf-bottom- sk clearfix">
+<div class="left-">
+<div class="p-ico-wrap">
+<span class="discount">
+<div class="text-" title="{{ instance.type }}"><span class="small">до </span>{{ instance.discount }} %
+</div>
+</span>
+</div>
+
+<div class="js-flt">
+<div class="pic-">
+<div class="pic-wrap-">
+    {% if instance.image %}
+<img alt="" src="/{{ instance.image.url }}" style="height:285px; width:285px;" />
+    {% else %}
+        <a href="{% url 'shares_detail' pk=instance.pk %}"><img alt="" src="/media/carousel/466_original.jpg" height="285" width="285" float="left"/></a>
+    {% endif %}
+</div>
+</div>
+</div>
+</div>
+<div class="clearfix right- border-">
+<div class="sc-social">
+<div class="social-widgets" id="social-widgets"></div>
+
+</div>
+</div>
+<div class="clearfix right- border-">
+<div class="r-deadline-block">
+<div class="sc-time-">
+<p>
+Окончание акции:
+<br>
+    {% if not instance.active %}
+<span>уже закончилась</span>
+    {% else %}
+    <span>{{ instance.end_date.day }}-{{ instance.end_date.month }}-{{ instance.end_date.year }}</span>
+    {% endif %}
+</p>
+</div>
+</div>
+<div class="fr">
+</div>
+</div>
+<div class="right- sc-company-card">
+<p>
+<span class="scc-title">Организатор:</span>
+<span class="scc-name">Trapeza</span>
+</p>
+<p>
+<span class="scc-title">Телефон:</span>
+<span class="scc-name phone-">+7 (000) 000-00-00</span>
+</p>
+<p>
+</p>
+</div>
+<div class="card showcase-ribbon-wrapper">
+<div class="showcase-ribbon clearfix">
+<div class="right-block">
+    {% if instance.type %}
+{{ instance.type }}
+    {% else %}
+    Распродажа
+    {% endif %}
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+<div class="showcase-full-info company">
+<div class="sfi-content clearfix">
+<div class="so-description"><p>
+    {% if instance.text %}
+	{{ instance.text }}
+{% else %}
+Нет текста
+{% endif %}</p>
+</div>
+<div class="showcase-offer-period">
+Акция действует
+c {{ instance.start_date.day }}-{{ instance.start_date.month }}-{{ instance.start_date.year }} по {{ instance.end_date.day }}-{{ instance.end_date.month }}-{{ instance.end_date.year }}
+</div>
+
+
+
+
+
+
+
+
+    </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{#  </div>  #}
+{% block scrip %}
+<script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+<script>
+    function confirmDelete() {
+        if (confirm("Вы уверены, что хотите удалить меню?")) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
+{% include 'javascripts.html' %}
+{% endblock %}
