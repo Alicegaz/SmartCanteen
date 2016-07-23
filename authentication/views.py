@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import permission_required
 from blog.models import Schedule, Post
 from django.db.models import Q
 from common.json_warper import is_mobile,json_response
-
+from common.permission import have_permission
 
 def login(request):
     args = {}
@@ -75,31 +75,32 @@ def role_is_not_none(role, form):
         return False
 
 
-@permission_required('blog.can_add', raise_exception=True)
 def register(request):
     form = forms.NewUserForm()
     if request.POST:
         ensure_permissions()
         form = forms.NewUserForm(request.POST)
         role = request.POST.get('role')
-        if form.is_valid() and role_is_not_none(role, form):
+        if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = User.objects.create_user(username=username, password=password)
-            if role == 'is_admin' or role == 'is_cashier':
-                if role == 'is_admin':
-                    permission = Permission.objects.get(codename='can_add')
-                elif role == 'is_cashier':
-                    permission = Permission.objects.get(codename='can_edit_schedule')
-            else:
-                user.delete()
-                return redirect('no_permission')
-            e = UserProfile()
-            e.profile = user
-            e.author = request.user
-            e.save()
-            user.user_permissions.add(permission)
-            user.save()
+            if role is not None:
+                if have_permission(request, 'blog.can_add'):
+                    if role == 'is_admin' or role == 'is_cashier':
+                        if role == 'is_admin':
+                            permission = Permission.objects.get(codename='can_add')
+                        elif role == 'is_cashier':
+                            permission = Permission.objects.get(codename='can_edit_schedule')
+                    else:
+                        user.delete()
+                        return redirect('no_permission')
+                    e = UserProfile()
+                    e.profile = user
+                    e.author = request.user
+                    e.save()
+                    user.user_permissions.add(permission)
+                    user.save()
             return redirect('/')
     return render(request, 'register.html', {'form': form})
 
