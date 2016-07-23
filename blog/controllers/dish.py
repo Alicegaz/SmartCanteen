@@ -4,7 +4,6 @@ from common.blog_post_list import get_menu_of_current_time
 from blog.models import IngDishRelation, Ingredient, Post, Offers, DishAmount
 
 
-
 def delete_all_ingredients(dish):
     for ing_r in IngDishRelation.objects.filter(dish=dish):
         ing_r.delete()
@@ -149,11 +148,11 @@ def buy_dish_list(dish_list):
         for dish in dish_list:
             dish = Post.objects.get(id=dish)
             try:
-                dish_amount = DishAmount.objects.get(offer=offer,dish = dish)
+                dish_amount = DishAmount.objects.get(offer=offer, dish=dish)
             except:
                 dish_amount = None
             if dish_amount is None:
-                dish_amount = DishAmount.objects.create(offer=offer, dish=dish)
+                dish_amount = DishAmount.objects.create(offer=offer, dish=dish, price=dish.price)
             else:
                 dish_amount.amount += 1
             dish_amount.save()
@@ -172,7 +171,7 @@ def buy(request):
     elif contain_dishes(request):
         dish_list = request.POST.getlist('item')
         buy_dish_list(dish_list)
-        dish_list = [Post.objects.get(id=i) for i in dish_list ]
+        dish_list = [Post.objects.get(id=i) for i in dish_list]
         return dishes_price(dish_list), get_calories(dish_list)
     else:
         return False
