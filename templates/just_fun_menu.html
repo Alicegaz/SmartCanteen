@@ -68,9 +68,14 @@
                     {% if user.is_authenticated %}
 					<li>
 						<a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
-			</li>
+			          </li>
                     {% endif %}
-                    </ul>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{% url 'offers_list' %}"><i class="fa fa-folder-open"></i>Архив заказов</a>
+            </li>
 			{% comment %}<li class="float">
 				<a class="search">
 					<input type="text" value="search ...">
