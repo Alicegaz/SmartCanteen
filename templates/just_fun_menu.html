@@ -28,10 +28,10 @@
 			        </li>
                     {% if schedule %}
                     {% if user.is_authenticated %}
-
+                     <li><a href="{% url 'schedule_edit' pk=1 %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
 
                     {% else %}
-                    <li><a href="{% url 'schedule_edit' %}" pk=schedule.id><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    <li><a href="{% url 'schedule_for_user' %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
                     {% endif %}
                     {% else %}
                     <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-clock-o"></i>Режим работы</a></li>

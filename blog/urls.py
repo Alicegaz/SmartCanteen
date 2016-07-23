@@ -49,6 +49,9 @@ urlpatterns = [
     url(r'^contacts/$', views.contacts, name='contacts'),
     url(r'^contacts/new/$', views.new_contact, name='new_contact'),
     url(r'^contacts/(?P<pk>\d+)/edit/$', views.contact_edit, name='contact_edit'),
+    url(r'^contacts/(?P<pk>\d+)/remove/$', views.contacts_remove, name='contacts_remove'),
+
+    url(r'^schedule_for_user/$', views.schedule_for_user, name='schedule_for_user')
 ]
 
 if settings.DEBUG:

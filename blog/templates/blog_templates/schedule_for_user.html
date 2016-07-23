@@ -224,6 +224,9 @@ li {
     html, body, .page-container{
              height: 100% !important;
          }
+    .address > p{
+        padding-bottom: 10px;
+    }
     </style>
 
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
@@ -232,7 +235,7 @@ li {
 {% endblock %}
 {% block content %}
      <div class="smart-green">
-    <h1>Контактная информация
+    <h1>Режим работы
     <span></span>
     </h1>
     <div class="row carousel-holder">
@@ -240,42 +243,38 @@ li {
         <div class="col-md-12">
 <div class="one_empty kontora-empty-box empty-showcase clearfix">
 <div class="n-p sc-new">
-<a class="n-p-link" href="{% url 'new_contact' %}" title="Добавить адрес">
-Адрес
+    {% if schedule %}
+<a class="n-p-link" href="{% url 'schedule_edit' pk=schedule.pk %}" title="Добавить режим работы">
+Режим
 </a>
-</div>
+        {% else %}
+        <a class="n-p-link" href="{% url 'schedule_new' %}" title="Добавить режим работы">Режим</a>
+
+        {% endif %}
 <div class="n-h-p">
 <a class="gray-link" href="{% url 'new_contact' %}">Добавьте адрес</a>
 <p class="descr mt15 fs12 gray">
-	Расскажите о ваших адресах
+	Расскажите о режимах работы вашей сети
 
 </p>
 </div>
         </div>
         </div>
-    {% elif not shares_active %}
-    <div class="descr mt15 fs12 gray">
-            К сожалению, администратор пока не указал адреса сети.
-</div>
+    </div>
   {% endif %}
 
     </div>
     <div class="L">
-        {% for contact in contacts %}
 <div class="cb clearfix js-toggle" data-effect="fade">
 <div>
+    {% if schedule %}
 <h3>
-    {% if contact.office_name %}
-{{ contact.office_name }}
-    {% else %}
-    У офиса нет названия
-    {% endif %}
+
+    Режим работы сети
+
 <p>
-<a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contact_edit' pk=contact.pk %}" title="Редактировать офис">
+<a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'schedule_edit' pk=schedule.pk %}" title="Редактировать режим работы">
 Редактировать
-</a>
-<a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contacts_remove' pk=contact.pk %}" onclick="return confirmDelete();" title="Удалить">
-Удалить
 </a>
 </p>
 </h3>
@@ -283,24 +282,43 @@ li {
 <li class="pl0">
 </li>
 <li class="address">
-    г.{{contact.city  }}, ул.{{ contact.street }} , д.{{ contact.building }} &nbsp;
-Сеть &quot;Трапеза&quot;
+    <table>
+        <tbody>
+        <tr>
+            <th><span>Пн-пт:</span></th>
+            <td>{{ schedule.monfr1.hour }}:{{ schedule.monfr1.minute }}
+                                    - {{ schedule.monfr2.hour }}:{{ schedule.monfr2.minute }}</td>
+        </tr>
+         <tr>
+            <th><span>Сб-Вс:</span></th>
+            <td>{{ schedule.stsn1.hour }}:{{ schedule.stsn1.minute }}
+                                    - {{ schedule.stsn2.hour }}:{{ schedule.stsn2.minute }}</td>
+        </tr>
+         <tr>
+            <th><span>Завтрак: </span></th>
+            <td>{{ schedule.breakfast1.hour }}:{{ schedule.breakfast1.minute }}
+                                    - {{ schedule.breakfast2.hour }}:{{ schedule.breakfast2.minute }}</td>
+        </tr>
+         <tr>
+            <th><span>Обед: </span></th>
+            <td>{{ schedule.dinner1.hour }}:{{ schedule.dinner1.minute }}
+                                    - {{ schedule.dinner2.hour }}:{{ schedule.dinner2.minute }}</td>
+        </tr>
+         <tr>
+            <th><span>Ужин: </span></th>
+            <td>{{ schedule.supper1.hour }}:{{ schedule.supper1.minute }}
+                                    - {{ schedule.supper2.hour }}:{{ schedule.supper2.minute }}</td>
+        </tr>
+        </tbody>
+    </table>
 <br>
 </li>
-<li class="phone-">
-<span class="number-">{{ contact.phone_number }}</span>
-
-</li>
-
-<li class="link-site">
-<a href="" class="js-ga-company-site-link" rel="" target="_blank" title="{{ contact.email }}">{{ contact.email }}</a>
-</li>
 </ul>
+    {% endif %}
 
     </div>
             <br>
 <hr align="center" width="100%" color="grey" />
-{% endfor %}
     </div>
 {% endblock %}
 

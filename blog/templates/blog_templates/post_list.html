@@ -86,16 +86,9 @@ ul {
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
-                        {% if schedule.image %}
-                            <img src="/{{ schedule.image.url }}"
-                                                                                   height="300" width="800"
-                                                                                   float="left"/>
-                        {% else %}
                             <img class="slide-image" src="/media/carousel/693868_cut-photo.ru.jpg" alt="">
-                        {% endif %}
                         <div class="carousel-content">
                             {% if schedule %}
-                                <div class="text1">
                                 <h3>Режим работы</h3>
                                 <p>Пн-Пт:{{ schedule.monfr1.hour }}:{{ schedule.monfr1.minute }}
                                     - {{ schedule.monfr2.hour }}:{{ schedule.monfr2.minute }}</p>
@@ -107,7 +100,6 @@ ul {
                                     - {{ schedule.dinner2.hour }}:{{ schedule.dinner2.minute }}</p>
                                 <p>Ужин: {{ schedule.supper1.hour }}:{{ schedule.supper1.minute }}
                                     - {{ schedule.supper2.hour }}:{{ schedule.supper2.minute }}</p>
-                            </div>
                             {% endif %}
                         </div>
                         <div class="carousel-caption">

@@ -169,7 +169,7 @@ class SharesForm(forms.ModelForm):
 
     class Meta:
         model = Shares
-        fields = ('title', 'text','image', 'type', 'old_price', 'new_price', 'discount', 'start_date', 'end_date', 'carousel')
+        fields = ('title', 'text','image', 'type', 'old_price', 'new_price', 'text', 'discount', 'start_date', 'end_date', 'carousel')
         widgets = {
             'body': forms.Textarea(),
             'type': ChoiceField(choices=TYPE_CHOICES, widget=forms.Select()),
@@ -211,7 +211,7 @@ class ContactsForm(forms.ModelForm):
     class Meta:
         model = Contacts
         fields = (
-            'office_name', 'country', 'region', 'city', 'street', 'building', 'comment', 'created_date', 'phone_number', 'image', 'email',
+            'office_name', 'country', 'region', 'city', 'street', 'building', 'comment', 'phone_number', 'image', 'email',
         )
         widgets = {
             'body': forms.Textarea(),
