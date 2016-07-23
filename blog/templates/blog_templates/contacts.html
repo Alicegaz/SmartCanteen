@@ -2,7 +2,7 @@
 {% load staticfiles %}
 {% block css %}
     <style>
-        .load-image, .kontora-empty-box .n-p {
+           .load-image, .kontora-empty-box .n-p {
             float: left;
             border: 2px dashed #41b1d6;
             width: 98px;
@@ -11,19 +11,17 @@
             position: relative;
             display: table;
         }
-
-        .load-image .li-link, .load-image .n-p-link, .kontora-empty-box .n-p .li-link, .kontora-empty-box .n-p .n-p-link {
+            .load-image .li-link, .load-image .n-p-link, .kontora-empty-box .n-p .li-link, .kontora-empty-box .n-p .n-p-link {
             display: table-cell;
             vertical-align: middle;
             text-align: center;
             font-size: 20px;
-            color: #41b1d6 !important;
+            color: #41b1d6!important;
             text-transform: uppercase;
             text-decoration: none;
             line-height: 1.3;
         }
-
-        .load-image .li-link:before, .load-image .n-p-link:before, .kontora-empty-box .n-p .li-link:before, .kontora-empty-box .n-p .n-p-link:before {
+            .load-image .li-link:before, .load-image .n-p-link:before, .kontora-empty-box .n-p .li-link:before, .kontora-empty-box .n-p .n-p-link:before {
             content: '+';
             display: block;
             margin: 0 auto 7px;
@@ -31,326 +29,280 @@
             font-weight: bold;
             line-height: 1;
         }
-
-        div.page-container {
+            div.page-container {
             margin-top: 40px !important;
         }
-
-        .kontora-content a:link, .kontora-content a:visited {
+            .kontora-content a:link, .kontora-content a:visited {
             color: #ff5722;
         }
-
-        .kontora-empty-box .n-p .n-p-link {
+            .kontora-empty-box .n-p .n-p-link {
             display: table-cell;
             vertical-align: middle;
             text-align: center;
             font-size: 20px;
-            color: #41b1d6 !important;
+            color: #41b1d6!important;
             text-transform: uppercase;
             text-decoration: none;
             line-height: 1.3;
         }
-
-        .kontora-empty-box .n-p .n-p-link:hover {
-            color: #1f57a8 !important;
+            .kontora-empty-box .n-p .n-p-link:hover {
+            color: #1f57a8!important;
         }
-
-        .n-h-p {
-            padding-right: 25%;
-        }
-
-        a.gray-link {
-            margin-left: 10px;
-            font-size: 25px;
-        }
-
-        p.descr.mt15.fs12.gray {
-            margin-left: 108px;
-            margin-top: 24px;
-            font-size: 15px;
-
-        }
-
-        div.row.carousel-holder .col-md-12 {
-            padding-left: 30px;
-        }
-
-        .smart-green {
-            height: unset !important;
-        }
-
-        .del {
-            height: 30px;
-            padding-top: 13px;
-            padding-bottom: 13px;
-            text-align: center;
-        }
-
-        .del2 {
-            height: 30px;
-            padding-top: 12px;
-            padding-bottom: 13px;
-            text-align: center;
-        }
-
-        .cb {
+            .n-h-p{
+                padding-right: 25%;
+            }
+            a.gray-link{
+                margin-left: 10px;
+                font-size: 25px;
+            }
+            p.descr.mt15.fs12.gray{
+                margin-left: 108px;
+                margin-top: 24px;
+                font-size: 15px;
+            }
+            div.row.carousel-holder .col-md-12{
+                padding-left: 30px;
+            }
+            .del{
+                height:30px;
+                padding-top: 13px;
+                padding-bottom:13px;
+                text-align: center;
+            }
+            .del2{
+                height:30px;
+                padding-top: 12px;
+                padding-bottom: 13px;
+                text-align: center;
+            }
+            .cb {
             clear: both;
-            padding-top: 40px;
+                padding-top: 40px;
         }
-
-        .cb {
-            clear: both;
-        }
-
-        .cb.clearfix.js-toggle > h3 {
+            .cb {
+                clear: both;
+            }
+            .cb.clearfix.js-toggle > h3 {
             margin: 25px 0 15px;
             font-size: 115.38%;
             line-height: 120%;
         }
-
-        .control-link.edit- {
-            padding-left: 18px;
+            .control-link.edit- {
+            /*padding-left: 18px;*/
+                padding-left:0;
         }
-
-        .kontora-content ul.contacts {
+            .kontora-content ul.contacts {
             margin: 0 0 1em 25px;
         }
-
-        .kontora-content .contacts {
-            position: relative;
-            padding: 0;
-            margin: 0 0 1em 0 !important;
-        }
-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        .contacts li {
-            padding: 2px 0 2px 20px;
-            position: relative;
-        }
-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        .contacts li {
-            padding: 2px 0 2px 20px;
-            position: relative;
-        }
-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        .contacts li {
-            padding: 2px 0 2px 20px;
-            position: relative;
-        }
-
-        .kc-col-2 .number- {
-            font-weight: bold;
-        }
-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        .contacts .link-site {
-            overflow: hidden;
-        }
-
-        .contacts li {
-            padding: 2px 0 2px 20px;
-            position: relative;
-        }
-
-        .kontora-content {
-            margin: 0 0 25px;
-            line-height: 130%;
-            font-size: 12px;
-        }
-
-        body.blizko.type-2-skin.type-2_default
-        body.type-2-skin.type-2_default {
-            background: #fff;
-            color: #333;
-        }
-
-        body.type-2-skin {
-            background: #fbf6f0;
-            font-family: verdana;
-        }
-
-        .kontora-content ul.contacts {
-            margin: 0 0 1em 25px;
-        }
-
-        .kontora-content .contacts {
-            position: relative;
-            padding: 0;
-            margin: 0 0 1em 0 !important;
-        }
-
-        .kontora-content ul {
-            margin: 0 0 15px;
-        }
-
-        .contacts {
+            .kontora-content .contacts {
+                position: relative;
+                padding: 0;
+                margin: 0 0 1em 0!important;
+            }
+            .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+            }
+            .contacts li {
+                padding: 2px 0 2px 20px;
+                position: relative;
+            }
+                .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+            }
+            .contacts li {
+                padding: 2px 0 2px 20px;
+                position: relative;
+            }
+                .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+            }
+            .contacts li {
+                padding: 2px 0 2px 20px;
+                position: relative;
+            }
+            .kc-col-2 .number- {
+                font-weight: bold;
+            }
+            .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+            }
+            .contacts .link-site {
+                overflow: hidden;
+            }
+            .contacts li {
+                padding: 2px 0 2px 20px;
+                position: relative;
+            }
+                .kontora-content {
+                margin: 0 0 25px;
+                line-height: 130%;
+                font-size: 12px;
+            }
+            body.blizko.type-2-skin.type-2_default
+            body.type-2-skin.type-2_default {
+                background: #fff;
+                color: #333;
+            }
+            body.type-2-skin {
+                background: #fbf6f0;
+                font-family: verdana;
+            }
+            .kontora-content ul.contacts {
+                margin: 0 0 1em 25px;
+            }
+            .kontora-content .contacts {
+                position: relative;
+                padding: 0;
+                margin: 0 0 1em 0!important;
+            }
+            .kontora-content ul {
+                margin: 0 0 15px;
+            }
+            .contacts {
             list-style: none;
-        }
-
-        .kontora-content {
-            margin: 0 0 25px;
-            line-height: 130%;
-            font-size: 12px;
-        }
-
-        .control-link.edit- {
-            padding-left: 18px;
-        }
-
-        .control-link {
-            position: relative;
-            margin: 0 0 3px 5px;
-        }
-
-        .edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
-            display: inline-block;
-            vertical-align: middle;
-            font: normal 12px/14px Arial, sans-serif;
-            color: #00b5db !important;
-            text-decoration: none;
-            text-transform: none;
-            cursor: pointer;
-        }
-
-        .kontora-content .contacts {
-            position: relative;
-            padding: 0;
-            margin: 0 0 1em 0 !important;
-        }
-
-        .contacts li {
-            padding: 10px 0 2px 20px;
-            position: relative;
-        }
-
-        .pl0 {
-            padding-left: 0 !important;
-        }
-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        .contacts li {
-            padding: 2px 0 2px 20px;
-            position: relative;
-        }
-
-        li {
-            display: list-item;
-            text-align: -webkit-match-parent;
-        }
-
-        .cb.clearfix.js-toggle p, h3 {
-            margin: 0;
-            padding-left: 14px;
-        }
-
-        .kc-col-2 .number- {
-            font-weight: bold;
-        }
-
-        li.phone-
-        .type-2-skin .kontora-box .contacts li {
-            font-size: 12px;
-        }
-
-        html, body, .page-container {
-            height: 100% !important;
-        }
-
-        .smart-green {
-            height: auto !important;
-        }
+            }
+            .kontora-content {
+                margin: 0 0 25px;
+                line-height: 130%;
+                font-size: 12px;
+            }
+                .control-link.edit- {
+                padding-left: 0px;
+            }
+                .control-link {
+                position: relative;
+                margin: 0 0 3px 5px;
+            }
+            .edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
+                display: inline-block;
+                vertical-align: middle;
+                font: normal 12px/14px Arial,sans-serif;
+                color: #00b5db!important;
+                text-decoration: none;
+                text-transform: none;
+                cursor: pointer;
+            }
+                .kontora-content .contacts {
+                position: relative;
+                padding: 0;
+                margin: 0 0 1em 0!important;
+            }
+                .contacts li {
+                padding: 10px 0 2px 20px;
+                position: relative;
+            }
+            .pl0 {
+                padding-left: 0!important;
+            }
+                .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+            }
+            .contacts li {
+                padding: 2px 0 2px 20px;
+                position: relative;
+            }
+            li {
+                display: list-item;
+                text-align: -webkit-match-parent;
+            }
+                .cb.clearfix.js-toggle p, h3 {
+                margin: 0;
+                padding-left: 14px;
+            }
+                .kc-col-2 .number- {
+                font-weight: bold;
+            }
+             li.phone-
+            .type-2-skin .kontora-box .contacts li {
+                font-size: 12px;
+                }
+            html, body, .page-container{
+                     height: 100% !important;
+                 }
+            footer{
+                display: none;
+            }
     </style>
 
-    <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token"/>
-    <link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image"/>
-    <link href="http://lider-mobile.blizko.ru/sales" rel="canonical">
+<meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
+<link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image" />
+<link href="http://lider-mobile.blizko.ru/sales" rel="canonical">
 {% endblock %}
 {% block content %}
-    <div class="smart-green">
+     <div class="smart-green">
     <h1>Контактная информация
-        <span></span>
+    <span></span>
     </h1>
     <div class="row carousel-holder">
         {% if user.is_authenticated %}
-            <div class="col-md-12">
-                <div class="one_empty kontora-empty-box empty-showcase clearfix">
-                    <div class="n-p sc-new">
-                        <a class="n-p-link" href="{% url 'new_contact' %}" title="Добавить адрес">
-                            Адрес
-                        </a>
-                    </div>
-                    <div class="n-h-p">
-                        <a class="gray-link" href="{% url 'new_contact' %}">Добавьте адрес</a>
-                        <p class="descr mt15 fs12 gray">
-                            Расскажите о ваших адресах
+                <div class="col-md-12">
+                    <div class="one_empty kontora-empty-box empty-showcase clearfix">
+                        <div class="n-p sc-new">
+                            <a class="n-p-link" href="{% url 'new_contact' %}" title="Добавить адрес">
+                                Адрес
+                            </a>
+                        </div>
+                        <div class="n-h-p">
+                            <a class="gray-link" href="{% url 'new_contact' %}">Добавьте адрес</a>
+                            <p class="descr mt15 fs12 gray">
+                                Расскажите о ваших адресах
 
-                        </p>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
         {% elif not shares_active %}
             <div class="descr mt15 fs12 gray">
-                К сожалению, администратор пока не указал адреса сети.
+                    К сожалению, администратор пока не указал адреса сети.
             </div>
         {% endif %}
 
     </div>
     <div class="L">
-    {% for contact in contacts %}
-        <div class="cb clearfix js-toggle" data-effect="fade">
-        <div>
-            <h3>
-                {% if contact.office_name %}
-                    {{ contact.office_name }}
-                {% else %}
-                    У офиса нет названия
-                {% endif %}
-                <a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contact_edit' pk=contact.pk %}"
-                   title="Редактировать офис">
-                    Редактировать
-                </a>
-            </h3>
-            <ul class="contacts">
-                <li class="pl0">
-                </li>
-                <li class="address">
-{#                    г Альметьевск, ул. Бигаш, д. 125#}
-                    г.{{ contact.city }}, ул.{{ contact.street }} , д.{{ contact.building }} &nbsp;
-                    <br>
-                </li>
-                <li class="phone-">
-                    <span class="number-">{{ contact.phone_number }}</span>
+        {% for contact in contacts %}
+            <div class="cb clearfix js-toggle" data-effect="fade">
+                    <div>
+                    <h3>
+                        {% if contact.office_name %}
+                            {{ contact.office_name }}
+                                {% else %}
+                                У офиса нет названия
+                        {% endif %}
+                        <p>
+                            <a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contact_edit' pk=contact.pk %}" title="Редактировать офис">
+                              Редактировать
+                            </a>
+                            <a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contacts_remove' pk=contact.pk %}" onclick="return confirmDelete();" title="Удалить">
+                              Удалить
+                            </a>
+                        </p>
+                    </h3>
+                    <ul class="contacts">
+                        <li class="pl0">
+                        </li>
 
-                </li>
+                        <li class="address">
+                            г.{{contact.city  }}, ул.{{ contact.street }} , д.{{ contact.building }} &nbsp;
+                            Сеть &quot;Трапеза&quot;
+                            <br>
+                        </li>
+                        <li class="phone-">
+                            <span class="number-">{{ contact.phone_number }}</span>
 
-                <li class="link-site">
-                    <a href="" class="js-ga-company-site-link" rel="" target="_blank"
-                       title="{{ contact.email }}">{{ contact.email }}</a>
-                </li>
-            </ul>
+                        </li>
 
-        </div>
-        <br>
-        <hr align="center" width="100%" color="grey"/>
-    {% endfor %}
-</div>
+                        <li class="link-site">
+                            <a href="" class="js-ga-company-site-link" rel="" target="_blank" title="{{ contact.email }}">{{ contact.email }}</a>
+                        </li>
+                    </ul>
+
+                        </div>
+            </div>
+                        <br>
+            <hr align="center" width="100%" color="grey" />
+{% endfor %}
+    </div>
+    </div>
 {% endblock %}
 
 
@@ -359,7 +311,7 @@
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
     <script type="text/javascript">
         function confirmDelete() {
-            if (confirm("Вы уверены, что хотите удалить акцию?")) {
+            if (confirm("Вы уверены, что хотите удалить адрес?")) {
                 return true;
             }
             else {
@@ -368,15 +320,15 @@
         }
     </script>
     {% include 'javascripts.html' %}
-    <script>
-        $(function () {
-            $(window).scroll(function () {
-                var top = $(document).scrollTop();
-                if (top < 100) $(".floating").css({top: '0', position: 'relative'});
-                else $(".floating").css({top: '10px', position: 'fixed'});
-            });
-        });
-    </script>
+     <script>
+     $(function(){
+    $(window).scroll(function() {
+        var top = $(document).scrollTop();
+        if (top < 100) $(".floating").css({top: '0', position: 'relative'});
+        else $(".floating").css({top: '10px', position: 'fixed'});
+    });
+});
+     </script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
     </script>

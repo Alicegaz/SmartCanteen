@@ -2,56 +2,414 @@
 {% load staticfiles %}
 {% block css %}
     <style>
-        div.page-container{
-            padding-top: 20px;
-        }
+                div.page-container {
+                    padding-top: 8%;
+                }
+                .headline4{
+                    position: relative;
+                    width:60%;
+                    color: lightseagreen;
+                    font-size: xx-large;
+                    font-family: Sans-Serif;
+                    padding-left:30%;
+
+            }
+                .content{
+                    margin-left:0;
+                margin-right:auto;
+                top:7%;
+                max-width: 90%;
+                background: #F8F8F8;
+                padding: 30px 30px 20px 30px;
+                font: 12px Arial, Helvetica, sans-serif;
+                color: #666;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                }
+             li#menu {
+                    width: 200px;
+                    min-height: 150px;
+                    border: 1px solid #f8f8f8 !important;
+                    display: -moz-inline-stack;
+                    display: inline-block;
+                    vertical-align: top;
+                    margin: 5px;
+                    zoom: 1;
+                    *display: inline;
+                    _height: 150px;
+                }
+                .smart-green{
+                    margin-top:-11.8%;
+                }
+                .col-xs-12.col-sm-6.col-md-4.col-l{
+                    border-top: unset !important;
+                    border: unset !important;
+                }
+                .glyphicon.glyphicon-plus-sign {
+                    color: #77DD77 !important;
+                }
+                .del{
+                    min-height: 45px;
+              position: relative;
+              overflow: hidden;
+                }
+                .product-page .pp-images {
+                float: left;
+                width: 250px;
+                margin: 0 25px 15px 9px;
+                position: relative;
+            }
+            .product-page .pp-images {
+                float: left;
+                width: 240px;
+                margin: 0 30px 15px 15px;
+                position: relative;
+            }
+
+            div {
+                display: block;
+            }
+             div.product-page.clearfix
+            .product-page {
+                font-size: 12px;
+                line-height: 1.4;
+            }
+                .product-page .pp-short {
+                overflow: hidden;
+                margin: 0;
+                padding-bottom: 10px;
+            }
+                .product-page h2 {
+                font: bold 13px Verdana;
+                margin: 8px 0 5px;
+            }
+                .product-page .pp-short .pp-buttons .ppb-row {
+                display: table-row;
+            }
+            .product-page .pp-short .pp-buttons .ppbr-cell {
+                display: table-cell;
+                min-width: 190px;
+                padding-right: 15px;
+            }
+                .product-page .pp-short .price- {
+                margin: 0 0 8px;
+            }
+            .product-page .pp-short .price, .product-page .pp-short .price- {
+                margin: 0 20px 8px 0;
+                font-size: 12px;
+                position: relative;
+                display: inline-block;
+                font-weight: normal;
+                color: #000;
+                line-height: 1;
+            }
+
+                .product-page .pp-short .price .bp-price-cover, .product-page .pp-short .price- .bp-price-cover {
+                color: #000;
+                display: block;
+                word-break: break-all;
+                overflow: hidden;
+            }
+             p.price-
+            .product-page .pp-short .price, .product-page .pp-short .price- {
+                margin: 0 20px 8px 0;
+                font-size: 12px;
+                position: relative;
+                display: inline-block;
+                font-weight: normal;
+                color: #000;
+                line-height: 1;
+            }
+
+                .product-page .pp-short .price .bp-price, .product-page .pp-short .price- .bp-price {
+                font-size: 30px;
+                position: relative;
+                font-weight: normal;
+                line-height: 1;
+            }
+            .product-page .pp-short .price b, .product-page .pp-short .price .bp-price, .product-page .pp-short .price- b, .product-page .pp-short .price- .bp-price {
+                font-size: 30px;
+                position: relative;
+                font-weight: normal;
+                color: #000;
+                line-height: 1;
+            }
+                i.bp-price.fsn{
+                    font-size: 30px;
+                    font-weight: normal;
+                }
+
+                .pp-buttons{
+                    padding: 10px 10px 10px 10px;
+                }
+                .type-2_default .kc-col-2 .kontora-box .head-, .type-2_default .kc-col-2-3 .kontora-box .head-, .type-2_default .kc-col-3 .kontora-catalogue a:link, .type-2_default .kc-col-3 .kontora-catalogue a:visited, .type-2_default .kc-col-1 .kontora-box a, .type-2_default .kc-col-3 .kontora-box a:link, .type-2_default .kc-col-3 .kontora-box a:visited {
+                color: #000;
+            }
+            .type-2-skin .kc-col-2 .yd-box .head-, .type-2-skin .kc-col-2-3 .yd-box .head-, .type-2-skin .kc-col-2 .kontora-box .head-, .type-2-skin .kc-col-2-3 .kontora-box .head- {
+                margin: -10px -10px 10px;
+                padding: 3px 10px;
+                font: italic 17px georgia;
+                border-bottom: 1px solid #c7c7c7;
+            }
+                .kc-col-2-3 .kontora-box .head-, .type-2_default .kc-col-3 .kontora-catalogue a:link, .type-2_default .kc-col-3 .kontora-catalogue a:visited, .type-2_default .kc-col-1 .kontora-box a, .type-2_default .kc-col-3 .kontora-box a:link, .type-2_default .kc-col-3 .kontora-box a:visited {
+                color: #000;
+            }
+            .type-2-skin .kc-col-2 .yd-box .head-, .type-2-skin .kc-col-2-3 .yd-box .head-, .type-2-skin .kc-col-2 .kontora-box .head-, .type-2-skin .kc-col-2-3 .kontora-box .head- {
+                margin: -10px -10px 10px;
+                padding: 3px 10px;
+                font: italic 17px georgia;
+                border-bottom: 1px solid #c7c7c7;
+            }
+                .control-link.edit- {
+                padding-left: 18px;
+            }
+            a, a:link, a:visited {
+                outline: 0;
+            }
+            a:visited {
+                color: #606;
+            }
+            a:link {
+                color: #1f57a8;
+            }
+            .control-link {
+                position: relative;
+                margin: 0 0 3px 5px;
+            }
+            .edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
+                display: inline-block;
+                vertical-align: middle;
+                font: normal 12px/14px Arial,sans-serif;
+                color: #00b5db!important;
+                text-decoration: none;
+                text-transform: none;
+                cursor: pointer;
+            }
+
+            .control-link.copy- {
+                padding-left: 18px;
+            }
+
+            a, a:link, a:visited {
+                outline: 0;
+            }
+            a:visited {
+                color: #606;
+            }
+            a:link {
+                color: #1f57a8;
+            }
+            .control-link {
+                position: relative;
+                margin: 0 0 3px 5px;
+            }
+            .edit-icons, .copy-icons, .control-link, .edit-rubric-icon {
+                display: inline-block;
+                vertical-align: middle;
+                font: normal 12px/14px Arial,sans-serif;
+                color: #00b5db!important;
+                text-decoration: none;
+                text-transform: none;
+                cursor: pointer;
+            }
+            a:-webkit-any-link {
+                color: -webkit-link;
+                cursor: auto;
+            }
+             div.card-edit-tools
+            .card-edit-tools {
+                width: 330px;
+                float: right;
+                text-align: right;
+            }
+                .card-edit-tools {
+                width: 330px;
+                float: right;
+                text-align: right;
+            }
+                .show-header {
+                font-weight: normal;
+                font-size: 20px;
+                line-height: 1;
+                margin: 9px 0 10px;
+                padding-left: 13px;
+                background: url(http://stblizko.ru/assets/images_2_4/header_marker-997520372e6fcacea7650ed23f1c1e75.png) 0 3px no-repeat;
+            }
+                td, th {
+                padding: 6px;
+            }
+                .pp-other {
+                clear: left;
+                margin: 0 0 15px;
+            }
+                .mb15 {
+                    margin-bottom: 15px!important;
+                }
+
+                div {
+                    display: block;
+                }
+                div.kontora-box.product-page
+                .product-page {
+                    font-size: 12px;
+                    line-height: 1.4;
+                }
+                .post#m{
+                    background-color: #F8F8F8;
+                    box-shadow: none;
+                }
+                html, body{
+                             height: 100% !important;
+                         }
+                .smart-green{
+                    height:100% !important;
+                }
+                .page-container{
+                    height:unset !important;
+                }
     </style>
-    <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+<link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet"/>
 {% endblock %}
 {% block content %}
-{#  <div class="col-md-8"> #}
     <div class="smart-green">
-        {# <a href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon-pencil"></span></a> #}
-        {# <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a><a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a> #}
-        <h1>{{ instance.title }} <a href="{% url 'post_edit' pk=instance.pk %}"><span
-                class="glyphicon glyphicon-pencil"></span></a></h1>
-        </h1>
-        {% if instance.image %}
-            <img src="/{{ instance.image.url }}" height="200" width="250" float="left"/>
-            {% else %}
-            <a href="{% url 'post_detail' pk=instance.pk %}"><img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/></a>
+    <h1>Список блюд
+    <span>список доступных блюд</span>
+    </h1>
+    <h2 class="head-">
+        {% if user.is_authenticated %}
+        <div class="card-edit-tools">
+        <a class="control-link edit-" href="{% url 'post_edit' pk=instance.pk %}" title="Редактировать товар">Редактировать</a>
+            <a class="control-link copy-" href="{% url 'post_remove' pk=instance.pk %}" title="Удалить товар">Удалить товар</a>
+            </div>
         {% endif %}
+    {% if instance.title %}
+    {{ instance.title }}
+        {% else %}
+        Нет названия
+    {% endif %}
+    </h2>
+    {% comment %}<div>{% endcomment %}
+           <div class="pp-images">
+                <div id="image-{{ instance.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                    <div class="post">
 
-        <p>price: {{ instance.price }}</p>
-        <p>калории: {{ instance.calories }}</p>
-        {% if ingredients %}
-            <ul>
-                {% for ingredient in ingredients %}
-                    <li>{{ ingredient.ingredient }}  {{ ingredient.amount }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        {{ instance.text|linebreaks }}
+                        <div class="post-top">
+                            {% if instance.image %}
+                                <img src="/{{ instance.image.url }}" height="200" width="250" float="left"/>
+                            {% else %}
+                                <a href="{% url 'post_detail' pk=instance.pk %}">
+                                    <img src="/media/carousel/710530243_51033_5546561749228341723.jpg" height="200" width="250" float="left"/>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <div class="pp-short">
+            <div id="image-{{ post.id }}" class="col-xs-12 col-sm-6 col-md-4 col-l">
+                <div class="post" id="m">
+      <h2>Цена:
+        </h2>
+                    <div class="pp-buttons">
+                        <div class="ppb-row">
+                            <div class="ppbr-cell">
+                                <p class="price-">
+        <span class="pb-price-cover">
+        <i class="bp-price fsn" itemprop="price">{{ instance.price }}</i>
+        "руб./шт."
+            </span>
+    </p>
     </div>
+    </div>
+    </div>
+
+        </div>
+
+        </div>
+    </div>
+
+
+    <div class="pp-other mb15">
+        <div id="image-{{ instance.id }}" class="col-xs-12 col-sm-6 col col-md-4 col-l">
+        <div class="post" id="m">
+<div class="show-header">Описание товара</div>
+            <table>
+                <tbody>
+                {% if instance.calories %}
+                <tr>
+                    <th><span>калории</span></th>
+                    <td>{{ instance.calories }}</td>
+                </tr>
+                {% endif %}
+                {% if instance.text %}
+                <tr>
+                    <th><span>описание</span></th>
+                    <td>{{ instance.text }}</td>
+                </tr>
+                {% endif %}
+                {% if instance.type %}
+                <tr>
+                    <th><span>Тип</span></th>
+                    <td>{{ instance.type }}</td>
+                </tr>
+                {% endif %}
+                {% if ingredients %}
+                    <tr>
+                        <th><span>Ингредиенты</span></th>
+                        <td>
+                            <ul>
+                                {% for ingredient in ingredients %}
+                                    <li>{{ ingredient.ingredient }}  {{ ingredient.amount }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+
+
+
+    </p>
+    </div>
+    <div class="menu"><a href="{% url 'post_new' %}">
+           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+{% endblock %}
+{% block scrip %}
+    <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+    <script type="text/javascript">
+        function confirmDelete() {
+            if (confirm("Вы уверены, что хотите удалить блюдо?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+    {% include 'javascripts.html' %}
+     <script>
+     $(function(){
+    $(window).scroll(function() {
+        var top = $(document).scrollTop();
+        if (top < 100) $(".floating").css({top: '0', position: 'relative'});
+        else $(".floating").css({top: '10px', position: 'fixed'});
+    });
+});
+     </script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
 {% endblock %}
 
-{#  </div>  #}
-{% block scrip %}
-<script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
-<script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-<script>
-    function confirmDelete() {
-        if (confirm("Вы уверены, что хотите удалить меню?")) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-</script>
-<script>
-    new gnMenu(document.getElementById('gn-menu'));
-</script>
-{% include 'javascripts.html' %}
-{% endblock %}
 

@@ -2,19 +2,19 @@
 {% load staticfiles %}
 {% block css %}
     <style>
-    div.page-container{
-        padding-top: 20px;
-    }
-     .smart-green input[type=text], .smart-green input[type=password], select{
-          width:90% !important;
-      }
-    html, body, .page-container{
+        div.page-container{
+            padding-top: 20px;
+        }
+         .smart-green input[type=text], .smart-green input[type=password], select{
+             width:90% !important;
+          }
+         html, body, .page-container{
              height: 100%;
-         }
+             }
     </style>
 {% endblock %}
     {% block content %}
-            <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
+            <form role="form" method="post" action="{% url 'new_contact' %}" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
                       <h1>Редактирование адреса
                           <span>Пожалуста заполните все поля формы</span>
                       </h1>

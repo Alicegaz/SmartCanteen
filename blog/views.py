@@ -8,9 +8,10 @@ from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
 from blog.controllers.shares import create_shares, shares_edit as shares_change
-from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, buy_dish_list
-from blog.controllers.contacts import contact_edit as contact_сhange, create_contact
+from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
+from blog.controllers.contacts import contact_edit as contact_change, create_contact
 from blog.controllers.menu import create_menu, add_to_history
+from blog.controllers.schedule import schedule_edit as schedule_change
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
 from common.decorators import user_have_permission
@@ -96,7 +97,9 @@ def dish_remove(request, pk):
 def menu_out(request):
     menu = get_menu_of_current_time()
     shares = Shares.objects.all().filter(carousel=True)
-    data = {'posts': menu, 'shares': shares}
+    if Schedule.objects.all().get(pk=1):
+     schedule = Schedule.objects.all().get(pk=1)
+    data = {'posts': menu, 'shares': shares, 'schedule':schedule}
     if json(request):
         data.pop('shares')
         return json_response(menu)
@@ -189,7 +192,7 @@ def ingredient_edit(request, pk):
     if request.method == "POST":
         ingredient = ingredient_change(request, ingredient)
         if ingredient is not False:
-            return redirect('post_ingredientlist')
+            return redirect('blog.views.ingredient_list')
         else:
             return redirect('no_permission')
     else:
@@ -202,7 +205,7 @@ def new_ingredient(request):
     if request.method == 'POST':
         ingredient = create_ingredient(request)
         if ingredient is not False:
-            return redirect('post_ingredientlist')
+            return redirect('blog.views.ingredient_list')
         else:
             return redirect('no_permission')
     else:
@@ -214,7 +217,7 @@ def new_ingredient(request):
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
-    return redirect('blog.views.post_ingredientlist')
+    return redirect('blog.views.ingredient_list')
 
 
 # TODO создать страницу
@@ -262,11 +265,11 @@ def schedule_new(request):
 
 @permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_edit(request, pk):
-    post = get_object_or_404(Schedule, pk=pk)
+    post = get_object_or_404(Schedule, pk=1)
     if request.method == "POST":
         form = ScheduleForm(request.POST, instance=post)
         if form.is_valid():
-            form.save_object(request=request)
+            form.save()
             return redirect('/')
     else:
         form = ScheduleForm(instance=post)
@@ -307,7 +310,7 @@ def shares_new(request):
 @permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def shares_edit(request, pk):
     context = {}
-    share = get_object_or_404(Shares, pk=pk)
+    share = get_object_or_404(Shares, pk=1)
     if request.method == "POST":
         share = shares_change(request, share)
         if share is not False:
@@ -408,7 +411,7 @@ def contact_edit(request, pk):
     context = {}
     contact = get_object_or_404(Contacts, pk=pk)
     if request.method == "POST":
-        contact = contact_сhange(request, contact)
+        contact = contact_change(request, contact)
         if contact is not False:
             return redirect('contacts')
         else:
@@ -417,3 +420,28 @@ def contact_edit(request, pk):
         context['form'] = ContactsForm(instance=contact)
         context['posts'] = Contacts.objects.all()
     return render(request, "blog_templates/contact_edit.html", context)
+
+@permission_required('blog.can_add', raise_exception=True)
+def contacts_remove(request, pk):
+    post = get_object_or_404(Contacts, pk=pk)
+    post.delete()
+    return redirect('blog.views.contacts')
+
+def schedule_for_user(request):
+    if Schedule.objects.all().get(pk=1):
+     schedule = Schedule.objects.all().get(pk=1)
+    return render(request, "blog_templates/schedule_for_user.html", {'schedule': schedule})
+
+@permission_required('blog.can_add', raise_exception=True)
+def schedule_edit(request, pk):
+    context = {}
+    dish = get_object_or_404(Schedule, pk=pk)
+    if request.method == "POST":
+        dish = schedule_change(request, dish)
+        if dish is not False:
+            return redirect('blog.views.schedule_for_user')
+        else:
+            return redirect('no_permission')
+    else:
+        context['form'] = ScheduleForm(instance=dish)
+    return render(request, "blog_templates/schedule_edit.html", context)

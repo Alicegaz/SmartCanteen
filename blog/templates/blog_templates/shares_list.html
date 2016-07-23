@@ -66,9 +66,6 @@
         padding-left: 30px;
     }
 
-    .smart-green{
-        height:unset !important;
-    }
     .del{
         height:30px;
         padding-top: 13px;
@@ -137,7 +134,7 @@
                 </div>
 
                 <div class="post-content">
-                {% if shares.title %}
+                {% if share.title %}
                 <h3><a href="{% url 'shares_detail' pk=share.pk %}">{{ share.title }}</a> &nbsp; <a class="btn btn-default" href="{% url 'shares_edit' pk=share.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
                 </h3>
@@ -176,7 +173,7 @@
                 </div>
 
                 <div class="post-content">
-                {% if shares.title %}
+                {% if share.title %}
                 <h3><a href="{% url 'shares_detail' pk=share.pk %}">{{ share.title }}</a>
                 </h3>
                     {% else %}

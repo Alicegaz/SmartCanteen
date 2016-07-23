@@ -152,7 +152,8 @@ class Schedule(models.Model):
     date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return self.stsn1
+        strr = str(self.date)
+        return strr
 
 
 class Shares(models.Model):

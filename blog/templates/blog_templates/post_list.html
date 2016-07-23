@@ -2,76 +2,76 @@
 {% load staticfiles %}
 {% block css %}
     <style>
-    .carousel-caption1{
-        margin-left: 40%;
-    }
-    .carousel-content p{
-        font-size:1.3vw;
-        text-shadow: 1px 1px 2px black, 0 0 1em grey;
-    }
-    .carousel-content .date{
-        /*margin-top: -100px; */
-        font-size: 1.2vw;
-        /*margin-left: 60%;*/
-        text-shadow: 1px 1px 2px black, 0 0 4em grey;
-    }
-.carousel-content h3 {
-    z-index: 10;
-    /* padding-top: 20px; */
-    color: #ff5722;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
-    font-size: 3vw;
-}
-.carousel-content img{
-    max-width: 100%;
-    height: auto;
-}
-ul {
-    list-style: none;
-    padding-left: 0;
-}
-     li#menu {
-        width: 200px;
-        min-height: 250px;
-        border: 1px solid #eee;
-        display: -moz-inline-stack;
-        display: inline-block;
-        vertical-align: top;
-        margin: 5px;
-        zoom: 1;
-        *display: inline;
-        _height: 250px;
-    }
-    .text1{
-        width:40%;
-        left: 50%;
-        /*margin-left: 50%;*/
-        /*margin-bottom:20%;*/
-        margin-top: -43%;
-        position:absolute;
-    }
-    .item{
-        position:relative;
-    }
-    .imag{
-    max-width: 30%;
-    height: auto;
-    margin-left:6%;
-    margin-top: auto;
-    bottom: 20%;
-    margin-bottom: 20%;
-        position:static;
-}
-    .carousel-content{
-        height:80%;
-    }
-    .post-content{
-        height:120px;
-    }
-    .del{
-        height:20px;
-        text-align:center;
-    }
+        .carousel-caption1{
+            margin-left: 40%;
+        }
+        .carousel-content p{
+            font-size:1.3vw;
+            text-shadow: 1px 1px 2px black, 0 0 1em grey;
+        }
+        .carousel-content .date{
+            /*margin-top: -100px; */
+            font-size: 1.2vw;
+            /*margin-left: 60%;*/
+            text-shadow: 1px 1px 2px black, 0 0 4em grey;
+        }
+        .carousel-content h3 {
+            z-index: 10;
+            /* padding-top: 20px; */
+            color: #ff5722;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+            font-size: 3vw;
+        }
+        .carousel-content img{
+            max-width: 100%;
+            height: auto;
+        }
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+         li#menu {
+            width: 200px;
+            min-height: 250px;
+            border: 1px solid #eee;
+            display: -moz-inline-stack;
+            display: inline-block;
+            vertical-align: top;
+            margin: 5px;
+            zoom: 1;
+            *display: inline;
+            _height: 250px;
+        }
+        .text1{
+            width:40%;
+            left: 50%;
+            /*margin-left: 50%;*/
+            /*margin-bottom:20%;*/
+            margin-top: -43%;
+            position:absolute;
+        }
+        .item{
+            position:relative;
+        }
+        .imag{
+            max-width: 30%;
+            height: auto;
+            margin-left:6%;
+            margin-top: auto;
+            bottom: 20%;
+            margin-bottom: 20%;
+            position:static;
+        }
+        .carousel-content{
+            height:80%;
+        }
+        .post-content{
+            height:120px;
+        }
+        .del{
+            height:20px;
+            text-align:center;
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -86,16 +86,9 @@ ul {
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
-                        {% if schedule.image %}
-                            <img src="/{{ schedule.image.url }}"
-                                                                                   height="300" width="800"
-                                                                                   float="left"/>
-                        {% else %}
                             <img class="slide-image" src="/media/carousel/693868_cut-photo.ru.jpg" alt="">
-                        {% endif %}
                         <div class="carousel-content">
                             {% if schedule %}
-                                <div class="text1">
                                 <h3>Режим работы</h3>
                                 <p>Пн-Пт:{{ schedule.monfr1.hour }}:{{ schedule.monfr1.minute }}
                                     - {{ schedule.monfr2.hour }}:{{ schedule.monfr2.minute }}</p>
@@ -107,7 +100,6 @@ ul {
                                     - {{ schedule.dinner2.hour }}:{{ schedule.dinner2.minute }}</p>
                                 <p>Ужин: {{ schedule.supper1.hour }}:{{ schedule.supper1.minute }}
                                     - {{ schedule.supper2.hour }}:{{ schedule.supper2.minute }}</p>
-                            </div>
                             {% endif %}
                         </div>
                         <div class="carousel-caption">
