@@ -6,7 +6,6 @@ from common.request import get_image_from_request
 from blog.models import Shares, Contacts
 
 
-# TODO need roles
 def create_contact(request):
     user = have_permission(request)
     if user:
@@ -30,8 +29,6 @@ def create_contact(request):
         return contact.id
     else:
         return False
-
-        # TODO need roles
 
 
 def contact_edit(request, contact):

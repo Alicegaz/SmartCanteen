@@ -1,46 +1,50 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-{%  block css %}
+{% block css %}
 
-      <style>
-            div.page-container{
-                padding-top: 80px !important;
-                padding-left: 15%;
-            }
-      .smart-green input[type=text], .smart-green input[type=password], select{
-          width:90% !important;
-      }
-      .smart-green{
-          max-width: 70%;
-      }
-        </style>
+    <style>
+        div.page-container {
+            padding-top: 80px !important;
+            padding-left: 15%;
+        }
+
+        .smart-green input[type=text], .smart-green input[type=password], select {
+            width: 90% !important;
+        }
+
+        .smart-green {
+            max-width: 70%;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
     <form method="post" class="smart-green">
-    <h1>Добавление нового пользователя
-    <span>зарегистрируйте нового сотрудника</span>
-    </h1>
-    <p>
-        <label>
-        <label for="username">Имя пользователя</label>
-            {{form.username  }}
-    </label>
-        <label>
-            <label for="password">Пароль</label>
-            {{form.password  }}
-        </label>
-        <label>
-            <input type="radio" name="role" value="is_admin" /> Администратор
-            <input type="radio" name="role" value="is_cashier" /> Кассир
-        </label>
-        <label>
-            <span>&nbsp;</span>
-            <button type="submit" class="button">Отправить</button>
-        </label>
-    </p>
+        <h1>Добавление нового пользователя
+            <span>зарегистрируйте нового сотрудника</span>
+        </h1>
+        <p>
+            <label>
+                <label for="username">Имя пользователя</label>
+                {{ form.username.errors}}
+                {{ form.username }}
+            </label>
+            <label>
+                <label for="password">Пароль</label>
+                {{ form.password.errors }}
+                {{ form.password }}
+            </label>
+            <label>
+                <input type="radio" name="role" value="is_admin"/> Администратор
+                <input type="radio" name="role" value="is_cashier"/> Кассир
+            </label>
+            <label>
+                <span>&nbsp;</span>
+                <button type="submit" class="button">Отправить</button>
+            </label>
+        </p>
     </form>
 {% endblock %}
 {% block scrip %}
-     {%  include 'javascripts.html' %}
+    {% include 'javascripts.html' %}
 {% endblock %}

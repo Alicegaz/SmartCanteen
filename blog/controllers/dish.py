@@ -1,8 +1,7 @@
 from common.permission import have_permission
 from common.request import get_image_from_request
 from common.blog_post_list import get_menu_of_current_time
-from blog.models import IngDishRelation, Ingredient, Post, Offers
-
+from blog.models import IngDishRelation, Ingredient, Post, Offers, DishAmount
 
 
 def delete_all_ingredients(dish):
@@ -75,7 +74,6 @@ def create_dish(request):
         try:
             if image:
                 dish.image = image
-
         except AttributeError:
             pass
         dish.save()
@@ -95,7 +93,7 @@ def get_dishes_list(request):
 def is_in_menu(dish_list):
     menu = get_menu_of_current_time()
     for item in dish_list:
-        if not menu.items.exists(item):
+        if item in menu.items.all():
             return False
     return True
 
@@ -123,25 +121,41 @@ def get_calories(dish_list):
 
 def contain_offer(request):
     try:
-        request.POST.get('offer')
+        s = request.POST.get('offer')
+        if s is None:
+            return False
+        else:
+            return True
     except:
         return False
-    return True
 
 
 def contain_dishes(request):
     try:
-        request.POST.getlist('dish')
+        s = request.POST.get('item')
+        if s is None:
+            return False
+        else:
+            return True
     except:
         return False
-    return True
 
 
 def buy_dish_list(dish_list):
     if is_in_menu(dish_list):
         offer = Offers(menu=get_menu_of_current_time())
+        offer.save()
         for dish in dish_list:
-            offer.items.add(Post.objects.get(id=dish))
+            dish = Post.objects.get(id=dish)
+            try:
+                dish_amount = DishAmount.objects.get(offer=offer, dish=dish)
+            except:
+                dish_amount = None
+            if dish_amount is None:
+                dish_amount = DishAmount.objects.create(offer=offer, dish=dish, price=dish.price)
+            else:
+                dish_amount.amount += 1
+            dish_amount.save()
         offer.save()
         return True
     else:
@@ -155,8 +169,9 @@ def buy(request):
         add_to_history(offer)
         return dishes_price(offer.items.all()), get_calories(offer.items.all())
     elif contain_dishes(request):
-        dish_list = request.POST.getlist('dish')
+        dish_list = request.POST.getlist('item')
         buy_dish_list(dish_list)
+        dish_list = [Post.objects.get(id=i) for i in dish_list]
         return dishes_price(dish_list), get_calories(dish_list)
     else:
         return False

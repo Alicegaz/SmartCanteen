@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table>
+        <tr>
+            <td>Дата</td>
+            <td>Цена</td>
+        </tr>
+        {% for offer in offers %}
+            <tr>
+
+                    <td><a href={% url 'offer_detail' pk=offer.offer.id %}>{{ offer.offer.date}}</a></td>
+                    <td>{{ offer.price }}</td>
+
+            </tr>
+        {% endfor %}
+
+    </table>
+{% endblock %}

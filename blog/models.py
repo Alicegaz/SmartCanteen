@@ -59,6 +59,7 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
     type = models.CharField(max_length=50, verbose_name='Тип ', default='First', choices=TYPE_CHOICES)
+    status = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -191,11 +192,26 @@ class Shares(models.Model):
             return True
         return False
 
+
 class Offers(models.Model):
     date = models.DateField(default=timezone.now)
-    items = models.ManyToManyField(Post)
     menu = models.ForeignKey(Menu)
     status = models.BooleanField(default=False)
+
+    def get_dish_list(self):
+        result = []
+        dish_amount_list = DishAmount.objects.filter(offer=self)
+        for dish_amount in dish_amount_list:
+            result.append(dish_amount)
+        return result
+
+
+class DishAmount(models.Model):
+    dish = models.ForeignKey(Post)
+    amount = models.IntegerField(default=1)
+    offer = models.ForeignKey(Offers)
+    price = models.IntegerField(default=0)
+
 
 class Contacts(models.Model):
     author = models.ForeignKey('auth.User')

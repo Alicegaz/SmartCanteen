@@ -1,13 +1,12 @@
 from blog.forms import SharesForm, ContactsForm
 from blog.models import Shares, Contacts
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
-from blog.models import Post, Ingredient, Menu, Schedule, History
+from blog.models import Post, Ingredient, Menu, Schedule, History, Offers
 from django.shortcuts import get_object_or_404, HttpResponse
 from django.contrib import auth
 from common.json_warper import json, json_response
 from common.blog_post_list import get_menu_of_current_time
 from django.shortcuts import redirect, render
-from blog.controllers.dish import dish_edit as dish_change, create_dish
 from blog.controllers.shares import create_shares, shares_edit as shares_change
 from blog.controllers.dish import dish_edit as dish_change, create_dish, buy, is_in_menu, buy_dish_list
 from blog.controllers.contacts import contact_edit as contact_change, create_contact
@@ -15,15 +14,13 @@ from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.schedule import schedule_edit as schedule_change
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from django.contrib.auth.decorators import permission_required
-from datetime import date
 from common.decorators import user_have_permission
-import datetime
 import pytz
-from django.db.models import F
-utc=pytz.UTC
+utc = pytz.UTC
+
 
 def dishes_list(request):
-    dishes = Post.objects.all().order_by('created_date')
+    dishes = Post.objects.all().order_by('created_date').filter(status=True)
     data = {'posts': dishes}
     if json(request):
         return json_response(dishes)
@@ -92,8 +89,9 @@ def new_dish(request):
 @permission_required('blog.can_add', raise_exception=True)
 def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    post.delete()
-    return redirect('blog.views.dishes_list')
+    post.status = False
+    post.save()
+    return redirect('dishes_list')
 
 
 def menu_out(request):
@@ -103,7 +101,6 @@ def menu_out(request):
      schedule = Schedule.objects.all().get(pk=1)
     data = {'posts': menu, 'shares': shares, 'schedule':schedule}
     if json(request):
-        #must be merge bug
         data.pop('shares')
         return json_response(menu)
     else:
@@ -279,20 +276,14 @@ def schedule_edit(request, pk):
     return render(request, "blog_templates/schedule_edit.html", {'form': form})
 
 
-
 def shares_list(request):
     shares = Shares.objects.all().order_by('created_date')
     data = {'shares': shares}
     try:
-        #filter active shares
-        #shares_active= Shares.objects.all().filter(end_date__range = [timezone.now(), utc.localize(datetime.datetime(F('end_date.year')))])
-        #shares_active = Shares.objects.all().raw('SELECT * FROM blog_shares WHERE timezone.now()<=end_date AND timezone.now()>=start_date')
-        shares_active=[]
+        shares_active = []
         for sh in Shares.objects.all():
             if sh.is_past_due():
                 shares_active.append(sh)
-
-
         data = {'shares': shares, 'shares_active': shares_active}
     except Exception:
         pass
@@ -302,7 +293,7 @@ def shares_list(request):
         return render(request, 'blog_templates/shares_list.html', data)
 
 
-@permission_required('blog.can_add','blog.can_edit_schedule', raise_exception=True)
+@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def shares_new(request):
     context = {}
     if request.method == 'POST':
@@ -348,6 +339,42 @@ def send_offer(request):
     else:
         return HttpResponse("There is no such dishes in menu", status=400)
 
+
+@permission_required('blog.can_add', raise_exception=True)
+def get_offers(request):
+    offers = Offers.objects.all()
+
+    class OfferPrice:
+        offer = None
+        price = None
+    result = []
+    for offer in offers:
+        price = 0
+        dishes = offer.get_dish_list()
+        for dish in dishes:
+            price += dish.price * dish.amount
+        obj = OfferPrice()
+        obj.offer = offer
+        obj.price = price
+        result.append(obj)
+    return render(request, "blog_templates/offers.html", {'offers': result})
+
+
+@permission_required('blog.can_add', raise_exception=True)
+def offer_detail(request, pk=None):
+    offer = Offers.objects.get(id=pk)
+    dish_list = offer.get_dish_list()
+    price = 0
+    for dish in dish_list:
+        price += dish.price*dish.amount
+    context = {
+        'offer': offer,
+        'dishes': dish_list,
+        'price': price,
+    }
+    return render(request,"blog_templates/offer_detail.html", context)
+
+
 def shares_detail(request, pk=None):
     share = get_object_or_404(Shares, pk=pk)
     active=share.is_past_due()
@@ -358,6 +385,7 @@ def shares_detail(request, pk=None):
     if json(request):
         return json_response(context)
     return render(request, 'blog_templates/shares_detail.html', context)
+
 
 def contacts(request):
     contacts = Contacts.objects.all()
@@ -377,18 +405,19 @@ def new_contact(request):
         context['form'] = ContactsForm()
     return render(request, 'blog_templates/contacts_form.html', context)
 
+
 @permission_required('blog.can_add', raise_exception=True)
 def contact_edit(request, pk):
     context = {}
-    dish = get_object_or_404(Contacts, pk=pk)
+    contact = get_object_or_404(Contacts, pk=pk)
     if request.method == "POST":
-        dish = contact_change(request, dish)
-        if dish is not False:
+        contact = contact_change(request, contact)
+        if contact is not False:
             return redirect('contacts')
         else:
             return redirect('no_permission')
     else:
-        context['form'] = ContactsForm(instance=dish)
+        context['form'] = ContactsForm(instance=contact)
         context['posts'] = Contacts.objects.all()
     return render(request, "blog_templates/contact_edit.html", context)
 

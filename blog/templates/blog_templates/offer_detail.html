@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{%  block content %}
+    {{ offer.date }}
+    {{ offer.menu.title }}
+    <table>
+        <tr>
+            <td>Блюдо</td>
+            <td>Цена</td>
+            <td>Количество</td>
+        </tr>
+        {% for dish in dishes %}
+            <tr>
+                <td>{{ dish.dish}}</td>
+                <td>{{ dish.price}}</td>
+                <td>{{  dish.amount }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

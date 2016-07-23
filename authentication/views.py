@@ -67,16 +67,24 @@ def ensure_permissions():
         pass
 
 
+def role_is_not_none(role, form):
+    if role is not None:
+        return True
+    else:
+        form.add_error('password', 'Укажите роль')
+        return False
+
+
 @permission_required('blog.can_add', raise_exception=True)
 def register(request):
     form = forms.NewUserForm()
     if request.POST:
         ensure_permissions()
         form = forms.NewUserForm(request.POST)
-        if form.is_valid():
+        role = request.POST.get('role')
+        if form.is_valid() and role_is_not_none(role, form):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            role = request.POST.get('role')
             user = User.objects.create_user(username=username, password=password)
             if role == 'is_admin' or role == 'is_cashier':
                 if role == 'is_admin':
@@ -84,7 +92,8 @@ def register(request):
                 elif role == 'is_cashier':
                     permission = Permission.objects.get(codename='can_edit_schedule')
             else:
-                return redirect('/auth/no_permision')
+                user.delete()
+                return redirect('no_permission')
             e = UserProfile()
             e.profile = user
             e.author = request.user

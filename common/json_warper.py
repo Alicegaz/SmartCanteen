@@ -48,6 +48,8 @@ def generate_json(data):
         return result
     elif isinstance(data, str):
         return str(data)
+    elif isinstance(data, int):
+        return int(data)
     elif hasattr(data, 'get_json_object'):
         return data.get_json_object()
     elif hasattr(data, '__iter__'):
