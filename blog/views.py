@@ -372,7 +372,7 @@ def offer_detail(request, pk=None):
         'dishes': dish_list,
         'price': price,
     }
-    return render(request,"blog_templates/offer_detail.html", context)
+    return render(request, "blog_templates/offer_detail.html", context)
 
 
 def shares_detail(request, pk=None):

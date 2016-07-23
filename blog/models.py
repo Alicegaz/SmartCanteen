@@ -148,7 +148,7 @@ class Schedule(models.Model):
     dinner2 = models.DateTimeField(auto_now=True, null=True)
     breakfast2 = models.DateTimeField(auto_now=True, null=True)
     supper2 = models.DateTimeField(auto_now=True, null=True)
-    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='фон')
+    image = models.FileField(null=True, upload_to='images/schedule', verbose_name='фон')
     date = models.DateField(default=timezone.now)
 
     def __str__(self):
@@ -171,7 +171,7 @@ class Shares(models.Model):
                                 MinValueValidator(1)
                             ], verbose_name='скидка')
     created_date = models.DateTimeField(default=timezone.now)
-    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
+    image = models.FileField(null=True, upload_to='images/shares', verbose_name='изображение блюда')
     carousel = models.BooleanField(default=True)
 
     def __str__(self):
@@ -223,7 +223,7 @@ class Contacts(models.Model):
     building = models.IntegerField(null=True, default=0)
     comment = models.TextField(verbose_name='Комментарий к адресу')
     created_date = models.DateTimeField(default=timezone.now)
-    image = models.FileField(null=True, upload_to='images/dishes', verbose_name='изображение блюда')
+    image = models.FileField(null=True, upload_to='images/contacts', verbose_name='изображение блюда')
 
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
