@@ -8,11 +8,14 @@
         .smart-green{
             height:auto !important;
         }
+    .block1{
+        display: none;
+    }
     </style>
 {% endblock %}
     {% block content %}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
-                      <h1>Изменить блюдо
+                      <h1>Создать новое блюдо
                           <span>Пожалуста заполните все поля формы</span>
                       </h1>
             <p>
@@ -65,9 +68,9 @@
                         <div class="form-group" id="quant">
                             <label for="quantity">Ингредиенты</label>
                                 {% for p in posts %}
-                                    <div class="block1">
-                                    <input type="number" class="form-group" name="quantity" id="{{p.id}}" value="0" style="display:none !important;" placeholder="{{ p.name }}">
-                                    <p class="help-block" style="display:none !important;">{{ p.name }}</p>
+                                    <div class="block1" id="{{p.id}}-block1">
+                                    <input type="number" class="form-group" name="quantity" id="{{p.id}}" value="0" style="display:block !important;" placeholder="{{ p.name }}">
+                                    <p class="help-block" style="display:block !important;">{{ p.name }}</p>
                                     </div>
                                 {% endfor %}
                         </div>
@@ -107,15 +110,13 @@
          }
        </script>
 
-   <script type="text/javascript">
+  <script type="text/javascript">
     function attachCheckboxHandlers() {
     // get reference to element containing toppings checkboxes
     var el = document.getElementById('id_ingredients');
     console.log("string", el);
-
     // get reference to input elements in toppings container element
     var tops = el.getElementsByTagName('input');
-
     // assign updateTotal function to onclick property of each checkbox
     for (var i=0, len=tops.length; i<len; i++) {
         if ( tops[i].type === 'checkbox' ) {
@@ -123,31 +124,24 @@
         }
     }
 }
-
 // called onclick of toppings checkboxes
 function updateTotal(e) {
     // 'this' is reference to checkbox clicked on
     var form = this.form;
-   document.getElementById('in').innerHTML = 'kod5';
     // get current value in total text box, using parseFloat since it is a string
     var val = parseInt(this.value);
-
     // if check box is checked, add its value to val, otherwise subtract it
     if ( this.checked ) {
-        var el1 = document.getElementById('quant');
-        var el2 = el1.getElementsByTagName('input');
-        var el3 = el1.getElementsByTagName('p');
-        el3[val-1].style.cssText = 'display: block !important';
-        el2[val-1].style.cssText = 'display: block !important';
+       // var el2 = el1.getElementsByTagName('div');
+       // var el3 = el2.getElementsByTagName('input');
+        //var el3 = el21.getElementsByTagName('p');
+        el1 = document.getElementById(val+"-block1");
+        //document.getElementById('in').innerHTML = val-11;
+        el1.style.cssText = 'display: inline-block !important';
     } else {
-        var el1 = document.getElementById('quant');
-        var el2 = el1.getElementsByTagName('input');
-        var el3 = el1.getElementsByTagName('p');
-        el3[val-1].style.cssText = 'display: none !important';
-        el2[val-1].style.cssText = 'display: none !important';
-
+         el1 = document.getElementById(val+"-block1");
+        el1.style.cssText = 'display: none !important';
     }
-
 }
      attachCheckboxHandlers();
     </script>
