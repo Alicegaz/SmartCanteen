@@ -13,10 +13,10 @@ def have_permission(request, permission=None):
         user = authenticate(username=username, password=password)
     if user is not None:
         if permission is not None:
-            if user.has_perm(permission):
-                return user
-            else:
-                return False
+            for perm in permission:
+                if user.has_perm(perm):
+                    return True
+            return False
         else:
             return user
     else:

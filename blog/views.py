@@ -13,12 +13,12 @@ from blog.controllers.contacts import contact_edit as contact_change, create_con
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.schedule import schedule_edit as schedule_change
 from blog.controllers.ingredient import ingredient_change, create_ingredient
-from django.contrib.auth.decorators import permission_required
 from common.decorators import user_have_permission
 import pytz
 utc = pytz.UTC
 
 
+@user_have_permission('blog.can_add')
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date').filter(status=True)
     data = {'posts': dishes}
@@ -28,6 +28,7 @@ def dishes_list(request):
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
+@user_have_permission('blog.can_add')
 def dish_details(request, pk=None):
     dish = get_object_or_404(Post, pk=pk)
     ingredients = dish.get_ingredients()
@@ -56,7 +57,7 @@ def dish_details(request, pk=None):
     return render(request, 'blog_templates/post_detail.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def dish_edit(request, pk):
     context = {}
     dish = get_object_or_404(Post, pk=pk)
@@ -72,7 +73,7 @@ def dish_edit(request, pk):
     return render(request, "blog_templates/post_edit.html", context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def new_dish(request):
     context = {'posts': Ingredient.objects.all()}
     if request.method == 'POST':
@@ -86,7 +87,7 @@ def new_dish(request):
     return render(request, 'blog_templates/post_new.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.status = False
@@ -97,8 +98,10 @@ def dish_remove(request, pk):
 def menu_out(request):
     menu = get_menu_of_current_time()
     shares = Shares.objects.all().filter(carousel=True)
-    if Schedule.objects.all().get(pk=1):
-     schedule = Schedule.objects.all().get(pk=1)
+    try:
+        schedule = Schedule.objects.all().get(pk=1)
+    except:
+        schedule = None
     data = {'posts': menu, 'shares': shares, 'schedule':schedule}
     if json(request):
         data.pop('shares')
@@ -107,13 +110,13 @@ def menu_out(request):
         return render(request, 'blog_templates/post_list.html', data)
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def history_out(request):
     history = History.objects.all().order_by('-menu__date')
     return render(request, 'blog_templates/history.html', {'history': history})
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def menu_detail(request, pk=None):
     menu = get_object_or_404(Menu, pk=pk)
     items = menu.items.all()
@@ -124,12 +127,10 @@ def menu_detail(request, pk=None):
     return render(request, 'blog_templates/menu_detail.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
-def menu_edit(request, pk):
+@user_have_permission('blog.can_add')def menu_edit(request, pk):
     return new_menu(request, pk)
 
-
-@permission_required('blog.can_add', 'blog.can_edit_shedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_shedule')
 def new_menu(request, pk=None):
     if request.method == 'POST':
         menu = create_menu(request)
@@ -150,14 +151,14 @@ def new_menu(request, pk=None):
     return render(request, 'blog_templates/new_menu.html', {'form': form})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def menu_remove(request, pk):
     menu = get_object_or_404(Menu, pk=pk)
     menu.delete()
     return redirect('menu_archive')
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def menu_item_remove(request, **kwargs):
     pk = kwargs.get('pk', '')
     post = Menu.objects.get(pk=pk)
@@ -169,7 +170,7 @@ def menu_item_remove(request, **kwargs):
     return redirect('blog.views.menu_archive')
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
     return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
@@ -186,7 +187,7 @@ def ingredient_detail(request, pk=None):
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def ingredient_edit(request, pk):
     ingredient = get_object_or_404(Ingredient, pk=pk)
     if request.method == "POST":
@@ -200,7 +201,7 @@ def ingredient_edit(request, pk):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def new_ingredient(request):
     if request.method == 'POST':
         ingredient = create_ingredient(request)
@@ -213,14 +214,13 @@ def new_ingredient(request):
     return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
     return redirect('blog.views.ingredient_list')
 
 
-# TODO создать страницу
 def no_permission(request):
     return render(request, 'blog_templates/no_permission.html')
 
@@ -250,7 +250,7 @@ def mymodel(request, pk=None):
 #     else:
 #         return HttpResponse("У вас нет прав администратора")
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def schedule_new(request):
         if request.method == 'POST':
             form = ScheduleForm(request.POST, request.FILES)
