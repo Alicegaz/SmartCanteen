@@ -263,9 +263,14 @@ def schedule_new(request):
         return render(request, 'blog_templates/schedule_new.html', {'form': form})
 
 
+def perm(user):
+    if user.has_perm('blog.can_add') or user.has_perm('blog.can_edit_schedule'):
+        return True
+
 @permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=1)
+
     if request.method == "POST":
         form = ScheduleForm(request.POST, instance=post)
         if form.is_valid():

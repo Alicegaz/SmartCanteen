@@ -20,9 +20,15 @@
 
 {% block content %}
     <form method="post" class="smart-green">
+    {% if user.profile.perm and user.is_authenticated %}
         <h1>Добавление нового пользователя
             <span>зарегистрируйте нового сотрудника</span>
         </h1>
+        {% else %}
+        <h1>Регистрация
+            <span>Пожалуйста, заполните все поля</span>
+        </h1>
+    {% endif %}
         <p>
             <label>
                 <label for="username">Имя пользователя</label>
@@ -34,10 +40,12 @@
                 {{ form.password.errors }}
                 {{ form.password }}
             </label>
+            {% if user.profile.perm and user.is_authenticated %}
             <label>
                 <input type="radio" name="role" value="is_admin"/> Администратор
                 <input type="radio" name="role" value="is_cashier"/> Кассир
             </label>
+            {% endif %}
             <label>
                 <span>&nbsp;</span>
                 <button type="submit" class="button">Отправить</button>
