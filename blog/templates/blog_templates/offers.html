@@ -53,7 +53,7 @@
        <tr>
            <th>дата</th><th>цена</th>
        </tr>
-           {% for post in posts %}
+           {% for offer in offers %}
                 {# <div class="col-md-8">  #}
                <tr>
                     <td><a href={% url 'offer_detail' pk=offer.offer.id %}>{{ offer.offer.date}}</a></td>

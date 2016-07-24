@@ -374,7 +374,8 @@ def get_offers(request):
         obj.price = price
         result.append(obj)
     perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
-    return render(request, "blog_templates/offers.html", {'offers': result, 'perm':perm})
+    print(result)
+    return render(request, "blog_templates/offers.html", {'offers': result, 'perm': perm})
 
 
 @user_have_permission('blog.can_add')

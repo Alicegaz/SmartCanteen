@@ -1,151 +1,135 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{%  block content %}
-    {{ offer.date }}
-    {{ offer.menu.title }}
-    <table>
-        <tr>
-            <td>Блюдо</td>
-            <td>Цена</td>
-            <td>Количество</td>
-        </tr>
-        {% for dish in dishes %}
-            <tr>
-                <td>{{ dish.dish}}</td>
-                <td>{{ dish.price}}</td>
-                <td>{{  dish.amount }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endblock %}
-
-
-
-
-
-
-
 {% extends "base.html" %}
 {% load staticfiles %}
 {% block css %}
-                   <style>
-               table {
-                  font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
-                  font-size: 14px !important;
-                  background: white !important;
-                  max-width: 70% !important;
-                  width: 70% !important;
-                  border-collapse: collapse !important;
-                  text-align: left !important;
-               }
-                th {
-                  font-weight: normal !important;
-                  color: #039 !important;
-                  border-bottom: 2px solid #6678b1 !important;
-                  padding: 10px 8px !important;
-                }
-                td {
-                  color: #669 !important;
-                  padding: 9px 8px !important;
-                  transition: .3s linear !important;
-                    border-top:1px solid #e8edff;
-                }
-                tr:hover td{
-                  color: #6699ff !important;
-                  background: #e8edff;
-                }
+    <style>
+        table {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
+            font-size: 14px !important;
+            background: white !important;
+            max-width: 70% !important;
+            width: 70% !important;
+            border-collapse: collapse !important;
+            text-align: left !important;
+        }
 
-               .glyphicon.glyphicon-plus-sign {
-                    color: #77DD77 !important;
-                }
-               div.page-container{
-                   padding-top:20px;
-               }
-               .smart-green{
-                   background: white;
-               }
-                   .type-2_default .kc-col-2 .kontora-box .head-, .type-2_default .kc-col-2-3 .kontora-box .head-, .type-2_default .kc-col-3 .kontora-catalogue a:link, .type-2_default .kc-col-3 .kontora-catalogue a:visited, .type-2_default .kc-col-1 .kontora-box a, .type-2_default .kc-col-3 .kontora-box a:link, .type-2_default .kc-col-3 .kontora-box a:visited {
-                    color: #000;
-                }
-                .type-2-skin .kc-col-2 .yd-box .head-, .type-2-skin .kc-col-2-3 .yd-box .head-, .type-2-skin .kc-col-2 .kontora-box .head-, .type-2-skin .kc-col-2-3 .kontora-box .head- {
-                    margin: -10px -10px 10px;
-                    padding: 3px 10px;
-                    font: italic 17px georgia;
-                    border-bottom: 1px solid #c7c7c7;
-                }
-                .pad- .kontora-box .head- {
-                    font-size: 17px;
-                }
-                .product-page .head- {
-                    border-bottom: 0!important;
-                }
-                   .product-page .pp-update {
-                        display: inline-block;
-                        color: #7d7d7d;
-                        font-size: 9px;
-                        margin: 0 0 10px 13px;
-                    }
-                   table{
-                       margin-left: 10%;
-                   }
-                                        </style>
-            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+        th {
+            font-weight: normal !important;
+            color: #039 !important;
+            border-bottom: 2px solid #6678b1 !important;
+            padding: 10px 8px !important;
+        }
+
+        td {
+            color: #669 !important;
+            padding: 9px 8px !important;
+            transition: .3s linear !important;
+            border-top: 1px solid #e8edff;
+        }
+
+        tr:hover td {
+            color: #6699ff !important;
+            background: #e8edff;
+        }
+
+        .glyphicon.glyphicon-plus-sign {
+            color: #77DD77 !important;
+        }
+
+        div.page-container {
+            padding-top: 20px;
+        }
+
+        .smart-green {
+            background: white;
+        }
+
+        .type-2_default .kc-col-2 .kontora-box .head-, .type-2_default .kc-col-2-3 .kontora-box .head-, .type-2_default .kc-col-3 .kontora-catalogue a:link, .type-2_default .kc-col-3 .kontora-catalogue a:visited, .type-2_default .kc-col-1 .kontora-box a, .type-2_default .kc-col-3 .kontora-box a:link, .type-2_default .kc-col-3 .kontora-box a:visited {
+            color: #000;
+        }
+
+        .type-2-skin .kc-col-2 .yd-box .head-, .type-2-skin .kc-col-2-3 .yd-box .head-, .type-2-skin .kc-col-2 .kontora-box .head-, .type-2-skin .kc-col-2-3 .kontora-box .head- {
+            margin: -10px -10px 10px;
+            padding: 3px 10px;
+            font: italic 17px georgia;
+            border-bottom: 1px solid #c7c7c7;
+        }
+
+        .pad- .kontora-box .head- {
+            font-size: 17px;
+        }
+
+        .product-page .head- {
+            border-bottom: 0 !important;
+        }
+
+        .product-page .pp-update {
+            display: inline-block;
+            color: #7d7d7d;
+            font-size: 9px;
+            margin: 0 0 10px 13px;
+        }
+
+        table {
+            margin-left: 10%;
+        }
+    </style>
+    <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
 
- {% block content %}
-     <div class="smart-green">
-     <h1>Заказы
-     <span>Aрхив обработанных заказо</span>
-     </h1>
-     <h2 class="head-">
-         {{ offer.menu.title }}
-     </h2>
-     <div class="clearfix">
-         <div class="pp-update">Совершено {{ offer.date }}</div>
-     </div>
-       <table>
-       <tr>
-           <th>Блюдо</th><th>цена</th><th>Количество</th>
-       </tr>
-           {% for post in posts %}
+{% block content %}
+    <div class="smart-green">
+        <h1>Заказы
+            <span>Aрхив обработанных заказо</span>
+        </h1>
+        <h2 class="head-">
+            {{ offer.menu.title }}
+        </h2>
+        <div class="clearfix">
+            <div class="pp-update">Совершено {{ offer.date }}</div>
+        </div>
+        <table>
+            <tr>
+                <th>Блюдо</th>
+                <th>цена</th>
+                <th>Количество</th>
+            </tr>
+            {% for dish in dishes %}
                 {# <div class="col-md-8">  #}
-               <tr>
-                    <td>{{dish.dish}}</td>
+                <tr>
+                    <td>{{ dish.dish }}</td>
                     <td>{{ dish.price }}</td>
                     <td>{{ dish.amount }}</td>
-               </tr>
-                        {# <p>price: {{  ingredients.price }}</p> #}
+                </tr>
+                {# <p>price: {{  ingredients.price }}</p> #}
 
             {% endfor %}
-       </table>
+        </table>
 
-     </div>
+    </div>
 
 
-              {#  </div>  #}
+    {#  </div>  #}
 
-       <div class="menu"><a href="{% url 'post_ingredientnew' %}">
-           <span class="glyphicon glyphicon-plus-sign"></span></a></div>
-  <div class="text"></div>
-  {% endblock %}
-    {% block scrip %}
-         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <div class="menu"><a href="{% url 'post_ingredientnew' %}">
+        <span class="glyphicon glyphicon-plus-sign"></span></a></div>
+    <div class="text"></div>
+{% endblock %}
+{% block scrip %}
+    <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
-        <script>
-         function confirmDelete ()
-         {
-             if (confirm("Вы уверены, что хотите удалить ингрединет?")) {
-                 return true;
-             }
-                     else
-                     {
-                     return false;
-                 }
-         }
-       </script>
     <script>
-			new gnMenu( document.getElementById( 'gn-menu' ) );
-		</script>
+        function confirmDelete() {
+            if (confirm("Вы уверены, что хотите удалить ингрединет?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
     {% include 'javascripts.html' %}
 {% endblock %}
 
