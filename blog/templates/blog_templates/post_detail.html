@@ -277,7 +277,7 @@
     <span>список доступных блюд</span>
     </h1>
     <h2 class="head-">
-        {% if user.profile.perm and user.is_authenticated %}
+        {% if perm %}
         <div class="card-edit-tools">
         <a class="control-link edit-" href="{% url 'post_edit' pk=instance.pk %}" title="Редактировать товар">Редактировать</a>
             <a class="control-link copy-" href="{% url 'post_remove' pk=instance.pk %}" title="Удалить товар">Удалить товар</a>

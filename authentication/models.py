@@ -7,7 +7,6 @@ from django.db import models
 class UserProfile(models.Model):
     profile = models.OneToOneField(User, related_name='profile', null=True)
     author = models.ForeignKey('auth.User', null=True)
-    perm = models.BooleanField(default = False)
 
     def __unicode__(self):  # __str__
         return unicode_literals(self.profile)

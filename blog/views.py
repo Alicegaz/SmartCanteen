@@ -14,6 +14,7 @@ from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.schedule import schedule_edit as schedule_change
 from blog.controllers.ingredient import ingredient_change, create_ingredient
 from common.decorators import user_have_permission
+from common.permission import have_permission
 import pytz
 utc = pytz.UTC
 
@@ -25,6 +26,8 @@ def dishes_list(request):
     if json(request):
         return json_response(dishes)
     else:
+        perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+        data['perm'] = perm
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
@@ -54,6 +57,8 @@ def dish_details(request, pk=None):
     }
     if json(request):
         return json_response(context)
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/post_detail.html', context)
 
 
@@ -70,6 +75,8 @@ def dish_edit(request, pk):
     else:
         context['form'] = PostForm(instance=dish)
         context['posts'] = Ingredient.objects.all()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, "blog_templates/post_edit.html", context)
 
 
@@ -84,6 +91,8 @@ def new_dish(request):
             return redirect('no_permission')
     else:
         context['form'] = PostForm()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/post_new.html', context)
 
 
@@ -92,6 +101,7 @@ def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.status = False
     post.save()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
     return redirect('dishes_list')
 
 
@@ -107,13 +117,16 @@ def menu_out(request):
         data.pop('shares')
         return json_response(menu)
     else:
+        perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+        data['perm'] = perm
         return render(request, 'blog_templates/post_list.html', data)
 
 
 @user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def history_out(request):
     history = History.objects.all().order_by('-menu__date')
-    return render(request, 'blog_templates/history.html', {'history': history})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/history.html', {'history': history, 'perm': perm})
 
 
 @user_have_permission('blog.can_add', 'blog.can_edit_schedule')
@@ -124,10 +137,13 @@ def menu_detail(request, pk=None):
         "instance": menu,
         "items": items,
     }
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/menu_detail.html', context)
 
 
-@user_have_permission('blog.can_add')def menu_edit(request, pk):
+@user_have_permission('blog.can_add')
+def menu_edit(request, pk):
     return new_menu(request, pk)
 
 @user_have_permission('blog.can_add', 'blog.can_edit_shedule')
@@ -139,7 +155,8 @@ def new_menu(request, pk=None):
             if status:
                 return redirect('/')
             else:
-                return render(request, 'blog_templates/not_enough_ingredient.html')
+                perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+                return render(request, 'blog_templates/not_enough_ingredient.html', {'perm': perm})
         #         TODO create page
         else:
             return redirect('no_permission')
@@ -148,32 +165,15 @@ def new_menu(request, pk=None):
             form = MenuForm(instance=Menu.objects.get(id=pk))
         else:
             form = MenuForm()
-    return render(request, 'blog_templates/new_menu.html', {'form': form})
-
-
-@user_have_permission('blog.can_add')
-def menu_remove(request, pk):
-    menu = get_object_or_404(Menu, pk=pk)
-    menu.delete()
-    return redirect('menu_archive')
-
-
-@user_have_permission('blog.can_add')
-def menu_item_remove(request, **kwargs):
-    pk = kwargs.get('pk', '')
-    post = Menu.objects.get(pk=pk)
-    if post.items.count() == 1:
-        post.delete()
-    else:
-        ite = post.items.get(pk=kwargs.get('item_pk', ''))
-        post.items.remove(ite)
-    return redirect('blog.views.menu_archive')
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/new_menu.html', {'form': form, 'perm': perm})
 
 
 @user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def ingredient_list(request):
     ingredients = Ingredient.objects.all()
-    return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/post_ingredientlist.html', {'posts': ingredients, 'perm': perm})
 
 
 @user_have_permission('blog.can_add')
@@ -184,6 +184,8 @@ def ingredient_detail(request, pk=None):
         "instance": instance1,
         "username": auth.get_user(request).is_superuser
     }
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/post_ingredientdetail.html', context)
 
 
@@ -193,12 +195,13 @@ def ingredient_edit(request, pk):
     if request.method == "POST":
         ingredient = ingredient_change(request, ingredient)
         if ingredient is not False:
-            return redirect('blog.views.ingredient_list')
+            return redirect('post_ingredientlist')
         else:
             return redirect('no_permission')
     else:
         form = IngredientsForm(instance=ingredient)
-    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form, 'perm': perm})
 
 
 @user_have_permission('blog.can_add')
@@ -206,23 +209,25 @@ def new_ingredient(request):
     if request.method == 'POST':
         ingredient = create_ingredient(request)
         if ingredient is not False:
-            return redirect('blog.views.ingredient_list')
+            return redirect('post_ingredientlist')
         else:
             return redirect('no_permission')
     else:
         form = IngredientsForm()
-    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/post_ingredientedit.html', {'form': form, 'perm': perm})
 
 
 @user_have_permission('blog.can_add')
 def ingredient_remove(request, pk):
     post = get_object_or_404(Ingredient, pk=pk)
     post.delete()
-    return redirect('blog.views.ingredient_list')
+    return redirect('post_ingredientlist')
 
 
 def no_permission(request):
-    return render(request, 'blog_templates/no_permission.html')
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/no_permission.html', {'perm': perm})
 
 
 # TODO оценить полезнсть этого метода
@@ -235,6 +240,8 @@ def mymodel(request, pk=None):
         "ingredientss": ingredientss,
 
     }
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/mymodal.html', context)
 
 
@@ -260,14 +267,11 @@ def schedule_new(request):
                 return redirect('/')
         else:
             form = ScheduleForm()
-        return render(request, 'blog_templates/schedule_new.html', {'form': form})
+        perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+        return render(request, 'blog_templates/schedule_new.html', {'form': form, 'perm': perm})
 
 
-def perm(user):
-    if user.has_perm('blog.can_add') or user.has_perm('blog.can_edit_schedule'):
-        return True
-
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def schedule_edit(request, pk):
     post = get_object_or_404(Schedule, pk=1)
 
@@ -278,7 +282,8 @@ def schedule_edit(request, pk):
             return redirect('/')
     else:
         form = ScheduleForm(instance=post)
-    return render(request, "blog_templates/schedule_edit.html", {'form': form})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, "blog_templates/schedule_edit.html", {'form': form, 'perm': perm })
 
 
 def shares_list(request):
@@ -295,10 +300,12 @@ def shares_list(request):
     if json(request):
         return json_response(shares)
     else:
+        perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+        data['perm'] = perm
         return render(request, 'blog_templates/shares_list.html', data)
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def shares_new(request):
     context = {}
     if request.method == 'POST':
@@ -309,10 +316,12 @@ def shares_new(request):
             return redirect('no_permission')
     else:
         context['form'] = SharesForm()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/shares_new.html', context)
 
 
-@permission_required('blog.can_add', 'blog.can_edit_schedule', raise_exception=True)
+@user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def shares_edit(request, pk):
     context = {}
     share = get_object_or_404(Shares, pk=1)
@@ -324,6 +333,8 @@ def shares_edit(request, pk):
             return redirect('no_permission')
     else:
         context['form'] = SharesForm(instance=share)
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, "blog_templates/shares_edit.html", context)
 
 
@@ -345,7 +356,7 @@ def send_offer(request):
         return HttpResponse("There is no such dishes in menu", status=400)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def get_offers(request):
     offers = Offers.objects.all()
 
@@ -362,10 +373,11 @@ def get_offers(request):
         obj.offer = offer
         obj.price = price
         result.append(obj)
-    return render(request, "blog_templates/offers.html", {'offers': result})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, "blog_templates/offers.html", {'offers': result, 'perm':perm})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def offer_detail(request, pk=None):
     offer = Offers.objects.get(id=pk)
     dish_list = offer.get_dish_list()
@@ -377,6 +389,8 @@ def offer_detail(request, pk=None):
         'dishes': dish_list,
         'price': price,
     }
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, "blog_templates/offer_detail.html", context)
 
 
@@ -389,15 +403,18 @@ def shares_detail(request, pk=None):
     }
     if json(request):
         return json_response(context)
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/shares_detail.html', context)
 
 
 def contacts(request):
     contacts = Contacts.objects.all()
-    return render(request, 'blog_templates/contacts.html', {'contacts': contacts})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, 'blog_templates/contacts.html', {'contacts': contacts, 'perm': perm})
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def new_contact(request):
     context = {'posts': Contacts.objects.all()}
     if request.method == 'POST':
@@ -408,10 +425,12 @@ def new_contact(request):
             return redirect('no_permission')
     else:
         context['form'] = ContactsForm()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, 'blog_templates/contacts_form.html', context)
 
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def contact_edit(request, pk):
     context = {}
     contact = get_object_or_404(Contacts, pk=pk)
@@ -424,9 +443,11 @@ def contact_edit(request, pk):
     else:
         context['form'] = ContactsForm(instance=contact)
         context['posts'] = Contacts.objects.all()
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, "blog_templates/contact_edit.html", context)
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def contacts_remove(request, pk):
     post = get_object_or_404(Contacts, pk=pk)
     post.delete()
@@ -434,10 +455,11 @@ def contacts_remove(request, pk):
 
 def schedule_for_user(request):
     if Schedule.objects.all().get(pk=1):
-     schedule = Schedule.objects.all().get(pk=1)
-    return render(request, "blog_templates/schedule_for_user.html", {'schedule': schedule})
+        schedule = Schedule.objects.all().get(pk=1)
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    return render(request, "blog_templates/schedule_for_user.html", {'schedule': schedule, 'perm': perm})
 
-@permission_required('blog.can_add', raise_exception=True)
+@user_have_permission('blog.can_add')
 def schedule_edit(request, pk):
     context = {}
     dish = get_object_or_404(Schedule, pk=pk)
@@ -449,4 +471,6 @@ def schedule_edit(request, pk):
             return redirect('no_permission')
     else:
         context['form'] = ScheduleForm(instance=dish)
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
+    context['perm'] = perm
     return render(request, "blog_templates/schedule_edit.html", context)

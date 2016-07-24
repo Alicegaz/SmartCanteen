@@ -1,83 +1,84 @@
 <nav>
-		<ul class="mcd-menu">
-       {% if user.profile.perm and user.is_authenticated %}
-			<li>
-				<a href="/auth/user">
-					<i class="fa fa-user"></i>
-					<strong>Управление</strong>
-                    <small>персоналом</small>
-				</a>
-                <ul>
-					<li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-circle"></i>Добавить сотрудника</a></li>
-					<li>
-						<a href="{% url 'authentication.views.users' %}"><i class="fa fa-group"></i>Управление</a>
-			        </li>
-                   </ul>
-        </li>
-        {% endif %}
-			<li>
-				<a href="" class="active">
-					<i class="fa fa-info-circle"></i>
-					<strong>Информация</strong>
-					<small>о столовой</small>
-				</a>
-                <ul>
-                    <li><a href={% url 'shares' %}><i class="fa fa-gift"></i>Акции</a></li>
-					<li>
-						<a href="{% url 'contacts' %}"><i class="fa fa-phone-square"></i>Контакты</a>
-			        </li>
-                    {% if schedule %}
-                    {% if user.profile.perm and user.is_authenticated %}
-                     <li><a href="{% url 'schedule_edit' pk=1 %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
-
-                    {% else %}
-                    <li><a href="{% url 'schedule_for_user' %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
-                    {% endif %}
-                    {% else %}
-                    <li><a href="{% url 'schedule_new' %}" ><i class="fa fa-clock-o"></i>Режим работы</a></li>
-
-                    {%  endif %}
-
-
-
-                </ul>
-        </li>
-					<li>
-				<a href="">
-					<i class="fa fa-list-ol"></i>
-					<strong>Склад</strong>
-					<small>товаров</small>
-				</a>
-                <ul>
-					<li><a href="{% url 'dishes_list' %}"><i class="fa fa-cutlery"></i>Блюда</a></li>
-                    {% if user.profile.perm and user.is_authenticated %}
-					<li>
-						<a href="{% url 'post_ingredientlist' %}"><i class="fa fa-lemon-o"></i>Продукты</a>
-			        </li>
-                    {% endif %}
-                    </ul>
-        </li>
-			<li>
-				<a href="{% url 'menu_archive' %}">
-					<i class="fa fa-file-text-o"></i>
-					<strong>Меню</strong>
-					<small>на сегодня</small>
-				</a>
-                <ul>
-					<li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open"></i>Архив</a></li>
-                    {% if user.profile.perm and user.is_authenticated %}
-					<li>
-						<a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
-			          </li>
-                    {% endif %}
-                </ul>
-            </li>
-
+    <ul class="mcd-menu">
+        {% if perm %}
             <li>
-                <a href="{% url 'offers_list' %}"><i class="fa fa-folder-open"></i><strong>Архив заказов</strong>
-                <small>отчет о продажах</small></a>
+                <a href="/auth/user">
+                    <i class="fa fa-user"></i>
+                    <strong>Управление</strong>
+                    <small>персоналом</small>
+                </a>
+                <ul>
+                    <li><a href="{% url 'authentication.views.register' %}"><i class="fa fa-circle"></i>Добавить
+                        сотрудника</a></li>
+                    <li>
+                        <a href="{% url 'authentication.views.users' %}"><i class="fa fa-group"></i>Управление</a>
+                    </li>
+                </ul>
             </li>
-			{% comment %}<li class="float">
+        {% endif %}
+        <li>
+            <a href="" class="active">
+                <i class="fa fa-info-circle"></i>
+                <strong>Информация</strong>
+                <small>о столовой</small>
+            </a>
+            <ul>
+                <li><a href={% url 'shares' %}><i class="fa fa-gift"></i>Акции</a></li>
+                <li>
+                    <a href="{% url 'contacts' %}"><i class="fa fa-phone-square"></i>Контакты</a>
+                </li>
+                {% if schedule %}
+                    {% if perm %}
+                        <li><a href="{% url 'schedule_edit' pk=1 %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
+
+                    {% else %}
+                        <li><a href="{% url 'schedule_for_user' %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
+                    {% endif %}
+                {% else %}
+                    <li><a href="{% url 'schedule_new' %}"><i class="fa fa-clock-o"></i>Режим работы</a></li>
+
+                {% endif %}
+
+
+            </ul>
+        </li>
+        <li>
+            <a href="">
+                <i class="fa fa-list-ol"></i>
+                <strong>Склад</strong>
+                <small>товаров</small>
+            </a>
+            <ul>
+                <li><a href="{% url 'dishes_list' %}"><i class="fa fa-cutlery"></i>Блюда</a></li>
+                {% if perm %}
+                    <li>
+                        <a href="{% url 'post_ingredientlist' %}"><i class="fa fa-lemon-o"></i>Продукты</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+        <li>
+            <a href="{% url 'menu_archive' %}">
+                <i class="fa fa-file-text-o"></i>
+                <strong>Меню</strong>
+                <small>на сегодня</small>
+            </a>
+            <ul>
+                <li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open"></i>Архив</a></li>
+                {% if perm %}
+                    <li>
+                        <a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+
+        <li>
+            <a href="{% url 'offers_list' %}"><i class="fa fa-folder-open"></i><strong>Архив заказов</strong>
+                <small>отчет о продажах</small>
+            </a>
+        </li>
+        {% comment %}<li class="float">
 				<a class="search">
 					<input type="text" value="search ...">
 					<button><i class="fa fa-search"></i></button>
@@ -86,5 +87,5 @@
 					<i class="fa fa-search"></i>
 				</a>
 			</li>{% endcomment %}
-            </ul>
-	</nav>
+    </ul>
+</nav>

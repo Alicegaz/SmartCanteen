@@ -22,9 +22,6 @@ from blog.models import Schedule, Post
 from django.db.models import Q
 
 
-
-
-
 def login(request):
     args = {}
     if request.POST:
@@ -101,26 +98,27 @@ def register(request):
             password = form.cleaned_data.get('password')
             user = User.objects.create_user(username=username, password=password)
             if role is not None:
-                if have_permission(request, 'blog.can_add'):
+                if have_permission(request, ['blog.can_add', 'blog.can_edit_schedule']):
                     if role == 'is_admin' or role == 'is_cashier':
                         if role == 'is_admin':
                             permission = Permission.objects.get(codename='can_add')
-                            perm = True
                         elif role == 'is_cashier':
                             permission = Permission.objects.get(codename='can_edit_schedule')
-                            perm = True
                     else:
                         user.delete()
                         return redirect('no_permission')
                     e = UserProfile()
                     e.profile = user
                     e.author = request.user
-                    e.perm = perm
                     e.save()
                     user.user_permissions.add(permission)
                     user.save()
-            return redirect('/')
-    return render(request, 'register.html', {'form': form})
+            if request.user.has_perm('blog.can_add') or request.user.has_perm('blog.can_edit_schedule'):
+                return redirect('users.html')
+            else:
+                return redirect('login.html')
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_scheduele'])
+    return render(request, 'register.html', {'form': form, 'perm': perm})
 
 
 @permission_required('blog.can_add', raise_exception=True)
@@ -136,4 +134,4 @@ def users(request):
 def user_remove(request, pk):
         user = get_object_or_404(User, pk=pk)
         user.delete()
-        return redirect('authentication.views.user')
+        return redirect('users.html')

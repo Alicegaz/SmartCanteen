@@ -27,11 +27,8 @@ urlpatterns = [
     # menu urls
     url(r'^menu/$', views.history_out, name='menu_archive'),
     url(r'^menu/new/$', views.new_menu, name='new_menu'),
-    url(r'^menu/(?P<pk>\d+)/remove/$', views.menu_remove, name='menu_remove'),
     url(r'^menu/(?P<pk>\d+)/$', views.menu_detail, name='menu_detail'),
     url(r'^menu/(?P<pk>\d+)/edit/$', views.menu_edit, name='menu_edit'),
-    url(r'^menu/(?P<pk>\d+)/item/(?P<item_pk>\d+)/remove', views.menu_item_remove, name='menu_item_remove'),
-
     # have no permission url
     url(r'^no_permission/$', views.no_permission, name='no_permission'),
 
