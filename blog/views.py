@@ -19,7 +19,6 @@ import pytz
 utc = pytz.UTC
 
 
-@user_have_permission('blog.can_add')
 def dishes_list(request):
     dishes = Post.objects.all().order_by('created_date').filter(status=True)
     data = {'posts': dishes}
@@ -31,7 +30,6 @@ def dishes_list(request):
         return render(request, 'blog_templates/dishes_list.html', data)
 
 
-@user_have_permission('blog.can_add')
 def dish_details(request, pk=None):
     dish = get_object_or_404(Post, pk=pk)
     ingredients = dish.get_ingredients()
@@ -101,7 +99,6 @@ def dish_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.status = False
     post.save()
-    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
     return redirect('dishes_list')
 
 
@@ -145,6 +142,7 @@ def menu_detail(request, pk=None):
 @user_have_permission('blog.can_add')
 def menu_edit(request, pk):
     return new_menu(request, pk)
+
 
 @user_have_permission('blog.can_add', 'blog.can_edit_shedule')
 def new_menu(request, pk=None):
@@ -448,17 +446,20 @@ def contact_edit(request, pk):
     context['perm'] = perm
     return render(request, "blog_templates/contact_edit.html", context)
 
+
 @user_have_permission('blog.can_add')
 def contacts_remove(request, pk):
     post = get_object_or_404(Contacts, pk=pk)
     post.delete()
     return redirect('blog.views.contacts')
 
+
 def schedule_for_user(request):
     if Schedule.objects.all().get(pk=1):
         schedule = Schedule.objects.all().get(pk=1)
     perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
     return render(request, "blog_templates/schedule_for_user.html", {'schedule': schedule, 'perm': perm})
+
 
 @user_have_permission('blog.can_add')
 def schedule_edit(request, pk):

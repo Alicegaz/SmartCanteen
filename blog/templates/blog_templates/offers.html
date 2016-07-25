@@ -51,13 +51,14 @@
      </h1>
        <table>
        <tr>
-           <th>дата</th><th>цена</th>
+           <th>дата</th><th>цена</th><th>Автор</th>
        </tr>
            {% for offer in offers %}
                 {# <div class="col-md-8">  #}
                <tr>
                     <td><a href={% url 'offer_detail' pk=offer.offer.id %}>{{ offer.offer.date}}</a></td>
                     <td>{{ offer.price }}</td>
+                    <td>{{ offer.offer.author.username }}</td>
                </tr>
                         {# <p>price: {{  ingredients.price }}</p> #}
 
