@@ -127,7 +127,8 @@ def users(request):
     perm2 = Permission.objects.get(codename='can_add')
     users1 = User.objects.filter(Q(user_permissions=perm1))
     users2 = User.objects.filter(Q(user_permissions=perm2))
-    return render(request, 'users.html', {'users1': users1, 'users2': users2})
+    perm = have_permission(request, ['blog.can_add', 'blog.can_edit_scheduele'])
+    return render(request, 'users.html', {'users1': users1, 'users2': users2, 'perm':perm})
 
 
 @permission_required('blog.can_add', raise_exception=True)
