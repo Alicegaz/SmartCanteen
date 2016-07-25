@@ -1,5 +1,5 @@
 from datetime import date
-
+from authentication.models import User
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -197,6 +197,7 @@ class Offers(models.Model):
     date = models.DateField(default=timezone.now)
     menu = models.ForeignKey(Menu)
     status = models.BooleanField(default=False)
+    author = models.ForeignKey(User, null=True)
 
     def get_dish_list(self):
         result = []

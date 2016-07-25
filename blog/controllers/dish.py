@@ -141,9 +141,9 @@ def contain_dishes(request):
         return False
 
 
-def buy_dish_list(dish_list):
+def buy_dish_list(dish_list, author):
     if is_in_menu(dish_list):
-        offer = Offers(menu=get_menu_of_current_time())
+        offer = Offers(menu=get_menu_of_current_time(), author=author)
         offer.save()
         for dish in dish_list:
             dish = Post.objects.get(id=dish)
@@ -169,9 +169,13 @@ def buy(request):
         add_to_history(offer)
         return dishes_price(offer.items.all()), get_calories(offer.items.all())
     elif contain_dishes(request):
-        dish_list = request.POST.getlist('item')
-        buy_dish_list(dish_list)
-        dish_list = [Post.objects.get(id=i) for i in dish_list]
-        return dishes_price(dish_list), get_calories(dish_list)
+        user = have_permission(request)
+        if user:
+            dish_list = request.POST.getlist('item')
+            buy_dish_list(dish_list, user)
+            dish_list = [Post.objects.get(id=i) for i in dish_list]
+            return dishes_price(dish_list), get_calories(dish_list)
+        else:
+            return False
     else:
         return False
