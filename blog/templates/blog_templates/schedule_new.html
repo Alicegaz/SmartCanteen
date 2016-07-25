@@ -9,6 +9,13 @@
             height:auto !important;
         }
     </style>
+      <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#2').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
 {% endblock %}
     {% block content %}
             <form role="form" method="post" action="" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}

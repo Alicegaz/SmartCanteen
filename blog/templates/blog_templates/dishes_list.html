@@ -55,6 +55,13 @@
                 overflow: hidden;
             }
     </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#3').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
 <link href="{% static "stylesheets/flipcart.css" %}" rel="stylesheet">
 {% endblock %}
 {% block content %}

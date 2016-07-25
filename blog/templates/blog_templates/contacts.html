@@ -223,7 +223,13 @@
                 display: none;
             }
     </style>
-
+ <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#2').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
 <meta content="hRYP4K4BnFBWWA7hE9dogowAUkY4YgmYw9uxjNcRdCA=" name="csrf-token" />
 <link href="http://thefavicongallery.com/g/u/guuui.com.ico" rel="shortcut icon" type="image" />
 <link href="http://lider-mobile.blizko.ru/sales" rel="canonical">
@@ -251,7 +257,7 @@
                         </div>
                     </div>
                 </div>
-        {% elif not shares_active %}
+        {% elif not contacts %}
             <div class="descr mt15 fs12 gray">
                     К сожалению, администратор пока не указал адреса сети.
             </div>
@@ -268,6 +274,7 @@
                                 {% else %}
                                 У офиса нет названия
                         {% endif %}
+                    {% if perm %}
                         <p>
                             <a class="control-link edit- js-ga-contacts-edit-office" href="{% url 'contact_edit' pk=contact.pk %}" title="Редактировать офис">
                               Редактировать
@@ -276,6 +283,7 @@
                               Удалить
                             </a>
                         </p>
+                    {% endif %}
                     </h3>
                     <ul class="contacts">
                         <li class="pl0">

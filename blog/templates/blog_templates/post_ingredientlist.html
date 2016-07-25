@@ -38,6 +38,13 @@
                    background: white;
                }
                                         </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#3').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
 
@@ -48,7 +55,7 @@
      </h1>
        <table>
        <tr>
-           <th>Ингридиент</th><th>Вес</th><th>Дата</th><th>Удалить</th><th>Изменить</th>
+           <th>Ингредиент</th><th>Вес</th><th>Дата</th><th>Удалить</th><th>Изменить</th>
        </tr>
            {% for post in posts %}
                 {# <div class="col-md-8">  #}

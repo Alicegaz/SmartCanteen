@@ -7,7 +7,7 @@
 
         <link href="{% static "stylesheets/forms.css" %}" rel="stylesheet">
         <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-        <title>Nazvanie</title>
+        <title>Trapeza</title>
         {% include 'stylesheets.html' %}
         <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
    <style>
@@ -490,7 +490,10 @@ ul{
     <body>
        {%  include 'navbar.html' %}
             <div class="sidebar" id="socializ">
+                {%  if perm %}
            {%  include 'just_fun_menu.html' %}
+                    <script language="JavaScript" type="text/javascript">highlight()</script>
+                {% endif %}
         </div>
 
         <div class="page-container">

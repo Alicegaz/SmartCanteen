@@ -12,11 +12,18 @@
              height: 100%;
              }
     </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#2').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
 {% endblock %}
     {% block content %}
             <form role="form" method="post" action="{% url 'new_contact' %}" enctype="multipart/form-data" class="smart-green">{%  csrf_token %}
                       <h1>Редактирование адреса
-                          <span>Пожалуста заполните все поля формы</span>
+                          <span>Пожалуйста, заполните все поля формы</span>
                       </h1>
             <p>
             <label>

@@ -2,7 +2,7 @@
     <ul class="mcd-menu">
         {% if perm %}
             <li>
-                <a href="/auth/user">
+                <a href="/auth/user" id="1">
                     <i class="fa fa-user"></i>
                     <strong>Управление</strong>
                     <small>персоналом</small>
@@ -17,7 +17,7 @@
             </li>
         {% endif %}
         <li>
-            <a href="" class="active">
+            <a href="{% url 'contacts' %}" id="2">
                 <i class="fa fa-info-circle"></i>
                 <strong>Информация</strong>
                 <small>о столовой</small>
@@ -43,7 +43,7 @@
             </ul>
         </li>
         <li>
-            <a href="">
+            <a href="{% url 'dishes_list' %}" id="3">
                 <i class="fa fa-list-ol"></i>
                 <strong>Склад</strong>
                 <small>товаров</small>
@@ -58,7 +58,7 @@
             </ul>
         </li>
         <li>
-            <a href="{% url 'menu_archive' %}">
+            <a href="{% url 'menu_archive' %}" id="4">
                 <i class="fa fa-file-text-o"></i>
                 <strong>Меню</strong>
                 <small>на сегодня</small>
@@ -74,7 +74,7 @@
         </li>
 
         <li>
-            <a href="{% url 'offers_list' %}"><i class="fa fa-folder-open"></i><strong>Архив заказов</strong>
+            <a href="{% url 'offers_list' %}" id="5"><i class="fa fa-folder-open"></i><strong>Архив заказов</strong>
                 <small>отчет о продажах</small>
             </a>
         </li>

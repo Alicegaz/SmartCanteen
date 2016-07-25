@@ -10,7 +10,13 @@
             height:auto !important;
         }
     </style>
-
+ <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#4').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
        {% block content %}

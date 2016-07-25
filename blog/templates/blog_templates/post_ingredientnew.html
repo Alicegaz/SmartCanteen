@@ -9,14 +9,21 @@
             height:auto !important;
             }
         </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#3').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
 {% block content %}
        {#  <div class="col-md-8"> #}
      <form method="post" class="smart-green">
             <h1>
-                "Добавить ингридиент"
-                <span>Пожалуйста, заполните все поля</span>
+                Добавить ингридиент
+                <span>Пожалуйста, заполните все поля формы</span>
             </h1>
             <p>
                 <label>

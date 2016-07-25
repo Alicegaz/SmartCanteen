@@ -31,13 +31,20 @@
                     padding-top: 20px;
                 }
         </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#4').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
        {#  <div class="col-md-8"> #}
 {% block content %}
     <div class="smart-green">
        <h1>Архив меню
-       <span>Измените желаемое, для создание нового. Оно автоматически появиться на главной</span></h1>
+       <span>Здесь Вы можете изменить уже существующее меню. Оно автоматически появится в качестве нового</span></h1>
             {% if history %}
                 <table>
                 <tr>

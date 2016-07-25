@@ -54,7 +54,13 @@ tr:hover td{
              height: 100% !important;
          }
         </style>
-
+ <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#1').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 
 

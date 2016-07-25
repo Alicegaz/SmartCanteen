@@ -73,6 +73,13 @@
             margin-left: 10%;
         }
     </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#5').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
     <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
 {% endblock %}
 
@@ -110,9 +117,6 @@
 
     {#  </div>  #}
 
-    <div class="menu"><a href="{% url 'post_ingredientnew' %}">
-        <span class="glyphicon glyphicon-plus-sign"></span></a></div>
-    <div class="text"></div>
 {% endblock %}
 {% block scrip %}
     <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>

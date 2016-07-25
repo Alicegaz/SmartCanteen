@@ -360,6 +360,13 @@
     </style>
 
     <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+      <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#2').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
 {% endblock %}
 {% block content %}
 {#  <div class="col-md-8"> #}
