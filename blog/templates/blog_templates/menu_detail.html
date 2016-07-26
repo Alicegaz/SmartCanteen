@@ -49,7 +49,7 @@ $(function () {
                 <p>
                     <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
-                 <a class="btn btn-default" href="{% url 'menu_item_remove' instance.pk item.pk %}" onclick="return confirmDelete();"><span class="glyphicon glyphicon-remove"></span></a>
+
                  </p>
                     {% if item.calories %}
                         <p>калории: {{ item.calories }}</p>
