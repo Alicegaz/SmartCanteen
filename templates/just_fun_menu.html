@@ -59,6 +59,7 @@
                 {% endif %}
             </ul>
         </li>
+    {% if perm %}
         <li>
             <a href="{% url 'menu_archive' %}" id="4">
                 <i class="fa fa-file-text-o"></i>
@@ -66,15 +67,16 @@
                 <small>на сегодня</small>
             </a>
             <ul>
-                {% if perm %}
+
                 <li><a href="{% url 'menu_archive' %}"><i class="fa fa-folder-open"></i>Архив</a></li>
 
                     <li>
                         <a href="{% url 'new_menu' %}"><i class="fa fa-check-square-o"></i>Создать меню</a>
                     </li>
-                {% endif %}
+
             </ul>
         </li>
+    {% endif %}
         {% if perm %}
             <li>
                 <a href="{% url 'offers_list' %}" id="5"><i class="fa fa-folder-open"></i><strong>Архив заказов</strong>
