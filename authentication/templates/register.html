@@ -23,10 +23,25 @@ $(function () {
     });
 });
 </script>
+     <script type="text/javascript">
+    function updateTotal() {
+    var el = document.getElementById('id_password2');
+    var el2 = document.getElementById('id_password');
+        elval=el.value;
+        document.getElementById('my').innerHTML = elval;
+        el2val = el2.value;
+        document.getElementById('my').innerHTML = el2val;
+        if (elval != el2val) {
+            var button = document.getElementsByTagName('button');
+            e11 = document.getElementById('alert');
+            el1.style.cssText = 'display: block !important';
+        }
+}
+    </script>
 {% endblock %}
 
 {% block content %}
-    <form method="post" class="smart-green">
+    <form method="post" id="register" class="smart-green">
         {% if perm %}
             <h1>Добавление нового пользователя
                 <span>зарегистрируйте нового сотрудника</span>
@@ -36,6 +51,7 @@ $(function () {
                 <span>Пожалуйста, заполните все поля</span>
             </h1>
         {% endif %}
+    <p id="my"> </p>
         <p>
             <label>
                 <label for="username">Имя пользователя</label>
@@ -47,19 +63,43 @@ $(function () {
                 {{ form.password.errors }}
                 {{ form.password }}
             </label>
+         <label>
+                <label for="password">Введите пароль еще раз</label>
+                <input id="id_password2" maxlength="20" name="password" type="password">
+         </label>
             {% if perm %}
                 <label>
                     <input type="radio" name="role" value="is_admin"/> Администратор
                     <input type="radio" name="role" value="is_cashier"/> Кассир
                 </label>
             {% endif %}
+        <div class="alert alert-danger" id="alert" style="display: none !important;">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <strong>Ошибка!</strong> Пароли не совпадают </div>
+
             <label>
                 <span>&nbsp;</span>
-                <button type="submit" class="button">Отправить</button>
+                <input type="button" class="button" onclick="updateTotal()" value="Отправить"/>
             </label>
         </p>
     </form>
 {% endblock %}
 {% block scrip %}
+    <script type="text/javascript">
+    function updateTotal() {
+        var el = document.getElementById('id_password');
+    var el2 = document.getElementById('id_password2');
+        elval=el.value;
+        el2val = el2.value;
+        if (elval != el2val) {
+            var button = document.getElementsByTagName('button');
+            e11 = document.getElementById('alert');
+            e11.style.cssText = 'display: block !important;';
+        }
+        else{
+            document.getElementById('register').submit();
+        }
+}
+    </script>
     {% include 'javascripts.html' %}
 {% endblock %}
