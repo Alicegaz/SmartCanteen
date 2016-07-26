@@ -322,7 +322,7 @@ def shares_new(request):
 @user_have_permission('blog.can_add', 'blog.can_edit_schedule')
 def shares_edit(request, pk):
     context = {}
-    share = get_object_or_404(Shares, pk=1)
+    share = get_object_or_404(Shares, pk=pk)
     if request.method == "POST":
         share = shares_change(request, share)
         if share is not False:

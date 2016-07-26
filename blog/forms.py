@@ -1,17 +1,11 @@
-from django import forms
-from django.core.exceptions import ValidationError
 from django.forms import ChoiceField, TimeField
-
 from blog.widgets import SelectTimeWidget
 from .models import Post, Ingredient, TYPE_CHOICES, TYPE_MENU_CHOICES, Menu, IngDishRelation, Schedule, \
     TYPE_CHOICES_SHARES, Shares, Contacts
 from blog.fields import *
-from django.utils import timezone
 from common.request import get_image_from_request
 from common.blog_post_list import get_menu_of_current_time
-from django.forms.extras.widgets import SelectDateWidget
 from django import forms
-from django.contrib.admin import widgets
 
 class ElectionTimesForm(forms.Form):
   # times
@@ -86,7 +80,7 @@ class IngredientsForm(forms.ModelForm):
 
 class MenuForm(forms.ModelForm):
     items = forms.ModelMultipleChoiceField(
-        Post.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
+        Post.objects.all().filter(status=True), widget=forms.CheckboxSelectMultiple(attrs={'class': 'chosen'}),
         required=False,
     )
 
@@ -157,6 +151,7 @@ class ScheduleForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ScheduleForm, self).__init__(*args, **kwargs)
+
 
 class SharesForm(forms.ModelForm):
     type = forms.ChoiceField(widget=forms.Select(), choices=TYPE_CHOICES_SHARES)
