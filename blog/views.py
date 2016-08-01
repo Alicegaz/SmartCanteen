@@ -109,7 +109,7 @@ def menu_out(request):
         schedule = Schedule.objects.all().get(pk=1)
     except:
         schedule = None
-    data = {'posts': menu, 'shares': shares, 'schedule':schedule}
+    data = {'posts': menu, 'shares': shares, 'schedule': schedule}
     if json(request):
         data.pop('shares')
         return json_response(menu)
@@ -475,3 +475,7 @@ def schedule_edit(request, pk):
     perm = have_permission(request, ['blog.can_add', 'blog.can_edit_schedule'])
     context['perm'] = perm
     return render(request, "blog_templates/schedule_edit.html", context)
+
+
+def cashier_create(request):
+    pass

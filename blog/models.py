@@ -244,3 +244,10 @@ class Contacts(models.Model):
         dic.pop('_state')
         return dic
 
+
+class CashierHistory(models.Model):
+    date = models.DateField(default=timezone.now)
+    jackpot = models.FloatField(default=0)
+    begin_time = models.TimeField(default=timezone.now)
+    hours_worked = models.IntegerField(default=0)
+    cashier =models.ForeignKey('auth.User')
