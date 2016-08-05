@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <style>
+        table {
+            font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif !important;
+            font-size: 14px !important;
+            background: white !important;
+            max-width: 70% !important;
+            width: 70% !important;
+            border-collapse: collapse !important;
+            text-align: left !important;
+        }
+
+        th {
+            font-weight: normal !important;
+            color: #039 !important;
+            border-bottom: 2px solid #6678b1 !important;
+            padding: 10px 8px !important;
+        }
+
+        td {
+            color: #669 !important;
+            padding: 9px 8px !important;
+            transition: .3s linear !important;
+            border-top: 1px solid #e8edff;
+        }
+
+        tr:hover td {
+            color: #6699ff !important;
+            background: #e8edff;
+        }
+
+               .glyphicon.glyphicon-plus-sign {
+                    color: #77DD77 !important;
+                }
+               div.page-container{
+                   padding-top:20px;
+               }
+               .smart-green{
+                   background: white;
+               }
+                     table{
+                       margin-left: 10%;
+                   }
+                                        </style>
+     <script language="JavaScript" type="text/javascript">
+$(function () {
+    $('.mcd-menu a#5').each(function () {
+            $(this).addClass('active');
+    });
+});
+</script>
+            <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+
+    <style>
+        .glyphicon.glyphicon-plus-sign {
+            color: #77DD77 !important;
+        }
+
+        div.page-container {
+            padding-top: 20px;
+        }
+
+        .smart-green {
+            background: white;
+        }
+
+        table {
+            margin-left: 10%;
+        }
+    </style>
+    <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
+{% endblock %}
+
+ {% block content %}
+    <div class="smart-green">
+        <h1>Заказы
+            <span>История работы кассиров</span>
+        </h1>
+        <table>
+            <tr>
+                <th>дата</th>
+                <th>цена</th>
+                <th>Кассир</th>
+                <th>Начало</th>
+                <th>Конец</th>
+            </tr>
+            {% for cashier in cash %}
+                {# <div class="col-md-8">  #}
+                <tr>
+                    <td>{{ cashier.date }}</td>
+                    <td>{{ cashier.jackpot }}</td>
+                    <td>{{ cashier.cashier }}</td>
+                    <td>{{ cashier.begin_time }}</td>
+                    <td>{{ cashier.end_time }}</td>
+                </tr>
+                {# <p>price: {{  ingredients.price }}</p> #}
+
+            {% endfor %}
+        </table>
+
+     </div>
+
+
+              {% endblock %}
+    {% block scrip %}
+         <script type="text/javascript" src="{% static 'javascripts/classie.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascripts/gnmenu.js' %}"></script>
+        <script>
+         function confirmDelete ()
+         {
+             if (confirm("Вы уверены, что хотите удалить ингрединет?")) {
+                 return true;
+             }
+                     else
+                     {
+                     return false;
+                 }
+         }
+       </script>
+    <script>
+			new gnMenu( document.getElementById( 'gn-menu' ) );
+		</script>
+    {% include 'javascripts.html' %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

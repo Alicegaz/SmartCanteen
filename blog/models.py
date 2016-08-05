@@ -194,7 +194,7 @@ class Shares(models.Model):
 
 
 class Offers(models.Model):
-    date = models.DateField(default=timezone.now)
+    date = models.DateTimeField(default=timezone.now)
     menu = models.ForeignKey(Menu)
     status = models.BooleanField(default=False)
     author = models.ForeignKey(User, null=True)
@@ -245,9 +245,9 @@ class Contacts(models.Model):
         return dic
 
 
-class CashierHistory(models.Model):
+class CashierHist(models.Model):
     date = models.DateField(default=timezone.now)
     jackpot = models.FloatField(default=0)
     begin_time = models.TimeField(default=timezone.now)
-    hours_worked = models.IntegerField(default=0)
-    cashier =models.ForeignKey('auth.User')
+    end_time = models.TimeField(null=True, blank=True)
+    cashier = models.ForeignKey('auth.User')

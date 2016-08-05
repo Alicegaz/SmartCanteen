@@ -11,11 +11,12 @@ def have_permission(request, permission=None):
         except Exception:
             return False
         user = authenticate(username=username, password=password)
+        print(user)
     if user is not None:
         if permission is not None:
             for perm in permission:
                 if user.has_perm(perm):
-                    return True
+                    return user
             return False
         else:
             return user

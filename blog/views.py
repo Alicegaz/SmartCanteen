@@ -1,7 +1,7 @@
 from blog.forms import SharesForm, ContactsForm
 from blog.models import Shares, Contacts
 from blog.forms import PostForm, IngredientsForm, MenuForm, ScheduleForm
-from blog.models import Post, Ingredient, Menu, Schedule, History, Offers
+from blog.models import Post, Ingredient, Menu, Schedule, History, Offers, CashierHist
 from django.shortcuts import get_object_or_404, HttpResponse
 from django.contrib import auth
 from common.json_warper import json, json_response
@@ -13,6 +13,7 @@ from blog.controllers.contacts import contact_edit as contact_change, create_con
 from blog.controllers.menu import create_menu, add_to_history
 from blog.controllers.schedule import schedule_edit as schedule_change
 from blog.controllers.ingredient import ingredient_change, create_ingredient
+from blog.controllers.cashier import cashier_history_create
 from common.decorators import user_have_permission
 from common.permission import have_permission
 import pytz
@@ -478,4 +479,18 @@ def schedule_edit(request, pk):
 
 
 def cashier_create(request):
-    pass
+    status = cashier_history_create(request)
+    if status:
+        return HttpResponse('OK', status=200)
+    else:
+        return HttpResponse('Error', status=404)
+
+
+def cashier_out(request):
+    cash = CashierHist.objects.all()
+    result = []
+    for res in cash:
+        if res.end_time is not None:
+            result.append(res)
+    context = {'cash': result}
+    return render(request, "blog_templates/cash_out.html", context)

@@ -52,6 +52,10 @@ urlpatterns = [
     url(r'^contacts/(?P<pk>\d+)/edit/$', views.contact_edit, name='contact_edit'),
     url(r'^contacts/(?P<pk>\d+)/remove/$', views.contacts_remove, name='contacts_remove'),
 
+    # url(r'^cashier/$', views.casher_out, name='cashier_out'),
+    url(r'^cashier/add/$', views.cashier_create, name='cashier_create'),
+    url(r'^cashier/$', views.cashier_out, name='cashier_out'),
+
     url(r'^schedule_for_user/$', views.schedule_for_user, name='schedule_for_user')
 ]
 
