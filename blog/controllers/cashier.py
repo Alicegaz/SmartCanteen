@@ -56,12 +56,12 @@ def cashier_history_create(request):
                 cash_hist = CashierHist.objects.get(date=timezone.now(), end_time=None)
                 cash_hist.end_time = timezone.now()
                 summ = 0
-                cuant = 0
+                offers_cuant = 0
                 for offer in Offers.objects.all():
                     if cash_hist.begin_time.date()<=offer.date.date()<= date.today():
                         summ += offer.offer_price()
-                        cuant +=1
-                cash_hist.jackpot = summ
+                        offers_cuant +=1
+                cash_hist.jackpot = offers_cuant
                 # TODO присваивать cash_hist.jackpot значение суммы всех заказов за период с begin time по настоящее время
                 cash_hist.save()
                 return True
