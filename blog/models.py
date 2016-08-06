@@ -120,6 +120,12 @@ class Menu(models.Model):
                 result = result or one_more
         return True
 
+    def price(self):
+        summ = 0
+        for it in self.items.all():
+            summ += it.price
+        return summ
+
     def subtract_from_ingredient(self):
         for item in self.items.all():
             ing_dish_relations = IngDishRelation.objects.filter(dish=item)
@@ -205,6 +211,9 @@ class Offers(models.Model):
         for dish_amount in dish_amount_list:
             result.append(dish_amount)
         return result
+
+    def offer_price(self):
+        return self.menu.price()
 
 
 class DishAmount(models.Model):

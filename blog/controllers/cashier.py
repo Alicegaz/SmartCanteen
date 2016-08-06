@@ -1,7 +1,7 @@
-from blog.models import CashierHist
+from blog.models import CashierHist, Offers
 from common.permission import have_permission
 from django.utils import timezone
-
+from datetime import date
 
 def contain_begin(request):
     try:
@@ -54,6 +54,13 @@ def cashier_history_create(request):
             elif end:
                 cash_hist = CashierHist.objects.get(date=timezone.now(), end_time=None)
                 cash_hist.end_time = timezone.now()
+                summ = 0
+                cuant = 0
+                for offer in Offers.objects.all():
+                    if cash_hist.begin_time.date()<=offer.date.date()<= date.today():
+                        summ += offer.offer_price()
+                        cuant +=1
+                cash_hist.jackpot = summ
                 # TODO присваивать cash_hist.jackpot значение суммы всех заказов за период с begin time по настоящее время
                 cash_hist.save()
                 return True
