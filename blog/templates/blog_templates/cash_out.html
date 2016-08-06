@@ -85,6 +85,7 @@ $(function () {
                 <th>Кассир</th>
                 <th>Начало</th>
                 <th>Конец</th>
+                <th>Количество сделок</th>
             </tr>
             {% for cashier in cash %}
                 {# <div class="col-md-8">  #}
@@ -94,6 +95,7 @@ $(function () {
                     <td>{{ cashier.cashier }}</td>
                     <td>{{ cashier.begin_time }}</td>
                     <td>{{ cashier.end_time }}</td>
+                    <td>{{ cashier.offers }}</td>
                 </tr>
                 {# <p>price: {{  ingredients.price }}</p> #}
 

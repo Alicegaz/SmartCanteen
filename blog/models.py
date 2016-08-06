@@ -261,6 +261,7 @@ class Contacts(models.Model):
 class CashierHist(models.Model):
     date = models.DateField(default=timezone.now)
     jackpot = models.FloatField(default=0)
+    offers = models.IntegerField(default=0)
     begin_time = models.TimeField(default=timezone.now)
     end_time = models.TimeField(null=True, blank=True)
     cashier = models.ForeignKey('auth.User')
