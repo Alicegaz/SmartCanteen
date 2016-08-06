@@ -3,6 +3,7 @@ from common.permission import have_permission
 from django.utils import timezone
 from datetime import date
 
+
 def contain_begin(request):
     try:
         s = request.POST.get('begin')

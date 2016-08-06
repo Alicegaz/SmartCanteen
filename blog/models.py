@@ -213,7 +213,11 @@ class Offers(models.Model):
         return result
 
     def offer_price(self):
-        return self.menu.price()
+        price = 0
+        dishes = self.get_dish_list()
+        for dish in dishes:
+            price += dish.price * dish.amount
+        return price
 
 
 class DishAmount(models.Model):
