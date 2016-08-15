@@ -3,6 +3,7 @@ from common.permission import have_permission
 from django.utils import timezone
 from datetime import date
 
+
 def contain_begin(request):
     try:
         s = request.POST.get('begin')
@@ -60,7 +61,8 @@ def cashier_history_create(request):
                     if cash_hist.begin_time.date()<=offer.date.date()<= date.today():
                         summ += offer.offer_price()
                         offers_cuant +=1
-                cash_hist.jackpot = offers_cuant
+                cash_hist.offers = offers_cuant
+                cash_hist.jackpot = summ
                 # TODO присваивать cash_hist.jackpot значение суммы всех заказов за период с begin time по настоящее время
                 cash_hist.save()
                 return True

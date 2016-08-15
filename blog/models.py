@@ -213,7 +213,11 @@ class Offers(models.Model):
         return result
 
     def offer_price(self):
-        return self.menu.price()
+        price = 0
+        dishes = self.get_dish_list()
+        for dish in dishes:
+            price += dish.price * dish.amount
+        return price
 
 
 class DishAmount(models.Model):
@@ -257,6 +261,7 @@ class Contacts(models.Model):
 class CashierHist(models.Model):
     date = models.DateField(default=timezone.now)
     jackpot = models.FloatField(default=0)
+    offers = models.IntegerField(default=0)
     begin_time = models.TimeField(default=timezone.now)
     end_time = models.TimeField(null=True, blank=True)
     cashier = models.ForeignKey('auth.User')
