@@ -357,8 +357,7 @@ def send_offer(request):
 
 @user_have_permission('blog.can_add')
 def get_offers(request):
-    offers = Offers.objects.all()
-
+    offers = Offers.objects.all.order_by('-date')
     class OfferPrice:
         offer = None
         price = None
