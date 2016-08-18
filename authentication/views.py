@@ -46,7 +46,7 @@ def login(request):
                 elif user.has_perm('blog.can_add'):
                     role = '0'
                 elif user.has_perm('blog.can_edit_schedule'):
-                    role = '0'
+                    role = '3'
                 else:
                     role = '1'
             else:
