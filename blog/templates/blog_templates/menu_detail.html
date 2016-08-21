@@ -6,6 +6,16 @@
                 div.page-container{
                     padding-top: 20px;
                 }
+           .smart-green{
+               height: unset !important;
+           }
+           .del{
+            height:20px;
+            text-align:center;
+        }
+           .post-content{
+            height:120px;
+        }
            </style>
             <script type="text/javascript" src="{% static 'javascripts/modernizr.custom.js' %}"></script>
          <script language="JavaScript" type="text/javascript">
@@ -46,15 +56,22 @@ $(function () {
                 <div class="post-content">
                {# <a href="{% url 'post_detail %}' pk=item.pk %}">{{ item.title }}</a> #}
                 <h3><a href="{% url 'post_detail' pk=item.pk %}">{{ item.title }}</a></h3>
-                <p>
-                    <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
 
-
-                 </p>
                     {# {% if item.calories %}#}
                       {#  <p>калории: {{ item.calories }}</p>#}
                     {# {% endif %}#}
                     </div>
+                {%if perm  %}
+                <div class="del">
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=item.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                </div>
+                {% else %}
+                <div class="del">
+                    {% if item.calories%}
+                        <p>калории: {{ item.calories }}</p>
+                        {% endif %}
+                                  </div>
+                {% endif %}
                 </div>
                 </div>
                 </li>
