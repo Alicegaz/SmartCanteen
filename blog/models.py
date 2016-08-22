@@ -196,8 +196,6 @@ class Shares(models.Model):
     def is_past_due(self):
         if date.today() <= self.end_date.date():
             return True
-        return False
-
 
 class Offers(models.Model):
     date = models.DateTimeField(default=timezone.now)
