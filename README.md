@@ -1,4 +1,4 @@
-# my-first-blog1
-# my-first-blog1
-# my-first-blog1
-# my-first-blog1
+#ORDER COST EVOLUATION SYSTEM
+The system for canteens: an easy interface for cashiers and automatization of
+their work, presents users with current menu. 
+Used technologies: Django, python, HTML, JavaScript, CSS
